@@ -15,11 +15,11 @@ TagManager:
   - 
   - 
   - 
+  - Character
+  - Enemy
   - 
-  - 
-  - 
-  - 
-  - 
+  - EnemyBullet
+  - PlayerBullet
   - 
   - 
   - 
