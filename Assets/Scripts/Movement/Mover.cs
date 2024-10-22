@@ -19,7 +19,7 @@ public class Mover : MonoBehaviour
         Move();
     }
 
-    public void Init(IMoveSource moveSource, float speed)
+    public void Initialize(IMoveSource moveSource, float speed)
     {
         _moveSource = moveSource;
         _speed = speed;
