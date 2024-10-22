@@ -9,7 +9,8 @@ public class AttackComponent : MonoBehaviour
 
     private void OnEnable()
     {
-        _shootEvent.Fired += _gun.Shoot;
+        if (_shootEvent != null)
+            _shootEvent.Fired -= _gun.Shoot;
     }
 
     private void OnDisable()
@@ -21,5 +22,6 @@ public class AttackComponent : MonoBehaviour
     {
         _gun = gun;
         _shootEvent = shootEvent;
+        _shootEvent.Fired += _gun.Shoot;
     }
 }

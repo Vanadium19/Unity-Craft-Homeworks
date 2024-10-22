@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 7936085547460007407}
   - component: {fileID: 5568771391735819375}
   - component: {fileID: 659620479434099170}
-  - component: {fileID: 7735631526396148986}
-  - component: {fileID: -2640095480713221989}
   - component: {fileID: -8740644992213360888}
+  - component: {fileID: 7486560671504732277}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -152,32 +151,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7735631526396148986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559606060570185700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b33ab31166b1a6a44a055f1fc2802fde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 5
---- !u!114 &-2640095480713221989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559606060570185700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0572b964ccf633946b1ac8e910612345, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 3
 --- !u!114 &-8740644992213360888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +158,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559606060570185700}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 698a447b4e618c6479eaa91ba609b88a, type: 3}
   m_Name: 
@@ -194,6 +167,21 @@ MonoBehaviour:
   _delay: 1
   _damage: 1
   _bulletSpeed: 2
+--- !u!114 &7486560671504732277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559606060570185700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362c3f844e726ab4984e9923d4d71fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 5
+  _speed: 3
+  _shotDelay: 1
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private BulletManager _bulletManager;
-    [SerializeField] private EnemyHealth _enemyPrefab;
+    [SerializeField] private EnemyContext _enemyPrefab;
 
     [SerializeField] private Transform _container;
     [SerializeField] private Transform _worldTransform;
@@ -15,14 +15,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform[] _spawnPositions;
     [SerializeField] private Transform[] _attackPositions;
 
-    private readonly Queue<EnemyHealth> _enemyPool = new();
+    private Queue<EnemyContext> _enemyPool = new();
 
     private void Start()
     {
         for (var i = 0; i < 7; i++)
         {
-            var enemy = Instantiate(_enemyPrefab, _container);
-            _enemyPool.Enqueue(enemy);
+            var enemy = Spawn();
+            Push(enemy);
         }
 
         StartCoroutine(StartSpawn());
@@ -34,18 +34,41 @@ public class EnemySpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(1, 2));
 
-            if (!_enemyPool.TryDequeue(out EnemyHealth enemy))
-                enemy = Instantiate(_enemyPrefab, _container);
+            var enemy = Pull();
 
-            enemy.transform.SetParent(_worldTransform);
-
-            Vector3 spawnPosition = GetRandomPoint(_spawnPositions);
-            enemy.transform.position = spawnPosition;
-
+            enemy.transform.position = GetRandomPoint(_spawnPositions);
+            
             Vector3 attackPosition = GetRandomPoint(_attackPositions);
-            enemy.gameObject.GetComponent<EnemyMover>().Init(attackPosition);
-            enemy.gameObject.GetComponent<EnemyAttacker>().Init(_target, _bulletManager);
+
+            enemy.StartMoving(attackPosition);
         }
+    }
+
+    private void Push(EnemyContext enemy)
+    {
+        enemy.gameObject.SetActive(false);
+        enemy.transform.SetParent(_container);
+        _enemyPool.Enqueue(enemy);
+    }
+
+    private EnemyContext Pull()
+    {
+        if (_enemyPool.Count == 0)
+            return Spawn();
+
+        var enemy = _enemyPool.Dequeue();
+
+        enemy.gameObject.SetActive(true);
+        enemy.transform.SetParent(_worldTransform);
+
+        return enemy;
+    }
+
+    private EnemyContext Spawn()
+    {
+        var enemy = Instantiate(_enemyPrefab, _worldTransform);
+        enemy.Initialize();
+        return enemy;
     }
 
     private Vector2 GetRandomPoint(Transform[] points)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,8 +8,8 @@ public class EnemyMoveSource : MonoBehaviour, IMoveSource
     private readonly float _destinationLapping = 0.25f;
 
     private Vector2 _value;
-    private Vector2 _destination;
     private Transform _transform;
+    private Coroutine _moving;
 
     public Vector2 Value => _value;
 
@@ -17,24 +18,26 @@ public class EnemyMoveSource : MonoBehaviour, IMoveSource
         _transform = transform;
     }
 
-    private void Update()
+    public void StartMoving(Vector2 destination)
     {
-        Vector2 distance = _destination - (Vector2)_transform.position;
+        if (_moving != null)
+            StopCoroutine(_moving);
 
-        if (distance.magnitude <= _destinationLapping)
-            StopMoving();
-
-        _value = distance.normalized;
+        _moving = StartCoroutine(Moving(destination));
     }
 
-    public void Init(Vector2 destination)
+    private IEnumerator Moving(Vector2 destination)
     {
-        _destination = destination;
-    }
+        float distance = float.MaxValue;
 
-    private void StopMoving()
-    {
-        _value = Vector2.zero;
-        enabled = false;
+        while (distance > _destinationLapping)
+        {
+            Vector3 path = destination - (Vector2)_transform.position;
+            distance = path.magnitude;
+            _value = path.normalized;
+            yield return null;
+        }
+
+        _value = Vector3.zero;
     }
 }

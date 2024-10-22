@@ -8,15 +8,22 @@ public class EnemyContext : MonoBehaviour
     [SerializeField] private float _speed = 5.0f;
     [SerializeField] private float _shotDelay = 1f;
 
-    private void Initialize()
+    private EnemyMoveSource _moveSource;
+
+    public void Initialize()
     {
         gameObject.AddComponent<Health>().Initialize(_health);
 
-        IMoveSource moveSource = gameObject.AddComponent<EnemyMoveSource>();
-        gameObject.AddComponent<Mover>().Initialize(moveSource, _speed);
+        _moveSource = gameObject.AddComponent<EnemyMoveSource>();
+        gameObject.AddComponent<Mover>().Initialize(_moveSource, _speed);
 
         IGun gun = gameObject.AddComponent<EnemyGun>();
         IShootEvent shootEvent = gameObject.AddComponent<EnemyShootEvent>().Initialize(_shotDelay);
         gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
+    }
+
+    public void StartMoving(Vector2 destination)
+    {
+        _moveSource.StartMoving(destination);
     }
 }

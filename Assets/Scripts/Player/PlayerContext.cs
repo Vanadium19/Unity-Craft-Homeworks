@@ -7,6 +7,11 @@ public class PlayerContext : MonoBehaviour
     [SerializeField] private int _health = 5;
     [SerializeField] private float _speed = 5.0f;
 
+    private void Awake()
+    {
+        Initialize();
+    }
+
     private void Initialize()
     {
         gameObject.AddComponent<Health>().Initialize(_health);

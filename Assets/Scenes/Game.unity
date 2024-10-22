@@ -396,13 +396,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 562298203}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47897cd114b6a884b97c07f66cdaad4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletManager: {fileID: 363245577}
-  _enemyPrefab: {fileID: 7735631526396148986, guid: 87fe189881a524806800482ac8eaaa83,
+  _enemyPrefab: {fileID: 7486560671504732277, guid: 87fe189881a524806800482ac8eaaa83,
     type: 3}
   _container: {fileID: 178513672}
   _worldTransform: {fileID: 1683128698}
