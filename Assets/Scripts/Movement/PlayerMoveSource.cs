@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveInput : MonoBehaviour
+public class PlayerMoveSource : MonoBehaviour, IMoveSource
 {
     private Vector2 _value;
 

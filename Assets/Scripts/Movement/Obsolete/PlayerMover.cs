@@ -4,18 +4,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TextCore.Text;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(PlayerMoveInput))]
+[RequireComponent(typeof(Rigidbody2D), typeof(PlayerMoveSource))]
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private float _speed = 5.0f;
 
-    private PlayerMoveInput _moveInput;
+    private PlayerMoveSource _moveInput;
     private Rigidbody2D _rigidbody;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _moveInput = GetComponent<PlayerMoveInput>();
+        _moveInput = GetComponent<PlayerMoveSource>();
     }
 
     private void FixedUpdate()
