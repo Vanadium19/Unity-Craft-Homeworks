@@ -4,6 +4,8 @@ namespace ShootEmUp.Components.Movement
 {
     public class PlayerMoveSource : MonoBehaviour, IMoveSource
     {
+        private readonly string _axisName = "Horizontal";
+
         private Vector2 _value;
 
         public Vector2 Value => _value;
@@ -15,12 +17,7 @@ namespace ShootEmUp.Components.Movement
 
         private void ReadInput()
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
-                _value = Vector2.left;
-            else if (Input.GetKey(KeyCode.RightArrow))
-                _value = Vector2.right;
-            else
-                _value = Vector2.zero;
+            _value = Vector2.right * Input.GetAxis(_axisName);
         }
     }
 }
