@@ -1,7 +1,9 @@
 using System;
+using ShootEmUp.Common;
 using ShootEmUp.Components.AttackComponents;
 using ShootEmUp.Components.Movement;
 using ShootEmUp.Components.Weapons;
+using ShootEmUp.Pools;
 using UnityEngine;
 
 namespace ShootEmUp.Installers
@@ -34,7 +36,9 @@ namespace ShootEmUp.Installers
             if (_target == null)
                 throw new ArgumentNullException();
 
-            IGun gun = gameObject.AddComponent<EnemyGun>().Initialize(firePoint, _target, bullet, damage, bulletSpeed);
+            BulletsPool pool = new(transform, bullet, true, damage, Color.red, PhysicsLayer.EnemyBullet);
+            IGun gun = new EnemyGun(pool, firePoint, _target, bulletSpeed);
+
             IShootEvent shootEvent = gameObject.AddComponent<EnemyShootEvent>().Initialize(_shotDelay, _moveSource.CanShoot);
             gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
         }

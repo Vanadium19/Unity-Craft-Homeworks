@@ -4,32 +4,23 @@ using UnityEngine;
 
 namespace ShootEmUp.Components.Weapons
 {
-    public class EnemyGun : MonoBehaviour, IGun
+    public class EnemyGun : Gun
     {
-        private BulletsPool _pool;
         private Transform _firePoint;
         private Transform _target;
-        private float _bulletSpeed;
 
-        public IGun Initialize(Transform firePoint,
-                               Transform target,
-                               Bullet prefab,
-                               int damage,
-                               float bulletSpeed)
+        public EnemyGun(BulletsPool pool,
+                        Transform firePoint,
+                        Transform target,
+                        float bulletSpeed) : base(pool, firePoint, bulletSpeed)
         {
-            _pool = new(transform, prefab, true, damage, Color.red, PhysicsLayer.EnemyBullet);
             _firePoint = firePoint;
-            _bulletSpeed = bulletSpeed;
             _target = target;
-            return this;
         }
 
-        public void Shoot()
+        protected override Vector2 GetDirection()
         {
-            Vector3 direction = (_target.position - _firePoint.position).normalized;
-            Bullet bullet = _pool.Pull();
-
-            bullet.Throw(_firePoint.position, direction * _bulletSpeed);
+            return (_target.position - _firePoint.position).normalized;
         }
     }
 }

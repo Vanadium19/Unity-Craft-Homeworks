@@ -1,28 +1,17 @@
-using ShootEmUp.Common;
 using ShootEmUp.Pools;
 using UnityEngine;
 
 namespace ShootEmUp.Components.Weapons
 {
-    public class PlayerGun : MonoBehaviour, IGun
+    public class PlayerGun : Gun
     {
-        private BulletsPool _pool;
-        private Transform _firePoint;
-        private float _bulletSpeed;
+        public PlayerGun(BulletsPool pool,
+                         Transform firePoint,
+                         float bulletSpeed) : base(pool, firePoint, bulletSpeed) { }
 
-        public IGun Initialize(Transform firePoint, Bullet prefab, int damage, float bulletSpeed)
+        protected override Vector2 GetDirection()
         {
-            _pool = new(transform, prefab, false, damage, Color.blue, PhysicsLayer.PlayerBullet);
-            _firePoint = firePoint;
-            _bulletSpeed = bulletSpeed;
-            return this;
-        }
-
-        public void Shoot()
-        {
-            Bullet bullet = _pool.Pull();
-
-            bullet.Throw(_firePoint.position, Vector2.up * _bulletSpeed);
+            return Vector2.up;
         }
     }
 }
