@@ -11,12 +11,13 @@ namespace ShootEmUp.Pools
         private Color _color;
         private int _layer;
 
-        public BulletsPool(Transform container,
+        public BulletsPool(Transform poolContainer,
+                           Transform worldContainer,
                            Bullet prefab,
                            bool isEnemy,
                            int damage,
                            Color color,
-                           PhysicsLayer layer) : base(container, prefab)
+                           PhysicsLayer layer) : base(poolContainer, worldContainer, prefab)
         {
             _isEnemy = isEnemy;
             _damage = damage;

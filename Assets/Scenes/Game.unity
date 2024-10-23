@@ -431,7 +431,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 7486560671504732277, guid: 87fe189881a524806800482ac8eaaa83,
     type: 3}
-  _player: {fileID: 4414282821800802396}
   _container: {fileID: 178513672}
   _worldTransform: {fileID: 1683128698}
   _spawnPositions:
@@ -453,6 +452,37 @@ MonoBehaviour:
   - {fileID: 1549378007}
   - {fileID: 78117031}
   - {fileID: 883274640}
+--- !u!1 &604311689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 604311690}
+  m_Layer: 0
+  m_Name: <Bullets>
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &604311690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604311689}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1337844002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883274639
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,6 +751,7 @@ Transform:
   - {fileID: 7166351703523243260}
   - {fileID: 1247456035}
   - {fileID: 1683128698}
+  - {fileID: 604311690}
   - {fileID: 4414282821800802396}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1209,12 +1240,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3951702117947426121}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a164a02d2c945743b2eaa18af56885a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 4414282821800802397}
+  _bulletWorldContainer: {fileID: 604311690}
+  _spawner: {fileID: 562298206}
 --- !u!212 &4162873433806880330
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -2,19 +2,25 @@ using System.Collections.Generic;
 using ShootEmUp.Components.HealthComponents;
 using ShootEmUp.Installers;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace ShootEmUp.Pools
 {
     public class EnemiesPool : Pool<EnemyInstaller>
     {
         private Transform _target;
+        private Transform _bulletWorldContainer;
+
         private Dictionary<Health, EnemyInstaller> _enemies;
 
-        public EnemiesPool(Transform container,
+        public EnemiesPool(Transform poolContainer,
+                           Transform worldContainer,
                            EnemyInstaller prefab,
-                           Transform target) : base(container, prefab)
+                           Transform bulletWorldContainer,
+                           Transform target) : base(poolContainer, worldContainer, prefab)
         {
             _target = target;
+            _bulletWorldContainer = bulletWorldContainer;
             _enemies = new();
         }
 
@@ -39,7 +45,7 @@ namespace ShootEmUp.Pools
             var enemy = base.Spawn();
 
             enemy.SetTarget(_target);
-            enemy.Initialize(true);
+            enemy.Initialize(true, _bulletWorldContainer);
             _enemies.Add(enemy.Health, enemy);
             return enemy;
         }

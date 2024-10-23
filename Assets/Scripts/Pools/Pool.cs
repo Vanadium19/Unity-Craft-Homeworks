@@ -5,14 +5,16 @@ namespace ShootEmUp.Pools
 {
     public class Pool<T> where T : MonoBehaviour
     {
-        private Transform _container;
+        private Transform _poolContainer;
+        private Transform _worldContainer;
 
         private Queue<T> _objects;
         private T _prefab;
 
-        public Pool(Transform container, T prefab)
+        public Pool(Transform poolContainer, Transform worldContainer, T prefab)
         {
-            _container = container;
+            _poolContainer = poolContainer;
+            _worldContainer = worldContainer;
             _objects = new();
             _prefab = prefab;
         }
@@ -23,7 +25,9 @@ namespace ShootEmUp.Pools
                 return Spawn();
 
             var spawnableObject = _objects.Dequeue();
+
             spawnableObject.gameObject.SetActive(true);
+            spawnableObject.transform.SetParent(_worldContainer);
 
             return spawnableObject;
         }
@@ -31,6 +35,7 @@ namespace ShootEmUp.Pools
         public virtual void Push(T spawnableObject)
         {
             spawnableObject.gameObject.SetActive(false);
+            spawnableObject.transform.SetParent(_poolContainer);
             _objects.Enqueue(spawnableObject);
         }
 
@@ -38,7 +43,7 @@ namespace ShootEmUp.Pools
         {
             var spawnableObject = Object.Instantiate(_prefab);
 
-            spawnableObject.transform.SetParent(_container);
+            spawnableObject.transform.SetParent(_worldContainer);
             return spawnableObject;
         }
     }

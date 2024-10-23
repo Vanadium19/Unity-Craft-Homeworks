@@ -18,14 +18,18 @@ public abstract class Installer : MonoBehaviour
 
     public Health Health => _healthComponent;
 
-    public void Initialize(bool isEnemy)
+    public void Initialize(bool isEnemy, Transform worldBulletContainer)
     {
         _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, isEnemy);
         InitializeMover(_speed);
-        InitializeWeapon(_firePoint, _bulletPrefab, _damage, _bulletSpeed);
+        InitializeWeapon(worldBulletContainer, _firePoint, _bulletPrefab, _damage, _bulletSpeed);
     }
 
     protected abstract void InitializeMover(float speed);
 
-    protected abstract void InitializeWeapon(Transform firePoint, Bullet bullet, int damage, int bulletSpeed);
+    protected abstract void InitializeWeapon(Transform worldBulletContainer,
+                                             Transform firePoint,
+                                             Bullet bullet,
+                                             int damage,
+                                             int bulletSpeed);
 }

@@ -7,8 +7,9 @@ namespace ShootEmUp.Level
 {
     public class EnemySpawner : MonoBehaviour
     {
+        private readonly WaitForSeconds _delay = new WaitForSeconds(2f);
+
         [SerializeField] private EnemyInstaller _enemyPrefab;
-        [SerializeField] private Transform _player;
 
         [SerializeField] private Transform _container;
         [SerializeField] private Transform _worldTransform;
@@ -19,31 +20,28 @@ namespace ShootEmUp.Level
         private EnemiesPool _pool;
         private Coroutine _spawning;
 
-        private void Awake()
+        public void Initialize(Transform bulletWorldTransform, Transform player)
         {
-            _pool = new(_container, _enemyPrefab, _player);
+            _pool = new(_container, _worldTransform, _enemyPrefab, bulletWorldTransform, player);
         }
 
-        private void OnEnable()
+        public void StartSpawn()
         {
-            _spawning = StartCoroutine(StartSpawn());
+            if (_spawning != null)
+                StopCoroutine(_spawning);
+
+            _spawning = StartCoroutine(Spawning());
         }
 
-        private void OnDisable()
-        {
-            StopCoroutine(_spawning);
-        }
-
-        private IEnumerator StartSpawn()
+        private IEnumerator Spawning()
         {
             while (true)
             {
-                yield return new WaitForSeconds(Random.Range(1, 2));
+                yield return _delay;
 
                 var enemy = _pool.Pull();
 
                 enemy.transform.position = GetRandomPoint(_spawnPositions);
-                enemy.transform.SetParent(_worldTransform);
 
                 Vector3 attackPosition = GetRandomPoint(_attackPositions);
                 enemy.StartMoving(attackPosition);
