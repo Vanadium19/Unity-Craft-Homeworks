@@ -1,6 +1,5 @@
 using ShootEmUp;
-using System.Collections;
-using System.Collections.Generic;
+using ShootEmUp.Common;
 using UnityEngine;
 
 public class PlayerGun : MonoBehaviour, IGun
@@ -19,8 +18,8 @@ public class PlayerGun : MonoBehaviour, IGun
 
     public void Shoot()
     {
-        var bullet = _pool.Pull();
-        bullet.transform.parent = null;
+        Bullet bullet = _pool.Pull();
+
         bullet.Throw(_firePoint.position, Vector2.up * _bulletSpeed);
     }
 }

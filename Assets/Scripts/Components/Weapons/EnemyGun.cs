@@ -1,4 +1,5 @@
 using ShootEmUp;
+using ShootEmUp.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +29,6 @@ public class EnemyGun : MonoBehaviour, IGun
         Vector3 direction = (_target.position - _firePoint.position).normalized;
         Bullet bullet = _pool.Pull();
 
-        bullet.transform.parent = null;
         bullet.Throw(_firePoint.position, direction * _bulletSpeed);
     }
 }

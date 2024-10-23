@@ -30,12 +30,14 @@ public class Pool<T> where T : MonoBehaviour
     public virtual void Push(T spawnableObject)
     {
         spawnableObject.gameObject.SetActive(false);
-        spawnableObject.transform.SetParent(_container);
         _objects.Enqueue(spawnableObject);
     }
 
     protected virtual T Spawn()
     {
-        return Object.Instantiate(_prefab);
+        var spawnableObject = Object.Instantiate(_prefab);
+
+        spawnableObject.transform.SetParent(_container);
+        return spawnableObject;
     }
 }
