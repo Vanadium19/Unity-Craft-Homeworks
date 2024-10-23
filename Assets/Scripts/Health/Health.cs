@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    private int _health = 5;
+    private int _health;
+    private bool _isEnemy;
 
     public event Action<int> HealthChanged;
     public event Action Died;
+
+    public bool IsEnemy => _isEnemy;
 
     public void TakeDamage(int damage)
     {
@@ -22,8 +25,9 @@ public class Health : MonoBehaviour
             Died?.Invoke();
     }
 
-    public void Initialize(int health)
+    public void Initialize(int health, bool isEnemy)
     {
         _health = health;
+        _isEnemy = isEnemy;
     }
 }

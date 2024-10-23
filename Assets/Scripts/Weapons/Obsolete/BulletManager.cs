@@ -6,7 +6,7 @@ namespace ShootEmUp
     public sealed class BulletManager : MonoBehaviour
     {
         [SerializeField]
-        public Bullet prefab;
+        public OldBullet prefab;
 
         [SerializeField]
         public Transform worldTransform;
@@ -17,15 +17,15 @@ namespace ShootEmUp
         [SerializeField]
         private Transform container;
 
-        public readonly HashSet<Bullet> m_activeBullets = new();
-        public readonly Queue<Bullet> m_bulletPool = new();
-        private readonly List<Bullet> m_cache = new();
+        public readonly HashSet<OldBullet> m_activeBullets = new();
+        public readonly Queue<OldBullet> m_bulletPool = new();
+        private readonly List<OldBullet> m_cache = new();
 
         private void Awake()
         {
             for (var i = 0; i < 10; i++)
             {
-                Bullet bullet = Instantiate(this.prefab, this.container);
+                OldBullet bullet = Instantiate(this.prefab, this.container);
                 this.m_bulletPool.Enqueue(bullet);
             }
         }
@@ -37,7 +37,7 @@ namespace ShootEmUp
 
             for (int i = 0, count = this.m_cache.Count; i < count; i++)
             {
-                Bullet bullet = this.m_cache[i];
+                OldBullet bullet = this.m_cache[i];
                 if (!this.levelBounds.InBounds(bullet.transform.position))
                 {
                     this.RemoveBullet(bullet);
@@ -76,13 +76,13 @@ namespace ShootEmUp
             }
         }
 
-        private void OnBulletCollision(Bullet bullet, Collision2D collision)
+        private void OnBulletCollision(OldBullet bullet, Collision2D collision)
         {
             this.DealDamage(bullet, collision.gameObject);
             this.RemoveBullet(bullet);
         }
 
-        private void RemoveBullet(Bullet bullet)
+        private void RemoveBullet(OldBullet bullet)
         {
             if (this.m_activeBullets.Remove(bullet))
             {
@@ -92,7 +92,7 @@ namespace ShootEmUp
             }
         }
 
-        private void DealDamage(Bullet bullet, GameObject other)
+        private void DealDamage(OldBullet bullet, GameObject other)
         {
             int damage = bullet.damage;
             if (damage <= 0)

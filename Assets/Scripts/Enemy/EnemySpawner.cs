@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private BulletManager _bulletManager;
     [SerializeField] private EnemyContext _enemyPrefab;
 
     [SerializeField] private Transform _container;
@@ -16,6 +15,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform[] _attackPositions;
 
     private Queue<EnemyContext> _enemyPool = new();
+    private Coroutine _spawning;
 
     private void Start()
     {
@@ -25,7 +25,12 @@ public class EnemySpawner : MonoBehaviour
             Push(enemy);
         }
 
-        StartCoroutine(StartSpawn());
+        _spawning = StartCoroutine(StartSpawn());
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(_spawning);   
     }
 
     private IEnumerator StartSpawn()

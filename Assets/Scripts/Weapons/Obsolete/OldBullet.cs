@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class Bullet : MonoBehaviour
+    public sealed class OldBullet : MonoBehaviour
     {
-        public event Action<Bullet, Collision2D> OnCollisionEntered;
+        public event Action<OldBullet, Collision2D> OnCollisionEntered;
 
         [NonSerialized]
         public bool isPlayer;

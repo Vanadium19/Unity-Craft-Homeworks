@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7936085547460007407}
   - component: {fileID: 5568771391735819375}
   - component: {fileID: 659620479434099170}
-  - component: {fileID: -8740644992213360888}
   - component: {fileID: 7486560671504732277}
   m_Layer: 11
   m_Name: Enemy
@@ -151,22 +150,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-8740644992213360888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559606060570185700}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 698a447b4e618c6479eaa91ba609b88a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _firePoint: {fileID: 3195880656587174614}
-  _delay: 1
-  _damage: 1
-  _bulletSpeed: 2
 --- !u!114 &7486560671504732277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +165,11 @@ MonoBehaviour:
   _health: 5
   _speed: 3
   _shotDelay: 1
+  _bulletSpeed: 2
+  _damage: 1
+  _firePoint: {fileID: 3195880656587174614}
+  _bulletPrefab: {fileID: 4766385219215510599, guid: 5fe72886874b4e445b06cf777ca4920d,
+    type: 3}
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0
