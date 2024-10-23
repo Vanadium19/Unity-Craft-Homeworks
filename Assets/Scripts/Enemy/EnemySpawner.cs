@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private EnemyContext _enemyPrefab;
+    [SerializeField] private EnemyInstaller _enemyPrefab;
 
     [SerializeField] private Transform _container;
     [SerializeField] private Transform _worldTransform;
@@ -14,17 +14,16 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform[] _spawnPositions;
     [SerializeField] private Transform[] _attackPositions;
 
-    private Queue<EnemyContext> _enemyPool = new();
+    private EnemiesPool _pool;
     private Coroutine _spawning;
 
-    private void Start()
+    private void Awake()
     {
-        for (var i = 0; i < 7; i++)
-        {
-            var enemy = Spawn();
-            Push(enemy);
-        }
+        _pool = new(_container, _enemyPrefab);
+    }
 
+    private void OnEnable()
+    {
         _spawning = StartCoroutine(StartSpawn());
     }
 
@@ -39,42 +38,17 @@ public class EnemySpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(1, 2));
 
-            var enemy = Pull();
+            var enemy = _pool.Pull();
 
             enemy.transform.position = GetRandomPoint(_spawnPositions);
+            enemy.transform.SetParent(_worldTransform);
             
             Vector3 attackPosition = GetRandomPoint(_attackPositions);
-
             enemy.StartMoving(attackPosition);
+
+            enemy.ResetHealth();
         }
-    }
-
-    private void Push(EnemyContext enemy)
-    {
-        enemy.gameObject.SetActive(false);
-        enemy.transform.SetParent(_container);
-        _enemyPool.Enqueue(enemy);
-    }
-
-    private EnemyContext Pull()
-    {
-        if (_enemyPool.Count == 0)
-            return Spawn();
-
-        var enemy = _enemyPool.Dequeue();
-
-        enemy.gameObject.SetActive(true);
-        enemy.transform.SetParent(_worldTransform);
-
-        return enemy;
-    }
-
-    private EnemyContext Spawn()
-    {
-        var enemy = Instantiate(_enemyPrefab, _worldTransform);
-        enemy.Initialize();
-        return enemy;
-    }
+    }  
 
     private Vector2 GetRandomPoint(Transform[] points)
     {

@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyContext : MonoBehaviour
+public class EnemyInstaller : MonoBehaviour
 {
     [Header("Characteristics")]
     [SerializeField] private int _health = 5;
@@ -14,12 +15,15 @@ public class EnemyContext : MonoBehaviour
     [SerializeField] private float _shotDelay = 1f;
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bullet _bulletPrefab;
-
+    
+    private Health _healthComponent;
     private EnemyMoveSource _moveSource;
+
+    public Health Health => _healthComponent;
 
     public void Initialize()
     {
-        gameObject.AddComponent<Health>().Initialize(_health, true);
+        _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, true);        
 
         _moveSource = gameObject.AddComponent<EnemyMoveSource>();
         gameObject.AddComponent<Mover>().Initialize(_moveSource, _speed);
@@ -32,5 +36,10 @@ public class EnemyContext : MonoBehaviour
     public void StartMoving(Vector2 destination)
     {
         _moveSource.StartMoving(destination);
+    }
+
+    public void ResetHealth()
+    {
+        _healthComponent.ResetHealth();
     }
 }

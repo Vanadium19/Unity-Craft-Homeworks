@@ -25,10 +25,9 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.TryGetComponent(out Health health) && health.IsEnemy != _isEnemy)
-        {
             health.TakeDamage(_damage);
-            Collided?.Invoke(this);
-        }
+
+        Collided?.Invoke(this);
     }
 
     public void Initialize(bool isEnemy, int damage, Color color, int layer)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerContext : MonoBehaviour
+public class PlayerInstaller : MonoBehaviour
 {
     [Header("Characteristics")]
     [SerializeField] private int _health = 5;
