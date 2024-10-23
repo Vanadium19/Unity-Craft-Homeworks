@@ -2,9 +2,9 @@ namespace ShootEmUp
 {
     public enum PhysicsLayer
     {
-        CHARACTER = 10,
-        ENEMY = 11,
-        ENEMY_BULLET = 13,
-        PLAYER_BULLET = 14
+        Character = 10,
+        Enemy = 11,
+        EnemyBullet = 13,
+        PlayerBullet = 14
     }
 }

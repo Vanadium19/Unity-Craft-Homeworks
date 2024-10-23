@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class EnemiesPool : Pool<EnemyInstaller>
 {
-    private Dictionary<Health, EnemyInstaller> _enemies;
+    private Transform _target;
+    private Dictionary<HealthComponent, EnemyInstaller> _enemies;
 
-    public EnemiesPool(Transform container, EnemyInstaller prefab) : base(container, prefab)
+    public EnemiesPool(Transform container,
+                       EnemyInstaller prefab,
+                       Transform target) : base(container, prefab)
     {
+        _target = target;
         _enemies = new();
     }
 
@@ -23,6 +27,7 @@ public class EnemiesPool : Pool<EnemyInstaller>
     public override void Push(EnemyInstaller spawnableObject)
     {
         spawnableObject.Health.Died -= OnEnemyDied;
+        spawnableObject.Health.ResetHealth();
 
         base.Push(spawnableObject);
     }
@@ -31,12 +36,12 @@ public class EnemiesPool : Pool<EnemyInstaller>
     {
         var enemy = base.Spawn();
 
-        enemy.Initialize();
+        enemy.Initialize(_target);
         _enemies.Add(enemy.Health, enemy);
         return enemy;
     }
 
-    private void OnEnemyDied(Health health)
+    private void OnEnemyDied(HealthComponent health)
     {
         if (_enemies.ContainsKey(health))
             Push(_enemies[health]);
