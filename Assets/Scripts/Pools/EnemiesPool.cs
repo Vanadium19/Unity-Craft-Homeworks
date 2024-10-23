@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemiesPool : Pool<EnemyInstaller>
 {
     private Transform _target;
-    private Dictionary<HealthComponent, EnemyInstaller> _enemies;
+    private Dictionary<Health, EnemyInstaller> _enemies;
 
     public EnemiesPool(Transform container,
                        EnemyInstaller prefab,
@@ -41,7 +41,7 @@ public class EnemiesPool : Pool<EnemyInstaller>
         return enemy;
     }
 
-    private void OnEnemyDied(HealthComponent health)
+    private void OnEnemyDied(Health health)
     {
         if (_enemies.ContainsKey(health))
             Push(_enemies[health]);

@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-public class HealthComponent : MonoBehaviour
+public class Health : MonoBehaviour
 {
     private int _health;
     private bool _isEnemy;
     private int _startHealth;
 
     public event Action<int> HealthChanged;
-    public event Action<HealthComponent> Died;
+    public event Action<Health> Died;
 
     public bool IsEnemy => _isEnemy;
 
@@ -24,7 +24,7 @@ public class HealthComponent : MonoBehaviour
             Died?.Invoke(this);
     }
 
-    public HealthComponent Initialize(int health, bool isEnemy)
+    public Health Initialize(int health, bool isEnemy)
     {
         _health = health;
         _startHealth = health;

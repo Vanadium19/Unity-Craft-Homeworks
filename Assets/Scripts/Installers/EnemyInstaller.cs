@@ -16,14 +16,14 @@ public class EnemyInstaller : MonoBehaviour
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bullet _bulletPrefab;
 
-    private HealthComponent _healthComponent;
+    private Health _healthComponent;
     private EnemyMoveSource _moveSource;
 
-    public HealthComponent Health => _healthComponent;
+    public Health Health => _healthComponent;
 
     public void Initialize(Transform target)
     {
-        _healthComponent = gameObject.AddComponent<HealthComponent>().Initialize(_health, true);
+        _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, true);
 
         _moveSource = gameObject.AddComponent<EnemyMoveSource>();
         gameObject.AddComponent<Mover>().Initialize(_moveSource, _speed);

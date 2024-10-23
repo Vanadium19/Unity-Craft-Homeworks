@@ -14,6 +14,10 @@ public class PlayerInstaller : MonoBehaviour
     [SerializeField] private Transform _firePoint;
     [SerializeField] private Bullet _bulletPrefab;
 
+    private Health _healthComponent;
+
+    public Health HealthComponent => _healthComponent;
+
     private void Awake()
     {
         Initialize();
@@ -21,7 +25,7 @@ public class PlayerInstaller : MonoBehaviour
 
     private void Initialize()
     {
-        gameObject.AddComponent<HealthComponent>().Initialize(_health, false);
+        _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, false);
 
         IMoveSource moveSource = gameObject.AddComponent<PlayerMoveSource>();
         gameObject.AddComponent<Mover>().Initialize(moveSource, _speed);
