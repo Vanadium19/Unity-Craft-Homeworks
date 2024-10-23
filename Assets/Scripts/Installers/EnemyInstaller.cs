@@ -1,44 +1,42 @@
+using System;
 using ShootEmUp.Components.AttackComponents;
-using ShootEmUp.Components.HealthComponents;
 using ShootEmUp.Components.Movement;
 using ShootEmUp.Components.Weapons;
 using UnityEngine;
 
 namespace ShootEmUp.Installers
 {
-    public class EnemyInstaller : MonoBehaviour
+    public class EnemyInstaller : Installer
     {
-        [Header("Characteristics")]
-        [SerializeField] private int _health = 5;
-        [SerializeField] private float _speed = 5.0f;
-
-        [Header("Weapon")]
-        [SerializeField] private int _damage = 1;
-        [SerializeField] private int _bulletSpeed = 3;
         [SerializeField] private float _shotDelay = 1f;
-        [SerializeField] private Transform _firePoint;
-        [SerializeField] private Bullet _bulletPrefab;
 
-        private Health _healthComponent;
         private EnemyMoveSource _moveSource;
-
-        public Health Health => _healthComponent;
-
-        public void Initialize(Transform target)
-        {
-            _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, true);
-
-            _moveSource = gameObject.AddComponent<EnemyMoveSource>();
-            gameObject.AddComponent<Mover>().Initialize(_moveSource, _speed);
-
-            IGun gun = gameObject.AddComponent<EnemyGun>().Initialize(_firePoint, target, _bulletPrefab, _damage, _bulletSpeed);
-            IShootEvent shootEvent = gameObject.AddComponent<EnemyShootEvent>().Initialize(_shotDelay, _moveSource.CanShoot);
-            gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
-        }
+        private Transform _target;
 
         public void StartMoving(Vector2 destination)
         {
             _moveSource.StartMoving(destination);
+        }
+
+        public void SetTarget(Transform target)
+        {
+            _target = target;
+        }
+
+        protected override void InitializeMover(float speed)
+        {
+            _moveSource = gameObject.AddComponent<EnemyMoveSource>();
+            gameObject.AddComponent<Mover>().Initialize(_moveSource, speed);
+        }
+
+        protected override void InitializeWeapon(Transform firePoint, Bullet bullet, int damage, int bulletSpeed)
+        {
+            if (_target == null)
+                throw new ArgumentNullException();
+
+            IGun gun = gameObject.AddComponent<EnemyGun>().Initialize(firePoint, _target, bullet, damage, bulletSpeed);
+            IShootEvent shootEvent = gameObject.AddComponent<EnemyShootEvent>().Initialize(_shotDelay, _moveSource.CanShoot);
+            gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
         }
     }
 }

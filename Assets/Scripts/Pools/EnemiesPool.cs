@@ -38,7 +38,8 @@ namespace ShootEmUp.Pools
         {
             var enemy = base.Spawn();
 
-            enemy.Initialize(_target);
+            enemy.SetTarget(_target);
+            enemy.Initialize(true);
             _enemies.Add(enemy.Health, enemy);
             return enemy;
         }

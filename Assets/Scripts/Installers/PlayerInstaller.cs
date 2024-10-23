@@ -1,40 +1,26 @@
 using ShootEmUp.Components.AttackComponents;
-using ShootEmUp.Components.HealthComponents;
 using ShootEmUp.Components.Movement;
 using ShootEmUp.Components.Weapons;
 using UnityEngine;
 
 namespace ShootEmUp.Installers
 {
-    public class PlayerInstaller : MonoBehaviour
+    public class PlayerInstaller : Installer
     {
-        [Header("Characteristics")]
-        [SerializeField] private int _health = 5;
-        [SerializeField] private float _speed = 5.0f;
-
-        [Header("Weapon")]
-        [SerializeField] private int _damage = 1;
-        [SerializeField] private int _bulletSpeed = 3;
-        [SerializeField] private Transform _firePoint;
-        [SerializeField] private Bullet _bulletPrefab;
-
-        private Health _healthComponent;
-
-        public Health HealthComponent => _healthComponent;
-
         private void Awake()
         {
-            Initialize();
+            Initialize(false);
         }
 
-        private void Initialize()
+        protected override void InitializeMover(float speed)
         {
-            _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, false);
-
             IMoveSource moveSource = gameObject.AddComponent<PlayerMoveSource>();
-            gameObject.AddComponent<Mover>().Initialize(moveSource, _speed);
+            gameObject.AddComponent<Mover>().Initialize(moveSource, speed);
+        }
 
-            IGun gun = gameObject.AddComponent<PlayerGun>().Initialize(_firePoint, _bulletPrefab, _damage, _bulletSpeed);
+        protected override void InitializeWeapon(Transform firePoint, Bullet bullet, int damage, int bulletSpeed)
+        {
+            IGun gun = gameObject.AddComponent<PlayerGun>().Initialize(firePoint, bullet, damage, bulletSpeed);
             IShootEvent shootEvent = gameObject.AddComponent<PlayerShootEvent>();
             gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
         }

@@ -10,12 +10,12 @@ namespace ShootEmUp.Level
 
         private void OnEnable()
         {
-            _player.HealthComponent.Died += EndGame;
+            _player.Health.Died += EndGame;
         }
 
         private void OnDisable()
         {
-            _player.HealthComponent.Died -= EndGame;
+            _player.Health.Died -= EndGame;
         }
 
         private void EndGame(Health health)
