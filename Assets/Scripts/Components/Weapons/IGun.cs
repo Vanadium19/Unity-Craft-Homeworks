@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IGun
+namespace ShootEmUp.Components.Weapons
 {
-    public void Shoot();
+    public interface IGun
+    {
+        public void Shoot();
+    }
 }

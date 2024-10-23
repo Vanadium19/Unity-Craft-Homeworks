@@ -1,50 +1,50 @@
-using ShootEmUp;
 using ShootEmUp.Common;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using ShootEmUp.Components.Weapons;
 using UnityEngine;
 
-public class BulletsPool : Pool<Bullet>
+namespace ShootEmUp.Pools
 {
-    private bool _isEnemy;
-    private int _damage;
-    private Color _color;
-    private int _layer;
-
-    public BulletsPool(Transform container,
-                       Bullet prefab,
-                       bool isEnemy,
-                       int damage,
-                       Color color,
-                       PhysicsLayer layer) : base(container, prefab)
+    public class BulletsPool : Pool<Bullet>
     {
-        _isEnemy = isEnemy;
-        _damage = damage;
-        _color = color;
-        _layer = (int)layer;
-    }
+        private bool _isEnemy;
+        private int _damage;
+        private Color _color;
+        private int _layer;
 
-    public override Bullet Pull()
-    {
-        var bullet = base.Pull();
+        public BulletsPool(Transform container,
+                           Bullet prefab,
+                           bool isEnemy,
+                           int damage,
+                           Color color,
+                           PhysicsLayer layer) : base(container, prefab)
+        {
+            _isEnemy = isEnemy;
+            _damage = damage;
+            _color = color;
+            _layer = (int)layer;
+        }
 
-        bullet.Collided += Push;
-        return bullet;
-    }
+        public override Bullet Pull()
+        {
+            var bullet = base.Pull();
 
-    public override void Push(Bullet spawnableObject)
-    {
-        spawnableObject.Collided -= Push;
+            bullet.Collided += Push;
+            return bullet;
+        }
 
-        base.Push(spawnableObject);
-    }
+        public override void Push(Bullet spawnableObject)
+        {
+            spawnableObject.Collided -= Push;
 
-    protected override Bullet Spawn()
-    {
-        var bullet = base.Spawn();
+            base.Push(spawnableObject);
+        }
 
-        bullet.Initialize(_isEnemy, _damage, _color, _layer);
-        return bullet;
+        protected override Bullet Spawn()
+        {
+            var bullet = base.Spawn();
+
+            bullet.Initialize(_isEnemy, _damage, _color, _layer);
+            return bullet;
+        }
     }
 }

@@ -1,38 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class Mover : MonoBehaviour
+namespace ShootEmUp.Components.Movement
 {
-    private IMoveSource _moveSource;
-    private Rigidbody2D _rigidbody;
-    private float _speed;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody2D))]
+    public class Mover : MonoBehaviour
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
-    }
+        private IMoveSource _moveSource;
+        private Rigidbody2D _rigidbody;
+        private float _speed;
 
-    private void FixedUpdate()
-    {
-        Move();
-    }
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+        }
 
-    public void Initialize(IMoveSource moveSource, float speed)
-    {
-        _moveSource = moveSource;
-        _speed = speed;
-    }
+        private void FixedUpdate()
+        {
+            Move();
+        }
 
-    private void Move()
-    {
-        if (_moveSource.Value == Vector2.zero)
-            return;
+        public void Initialize(IMoveSource moveSource, float speed)
+        {
+            _moveSource = moveSource;
+            _speed = speed;
+        }
 
-        Vector2 moveStep = _moveSource.Value * Time.fixedDeltaTime * _speed;
-        Vector2 targetPosition = _rigidbody.position + moveStep;
+        private void Move()
+        {
+            if (_moveSource.Value == Vector2.zero)
+                return;
 
-        _rigidbody.MovePosition(targetPosition);
+            Vector2 moveStep = _moveSource.Value * Time.fixedDeltaTime * _speed;
+            Vector2 targetPosition = _rigidbody.position + moveStep;
+
+            _rigidbody.MovePosition(targetPosition);
+        }
     }
 }

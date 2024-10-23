@@ -1,34 +1,35 @@
-using ShootEmUp;
 using ShootEmUp.Common;
-using System.Collections;
-using System.Collections.Generic;
+using ShootEmUp.Pools;
 using UnityEngine;
 
-public class EnemyGun : MonoBehaviour, IGun
+namespace ShootEmUp.Components.Weapons
 {
-    private BulletsPool _pool;
-    private Transform _firePoint;
-    private Transform _target;
-    private float _bulletSpeed;
-
-    public IGun Initialize(Transform firePoint,
-                           Transform target,
-                           Bullet prefab,
-                           int damage,
-                           float bulletSpeed)
+    public class EnemyGun : MonoBehaviour, IGun
     {
-        _pool = new(transform, prefab, true, damage, Color.red, PhysicsLayer.EnemyBullet);
-        _firePoint = firePoint;
-        _bulletSpeed = bulletSpeed;
-        _target = target;
-        return this;
-    }
+        private BulletsPool _pool;
+        private Transform _firePoint;
+        private Transform _target;
+        private float _bulletSpeed;
 
-    public void Shoot()
-    {
-        Vector3 direction = (_target.position - _firePoint.position).normalized;
-        Bullet bullet = _pool.Pull();
+        public IGun Initialize(Transform firePoint,
+                               Transform target,
+                               Bullet prefab,
+                               int damage,
+                               float bulletSpeed)
+        {
+            _pool = new(transform, prefab, true, damage, Color.red, PhysicsLayer.EnemyBullet);
+            _firePoint = firePoint;
+            _bulletSpeed = bulletSpeed;
+            _target = target;
+            return this;
+        }
 
-        bullet.Throw(_firePoint.position, direction * _bulletSpeed);
+        public void Shoot()
+        {
+            Vector3 direction = (_target.position - _firePoint.position).normalized;
+            Bullet bullet = _pool.Pull();
+
+            bullet.Throw(_firePoint.position, direction * _bulletSpeed);
+        }
     }
 }

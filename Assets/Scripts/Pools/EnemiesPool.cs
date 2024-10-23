@@ -1,49 +1,52 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using ShootEmUp.Components.HealthComponents;
+using ShootEmUp.Installers;
 using UnityEngine;
 
-public class EnemiesPool : Pool<EnemyInstaller>
+namespace ShootEmUp.Pools
 {
-    private Transform _target;
-    private Dictionary<Health, EnemyInstaller> _enemies;
-
-    public EnemiesPool(Transform container,
-                       EnemyInstaller prefab,
-                       Transform target) : base(container, prefab)
+    public class EnemiesPool : Pool<EnemyInstaller>
     {
-        _target = target;
-        _enemies = new();
-    }
+        private Transform _target;
+        private Dictionary<Health, EnemyInstaller> _enemies;
 
-    public override EnemyInstaller Pull()
-    {
-        var enemy = base.Pull();
+        public EnemiesPool(Transform container,
+                           EnemyInstaller prefab,
+                           Transform target) : base(container, prefab)
+        {
+            _target = target;
+            _enemies = new();
+        }
 
-        enemy.Health.Died += OnEnemyDied;
-        return enemy;
-    }
+        public override EnemyInstaller Pull()
+        {
+            var enemy = base.Pull();
 
-    public override void Push(EnemyInstaller spawnableObject)
-    {
-        spawnableObject.Health.Died -= OnEnemyDied;
-        spawnableObject.Health.ResetHealth();
+            enemy.Health.Died += OnEnemyDied;
+            return enemy;
+        }
 
-        base.Push(spawnableObject);
-    }
+        public override void Push(EnemyInstaller spawnableObject)
+        {
+            spawnableObject.Health.Died -= OnEnemyDied;
+            spawnableObject.Health.ResetHealth();
 
-    protected override EnemyInstaller Spawn()
-    {
-        var enemy = base.Spawn();
+            base.Push(spawnableObject);
+        }
 
-        enemy.Initialize(_target);
-        _enemies.Add(enemy.Health, enemy);
-        return enemy;
-    }
+        protected override EnemyInstaller Spawn()
+        {
+            var enemy = base.Spawn();
 
-    private void OnEnemyDied(Health health)
-    {
-        if (_enemies.ContainsKey(health))
-            Push(_enemies[health]);
+            enemy.Initialize(_target);
+            _enemies.Add(enemy.Health, enemy);
+            return enemy;
+        }
+
+        private void OnEnemyDied(Health health)
+        {
+            if (_enemies.ContainsKey(health))
+                Push(_enemies[health]);
+        }
     }
 }

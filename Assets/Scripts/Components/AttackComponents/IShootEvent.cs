@@ -1,6 +1,9 @@
 using System;
 
-public interface IShootEvent
+namespace ShootEmUp.Components.AttackComponents
 {
-    public event Action Fired;
+    public interface IShootEvent
+    {
+        public event Action Fired;
+    }
 }

@@ -1,36 +1,37 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShootEvent : MonoBehaviour, IShootEvent
+namespace ShootEmUp.Components.AttackComponents
 {
-    private float _delay;
-    private float _currentTime;
-    private Func<bool> _canShoot;
-
-    public event Action Fired;
-
-    private void Update()
+    public class EnemyShootEvent : MonoBehaviour, IShootEvent
     {
-        if (!_canShoot.Invoke())
-            return;
+        private float _delay;
+        private float _currentTime;
+        private Func<bool> _canShoot;
 
-        _currentTime -= Time.deltaTime;
+        public event Action Fired;
 
-        if (_currentTime > 0)
-            return;
+        private void Update()
+        {
+            if (!_canShoot.Invoke())
+                return;
 
-        Fired?.Invoke();
-        _currentTime = _delay;
-    }
+            _currentTime -= Time.deltaTime;
 
-    public IShootEvent Initialize(float delay, Func<bool> canShoot)
-    {
-        _delay = delay;
-        _currentTime = delay;
-        _canShoot = canShoot;
+            if (_currentTime > 0)
+                return;
 
-        return this;
+            Fired?.Invoke();
+            _currentTime = _delay;
+        }
+
+        public IShootEvent Initialize(float delay, Func<bool> canShoot)
+        {
+            _delay = delay;
+            _currentTime = delay;
+            _canShoot = canShoot;
+
+            return this;
+        }
     }
 }

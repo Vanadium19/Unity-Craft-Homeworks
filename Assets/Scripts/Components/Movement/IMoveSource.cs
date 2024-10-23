@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IMoveSource
+namespace ShootEmUp.Components.Movement
 {
-    public Vector2 Value { get; }
+    public interface IMoveSource
+    {
+        public Vector2 Value { get; }
+    }
 }

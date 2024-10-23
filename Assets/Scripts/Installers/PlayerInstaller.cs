@@ -1,37 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
+using ShootEmUp.Components.AttackComponents;
+using ShootEmUp.Components.HealthComponents;
+using ShootEmUp.Components.Movement;
+using ShootEmUp.Components.Weapons;
 using UnityEngine;
 
-public class PlayerInstaller : MonoBehaviour
+namespace ShootEmUp.Installers
 {
-    [Header("Characteristics")]
-    [SerializeField] private int _health = 5;
-    [SerializeField] private float _speed = 5.0f;
-
-    [Header("Weapon")]
-    [SerializeField] private int _damage = 1;
-    [SerializeField] private int _bulletSpeed = 3;
-    [SerializeField] private Transform _firePoint;
-    [SerializeField] private Bullet _bulletPrefab;
-
-    private Health _healthComponent;
-
-    public Health HealthComponent => _healthComponent;
-
-    private void Awake()
+    public class PlayerInstaller : MonoBehaviour
     {
-        Initialize();
-    }
+        [Header("Characteristics")]
+        [SerializeField] private int _health = 5;
+        [SerializeField] private float _speed = 5.0f;
 
-    private void Initialize()
-    {
-        _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, false);
+        [Header("Weapon")]
+        [SerializeField] private int _damage = 1;
+        [SerializeField] private int _bulletSpeed = 3;
+        [SerializeField] private Transform _firePoint;
+        [SerializeField] private Bullet _bulletPrefab;
 
-        IMoveSource moveSource = gameObject.AddComponent<PlayerMoveSource>();
-        gameObject.AddComponent<Mover>().Initialize(moveSource, _speed);
+        private Health _healthComponent;
 
-        IGun gun = gameObject.AddComponent<PlayerGun>().Initialize(_firePoint, _bulletPrefab, _damage, _bulletSpeed);
-        IShootEvent shootEvent = gameObject.AddComponent<PlayerShootEvent>();
-        gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
+        public Health HealthComponent => _healthComponent;
+
+        private void Awake()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, false);
+
+            IMoveSource moveSource = gameObject.AddComponent<PlayerMoveSource>();
+            gameObject.AddComponent<Mover>().Initialize(moveSource, _speed);
+
+            IGun gun = gameObject.AddComponent<PlayerGun>().Initialize(_firePoint, _bulletPrefab, _damage, _bulletSpeed);
+            IShootEvent shootEvent = gameObject.AddComponent<PlayerShootEvent>();
+            gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
+        }
     }
 }

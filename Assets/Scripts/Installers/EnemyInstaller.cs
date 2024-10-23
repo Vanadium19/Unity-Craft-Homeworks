@@ -1,40 +1,44 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using ShootEmUp.Components.AttackComponents;
+using ShootEmUp.Components.HealthComponents;
+using ShootEmUp.Components.Movement;
+using ShootEmUp.Components.Weapons;
 using UnityEngine;
 
-public class EnemyInstaller : MonoBehaviour
+namespace ShootEmUp.Installers
 {
-    [Header("Characteristics")]
-    [SerializeField] private int _health = 5;
-    [SerializeField] private float _speed = 5.0f;
-
-    [Header("Weapon")]
-    [SerializeField] private int _damage = 1;
-    [SerializeField] private int _bulletSpeed = 3;
-    [SerializeField] private float _shotDelay = 1f;
-    [SerializeField] private Transform _firePoint;
-    [SerializeField] private Bullet _bulletPrefab;
-
-    private Health _healthComponent;
-    private EnemyMoveSource _moveSource;
-
-    public Health Health => _healthComponent;
-
-    public void Initialize(Transform target)
+    public class EnemyInstaller : MonoBehaviour
     {
-        _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, true);
+        [Header("Characteristics")]
+        [SerializeField] private int _health = 5;
+        [SerializeField] private float _speed = 5.0f;
 
-        _moveSource = gameObject.AddComponent<EnemyMoveSource>();
-        gameObject.AddComponent<Mover>().Initialize(_moveSource, _speed);
+        [Header("Weapon")]
+        [SerializeField] private int _damage = 1;
+        [SerializeField] private int _bulletSpeed = 3;
+        [SerializeField] private float _shotDelay = 1f;
+        [SerializeField] private Transform _firePoint;
+        [SerializeField] private Bullet _bulletPrefab;
 
-        IGun gun = gameObject.AddComponent<EnemyGun>().Initialize(_firePoint, target, _bulletPrefab, _damage, _bulletSpeed);
-        IShootEvent shootEvent = gameObject.AddComponent<EnemyShootEvent>().Initialize(_shotDelay, _moveSource.CanShoot);
-        gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
-    }
+        private Health _healthComponent;
+        private EnemyMoveSource _moveSource;
 
-    public void StartMoving(Vector2 destination)
-    {
-        _moveSource.StartMoving(destination);
+        public Health Health => _healthComponent;
+
+        public void Initialize(Transform target)
+        {
+            _healthComponent = gameObject.AddComponent<Health>().Initialize(_health, true);
+
+            _moveSource = gameObject.AddComponent<EnemyMoveSource>();
+            gameObject.AddComponent<Mover>().Initialize(_moveSource, _speed);
+
+            IGun gun = gameObject.AddComponent<EnemyGun>().Initialize(_firePoint, target, _bulletPrefab, _damage, _bulletSpeed);
+            IShootEvent shootEvent = gameObject.AddComponent<EnemyShootEvent>().Initialize(_shotDelay, _moveSource.CanShoot);
+            gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
+        }
+
+        public void StartMoving(Vector2 destination)
+        {
+            _moveSource.StartMoving(destination);
+        }
     }
 }

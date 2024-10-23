@@ -1,48 +1,49 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class EnemyMoveSource : MonoBehaviour, IMoveSource
+namespace ShootEmUp.Components.Movement
 {
-    private readonly float _destinationLapping = 0.25f;
-
-    private Vector2 _value;
-    private Transform _transform;
-    private Coroutine _moving;
-
-    public Vector2 Value => _value;
-
-    private void Awake()
+    public class EnemyMoveSource : MonoBehaviour, IMoveSource
     {
-        _transform = transform;
-    }
+        private readonly float _destinationLapping = 0.25f;
 
-    public void StartMoving(Vector2 destination)
-    {
-        if (_moving != null)
-            StopCoroutine(_moving);
+        private Vector2 _value;
+        private Transform _transform;
+        private Coroutine _moving;
 
-        _moving = StartCoroutine(Moving(destination));
-    }
+        public Vector2 Value => _value;
 
-    private IEnumerator Moving(Vector2 destination)
-    {
-        float distance = float.MaxValue;
-
-        while (distance > _destinationLapping)
+        private void Awake()
         {
-            Vector3 path = destination - (Vector2)_transform.position;
-            distance = path.magnitude;
-            _value = path.normalized;
-            yield return null;
+            _transform = transform;
         }
 
-        _value = Vector3.zero;
-    }
+        public void StartMoving(Vector2 destination)
+        {
+            if (_moving != null)
+                StopCoroutine(_moving);
 
-    public bool CanShoot()
-    {
-        return _value == Vector2.zero;
+            _moving = StartCoroutine(Moving(destination));
+        }
+
+        public bool CanShoot()
+        {
+            return _value == Vector2.zero;
+        }
+
+        private IEnumerator Moving(Vector2 destination)
+        {
+            float distance = float.MaxValue;
+
+            while (distance > _destinationLapping)
+            {
+                Vector3 path = destination - (Vector2)_transform.position;
+                distance = path.magnitude;
+                _value = path.normalized;
+                yield return null;
+            }
+
+            _value = Vector3.zero;
+        }
     }
 }

@@ -1,13 +1,16 @@
 using System;
 using UnityEngine;
 
-public class PlayerShootEvent : MonoBehaviour, IShootEvent
+namespace ShootEmUp.Components.AttackComponents
 {
-    public event Action Fired;
-
-    private void Update()
+    public class PlayerShootEvent : MonoBehaviour, IShootEvent
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            Fired?.Invoke();
+        public event Action Fired;
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                Fired?.Invoke();
+        }
     }
 }

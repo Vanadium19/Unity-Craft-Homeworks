@@ -1,43 +1,45 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pool<T> where T : MonoBehaviour
+namespace ShootEmUp.Pools
 {
-    private Transform _container;
-
-    private Queue<T> _objects;
-    private T _prefab;
-
-    public Pool(Transform container, T prefab)
+    public class Pool<T> where T : MonoBehaviour
     {
-        _container = container;
-        _objects = new();
-        _prefab = prefab;
-    }
+        private Transform _container;
 
-    public virtual T Pull()
-    {
-        if (_objects.Count == 0)
-            return Spawn();
+        private Queue<T> _objects;
+        private T _prefab;
 
-        var spawnableObject = _objects.Dequeue();
-        spawnableObject.gameObject.SetActive(true);
+        public Pool(Transform container, T prefab)
+        {
+            _container = container;
+            _objects = new();
+            _prefab = prefab;
+        }
 
-        return spawnableObject;
-    }
+        public virtual T Pull()
+        {
+            if (_objects.Count == 0)
+                return Spawn();
 
-    public virtual void Push(T spawnableObject)
-    {
-        spawnableObject.gameObject.SetActive(false);
-        _objects.Enqueue(spawnableObject);
-    }
+            var spawnableObject = _objects.Dequeue();
+            spawnableObject.gameObject.SetActive(true);
 
-    protected virtual T Spawn()
-    {
-        var spawnableObject = Object.Instantiate(_prefab);
+            return spawnableObject;
+        }
 
-        spawnableObject.transform.SetParent(_container);
-        return spawnableObject;
+        public virtual void Push(T spawnableObject)
+        {
+            spawnableObject.gameObject.SetActive(false);
+            _objects.Enqueue(spawnableObject);
+        }
+
+        protected virtual T Spawn()
+        {
+            var spawnableObject = Object.Instantiate(_prefab);
+
+            spawnableObject.transform.SetParent(_container);
+            return spawnableObject;
+        }
     }
 }
