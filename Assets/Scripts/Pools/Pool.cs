@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShootEmUp.Level.Spawners
+namespace ShootEmUp.Pools
 {
     public abstract class Pool<T> where T : MonoBehaviour
     {

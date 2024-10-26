@@ -1,7 +1,8 @@
+using ShootEmUp.Level.Spawners;
 using ShootEmUp.Ships;
 using UnityEngine;
 
-namespace ShootEmUp.Level.Spawners
+namespace ShootEmUp.Pools
 {
     public class EnemyPool : Pool<EnemyShip>
     {
