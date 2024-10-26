@@ -39,8 +39,8 @@ namespace ShootEmUp.Installers
             BulletsPool pool = new(transform, worldBulletContainer, bullet, true, damage, Color.red, PhysicsLayer.EnemyBullet);
             IGun gun = new EnemyGun(pool, firePoint, _target, bulletSpeed);
 
-            IShootEvent shootEvent = gameObject.AddComponent<EnemyShootEvent>().Initialize(_shotDelay, _moveSource.CanShoot);
-            gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
+            //IShootEvent shootEvent = gameObject.AddComponent<EnemyShootEvent>().Initialize(_shotDelay, _moveSource.CanShoot);
+            //gameObject.AddComponent<AttackComponent>().Initialize(gun, shootEvent);
         }
     }
 }
