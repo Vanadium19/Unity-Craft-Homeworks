@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace ShootEmUp.Level.Spawners
 {
-    public class Pool<T> where T : MonoBehaviour
+    public abstract class Pool<T> where T : MonoBehaviour
     {
-        private Transform _poolContainer;
-        private Transform _worldContainer;
-
-        private Queue<T> _objects;
-        private T _prefab;
+        private readonly Transform _poolContainer;
+        private readonly Transform _worldContainer;
+        private readonly Queue<T> _objects;
+        private readonly T _prefab;
 
         public Pool(Transform poolContainer, Transform worldContainer, T prefab)
         {
@@ -21,25 +20,44 @@ namespace ShootEmUp.Level.Spawners
 
         public T Pull()
         {
-            var spawnableObject = _objects.Count == 0 ? Spawn() : _objects.Dequeue();
+            if (_objects.Count == 0)
+                return Spawn();
 
-            spawnableObject.gameObject.SetActive(true);
-            spawnableObject.transform.SetParent(_worldContainer);
+            var spawnableObject = _objects.Dequeue();
+
+            OnPulled(spawnableObject);
 
             return spawnableObject;
         }
 
         public void Push(T spawnableObject)
         {
-            spawnableObject.gameObject.SetActive(false);
-            spawnableObject.transform.SetParent(_poolContainer);
+            OnPushed(spawnableObject);
 
             _objects.Enqueue(spawnableObject);
         }
 
+        protected virtual void OnPulled(T spawnableObject)
+        {
+            spawnableObject.gameObject.SetActive(true);
+            spawnableObject.transform.SetParent(_worldContainer);
+        }
+
+        protected virtual void OnPushed(T spawnableObject)
+        {
+            spawnableObject.gameObject.SetActive(false);
+            spawnableObject.transform.SetParent(_poolContainer);
+        }
+
+        protected abstract void OnSpawned(T spawnableObject);
+
         private T Spawn()
         {
-            return Object.Instantiate(_prefab);
+            var spawnableObject = Object.Instantiate(_prefab, _worldContainer);
+
+            OnSpawned(spawnableObject);
+
+            return spawnableObject;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace ShootEmUp.Ships.Movement
     {
         private readonly float _destinationLapping = 0.25f;
 
+        private bool _isMove;
         private Mover _mover;
         private Coroutine _moving;
         private Transform _transform;
@@ -26,8 +27,14 @@ namespace ShootEmUp.Ships.Movement
             _moving = StartCoroutine(Moving(destination));
         }
 
+        public bool CanShoot()
+        {
+            return !_isMove;
+        }
+
         private IEnumerator Moving(Vector2 destination)
         {
+            _isMove = true;
             float distance = float.MaxValue;
 
             while (distance > _destinationLapping)
@@ -39,6 +46,8 @@ namespace ShootEmUp.Ships.Movement
 
                 yield return null;
             }
+
+            _isMove = false;
         }
     }
 }

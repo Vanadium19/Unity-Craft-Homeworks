@@ -17,12 +17,6 @@ namespace ShootEmUp.Ships
 
         private void Awake()
         {
-            Initialize(false);
-        }
-
-        public void Initialize(bool isEnemy)
-        {
-            _isEnemy = isEnemy;
             ResetHealth();
         }
 
@@ -41,6 +35,11 @@ namespace ShootEmUp.Ships
 
             if (_health <= 0)
                 Died?.Invoke(this);
+        }
+
+        protected void SetIsEnemy(bool isEnemy)
+        {
+            _isEnemy = isEnemy;
         }
     }
 }

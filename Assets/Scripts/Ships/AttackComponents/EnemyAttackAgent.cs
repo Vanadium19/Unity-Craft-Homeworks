@@ -1,5 +1,6 @@
 using ShootEmUp.Common;
 using ShootEmUp.Level.Spawners;
+using System;
 using UnityEngine;
 
 namespace ShootEmUp.Ships.AttackComponents
@@ -12,7 +13,15 @@ namespace ShootEmUp.Ships.AttackComponents
         [SerializeField] private int _damage;
 
         private BulletSpawner _bulletSpawner;
+        private Func<bool> _canShoot;
+        private Transform _transform;
+        private Transform _target;
         private float _currentTime;
+
+        private void Awake()
+        {
+            _transform = transform;
+        }
 
         private void Start()
         {
@@ -21,6 +30,9 @@ namespace ShootEmUp.Ships.AttackComponents
 
         private void Update()
         {
+            if (!_canShoot.Invoke())
+                return;
+
             _currentTime -= Time.deltaTime;
 
             if (_currentTime > 0)
@@ -29,14 +41,18 @@ namespace ShootEmUp.Ships.AttackComponents
             Shoot();
         }
 
-        public void Initialize(BulletSpawner bulletSpawner)
+        public void Initialize(Transform target, BulletSpawner bulletSpawner, Func<bool> canShoot)
         {
             _bulletSpawner = bulletSpawner;
+            _canShoot = canShoot;
+            _target = target;
         }
 
         private void Shoot()
         {
-            _bulletSpawner.Spawn(true, _damage, Color.red, (int)PhysicsLayer.EnemyBullet, _firePosition.position, Vector2.down);
+            Vector3 velocity = _bulletSpeed * (_target.position - _transform.position).normalized;
+
+            _bulletSpawner.Spawn(true, _damage, Color.red, (int)PhysicsLayer.EnemyBullet, _firePosition.position, velocity);
 
             _currentTime = _delay;
         }

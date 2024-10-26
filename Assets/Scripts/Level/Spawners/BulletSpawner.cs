@@ -9,7 +9,7 @@ namespace ShootEmUp.Level.Spawners
         [SerializeField] private Transform _worldContainer;
         [SerializeField] private Bullet _prefab;
 
-        private Pool<Bullet> _bulletsPool;
+        private BulletsPool _bulletsPool;
 
         private void Awake()
         {
@@ -28,14 +28,6 @@ namespace ShootEmUp.Level.Spawners
             bullet.SetAttackInfo(isEnemy, damage);
             bullet.SetColorAndLayer(color, layer);
             bullet.SetPositionAndVelocity(position, velocity);
-
-            bullet.Collided += OnBulletCollided;
-        }
-
-        private void OnBulletCollided(Bullet bullet)
-        {
-            _bulletsPool.Push(bullet);
-            bullet.Collided -= OnBulletCollided;
         }
     }
 }

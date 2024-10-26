@@ -8,7 +8,9 @@ namespace ShootEmUp.Level.Spawners
     {
         private readonly WaitForSeconds _delay = new WaitForSeconds(2f);
 
-        [SerializeField] private Ship _enemyPrefab;
+        [SerializeField] private BulletSpawner _bulletSpawner;
+        [SerializeField] private EnemyShip _enemyPrefab;
+        [SerializeField] private Transform _player;
 
         [SerializeField] private Transform _container;
         [SerializeField] private Transform _worldTransform;
@@ -16,11 +18,11 @@ namespace ShootEmUp.Level.Spawners
         [SerializeField] private Transform[] _spawnPositions;
         [SerializeField] private Transform[] _attackPositions;
 
-        private Pool<Ship> _pool;
+        private EnemyPool _pool;
 
         private void Awake()
         {
-            _pool = new(_container, _worldTransform, _enemyPrefab);
+            _pool = new(_container, _worldTransform, _enemyPrefab, _bulletSpawner, _player);
         }
 
         private void Start()
@@ -40,8 +42,7 @@ namespace ShootEmUp.Level.Spawners
                 enemy.transform.position = GetRandomPoint(_spawnPositions);
 
                 Vector3 attackPosition = GetRandomPoint(_attackPositions);
-
-                enemy.Died += OnEnemyDied;
+                enemy.SetDestination(attackPosition);
             }
         }
 
@@ -49,12 +50,6 @@ namespace ShootEmUp.Level.Spawners
         {
             int index = Random.Range(0, points.Length);
             return points[index].position;
-        }
-
-        private void OnEnemyDied(Ship enemy)
-        {
-            _pool.Push(enemy);
-            enemy.Died -= OnEnemyDied;
         }
     }
 }
