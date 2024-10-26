@@ -22,11 +22,6 @@ namespace ShootEmUp.Pools
             spawnableObject.Collided -= OnBulletCollided;
         }
 
-        protected override void OnSpawned(Bullet spawnableObject)
-        {
-            spawnableObject.Collided += OnBulletCollided;
-        }
-
         private void OnBulletCollided(Bullet bullet)
         {
             Push(bullet);

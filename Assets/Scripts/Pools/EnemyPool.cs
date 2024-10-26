@@ -34,7 +34,6 @@ namespace ShootEmUp.Pools
         protected override void OnSpawned(EnemyShip spawnableObject)
         {
             spawnableObject.Initialize(_player, _bulletSpawner);
-            spawnableObject.Died += OnEnemyDied;
         }
 
         private void OnEnemyDied(Ship enemy)

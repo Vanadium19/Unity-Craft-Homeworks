@@ -20,10 +20,7 @@ namespace ShootEmUp.Pools
 
         public T Pull()
         {
-            if (_objects.Count == 0)
-                return Spawn();
-
-            var spawnableObject = _objects.Dequeue();
+            var spawnableObject = _objects.Count == 0 ? Spawn() : _objects.Dequeue();
 
             OnPulled(spawnableObject);
 
@@ -49,11 +46,11 @@ namespace ShootEmUp.Pools
             spawnableObject.transform.SetParent(_poolContainer);
         }
 
-        protected abstract void OnSpawned(T spawnableObject);
+        protected virtual void OnSpawned(T spawnableObject) { }
 
         private T Spawn()
         {
-            var spawnableObject = Object.Instantiate(_prefab, _worldContainer);
+            var spawnableObject = Object.Instantiate(_prefab);
 
             OnSpawned(spawnableObject);
 
