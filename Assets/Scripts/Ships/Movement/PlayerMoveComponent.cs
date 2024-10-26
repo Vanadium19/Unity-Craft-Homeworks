@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ShootEmUp.Components.Movement
+namespace ShootEmUp.Ships.Movement
 {
     [RequireComponent(typeof(Mover))]
     public class PlayerMoveComponent : MonoBehaviour

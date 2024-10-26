@@ -1,10 +1,7 @@
-using Newtonsoft.Json.Linq;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-namespace ShootEmUp.Components.Movement
+namespace ShootEmUp.Ships.Movement
 {
     [RequireComponent(typeof(Mover))]
     public class EnemyMoveAgent : MonoBehaviour

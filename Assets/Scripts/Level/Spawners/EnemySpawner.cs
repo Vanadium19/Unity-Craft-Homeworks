@@ -1,15 +1,14 @@
+using ShootEmUp.Ships;
 using System.Collections;
-using ShootEmUp.Installers;
-using ShootEmUp.Pools;
 using UnityEngine;
 
-namespace ShootEmUp.Level
+namespace ShootEmUp.Level.Spawners
 {
     public class EnemySpawner : MonoBehaviour
     {
         private readonly WaitForSeconds _delay = new WaitForSeconds(2f);
 
-        [SerializeField] private EnemyInstaller _enemyPrefab;
+        [SerializeField] private Ship _enemyPrefab;
 
         [SerializeField] private Transform _container;
         [SerializeField] private Transform _worldTransform;
@@ -17,20 +16,16 @@ namespace ShootEmUp.Level
         [SerializeField] private Transform[] _spawnPositions;
         [SerializeField] private Transform[] _attackPositions;
 
-        private EnemiesPool _pool;
-        private Coroutine _spawning;
+        private Pool<Ship> _pool;
 
-        public void Initialize(Transform bulletWorldTransform, Transform player)
+        private void Awake()
         {
-            _pool = new(_container, _worldTransform, _enemyPrefab, bulletWorldTransform, player);
+            _pool = new(_container, _worldTransform, _enemyPrefab);
         }
 
-        public void StartSpawn()
+        private void Start()
         {
-            if (_spawning != null)
-                StopCoroutine(_spawning);
-
-            _spawning = StartCoroutine(Spawning());
+            StartCoroutine(Spawning());
         }
 
         private IEnumerator Spawning()
@@ -41,10 +36,12 @@ namespace ShootEmUp.Level
 
                 var enemy = _pool.Pull();
 
+                enemy.ResetHealth();
                 enemy.transform.position = GetRandomPoint(_spawnPositions);
 
                 Vector3 attackPosition = GetRandomPoint(_attackPositions);
-                enemy.StartMoving(attackPosition);
+
+                enemy.Died += OnEnemyDied;
             }
         }
 
@@ -52,6 +49,12 @@ namespace ShootEmUp.Level
         {
             int index = Random.Range(0, points.Length);
             return points[index].position;
+        }
+
+        private void OnEnemyDied(Ship enemy)
+        {
+            _pool.Push(enemy);
+            enemy.Died -= OnEnemyDied;
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ShootEmUp.Components.AttackComponents
+namespace ShootEmUp.Ships.AttackComponents
 {
     public class EnemyAttackAgent : MonoBehaviour
     {

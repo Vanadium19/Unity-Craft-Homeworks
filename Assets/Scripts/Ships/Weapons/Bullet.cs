@@ -1,8 +1,7 @@
 using System;
-using ShootEmUp.Components.HealthComponents;
 using UnityEngine;
 
-namespace ShootEmUp.Components.Weapons
+namespace ShootEmUp.Ships.Weapons
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
     public class Bullet : MonoBehaviour
@@ -25,21 +24,25 @@ namespace ShootEmUp.Components.Weapons
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.collider.TryGetComponent(out Health health) && health.IsEnemy != _isEnemy)
-                health.TakeDamage(_damage);
+            if (collision.collider.TryGetComponent(out Ship ship) && ship.IsEnemy != _isEnemy)
+                ship.TakeDamage(_damage);
 
             Collided?.Invoke(this);
         }
 
-        public void Initialize(bool isEnemy, int damage, Color color, int layer)
+        public void SetAttackInfo(bool isEnemy, int damage)
         {
             _isEnemy = isEnemy;
             _damage = damage;
+        }
+
+        public void SetColorAndLayer(Color color, int layer)
+        {
             _spriteRenderer.color = color;
             gameObject.layer = layer;
         }
 
-        public void Throw(Vector3 position, Vector2 velocity)
+        public void SetPositionAndVelocity(Vector3 position, Vector2 velocity)
         {
             _transform.position = position;
             _rigidbody.velocity = velocity;

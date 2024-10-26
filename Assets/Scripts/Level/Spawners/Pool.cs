@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShootEmUp.Pools
+namespace ShootEmUp.Level.Spawners
 {
     public class Pool<T> where T : MonoBehaviour
     {
@@ -19,12 +19,9 @@ namespace ShootEmUp.Pools
             _prefab = prefab;
         }
 
-        public virtual T Pull()
+        public T Pull()
         {
-            if (_objects.Count == 0)
-                return Spawn();
-
-            var spawnableObject = _objects.Dequeue();
+            var spawnableObject = _objects.Count == 0 ? Spawn() : _objects.Dequeue();
 
             spawnableObject.gameObject.SetActive(true);
             spawnableObject.transform.SetParent(_worldContainer);
@@ -32,19 +29,17 @@ namespace ShootEmUp.Pools
             return spawnableObject;
         }
 
-        public virtual void Push(T spawnableObject)
+        public void Push(T spawnableObject)
         {
             spawnableObject.gameObject.SetActive(false);
             spawnableObject.transform.SetParent(_poolContainer);
+
             _objects.Enqueue(spawnableObject);
         }
 
-        protected virtual T Spawn()
+        private T Spawn()
         {
-            var spawnableObject = Object.Instantiate(_prefab);
-
-            spawnableObject.transform.SetParent(_worldContainer);
-            return spawnableObject;
+            return Object.Instantiate(_prefab);
         }
     }
 }

@@ -1,3 +1,4 @@
+using ShootEmUp.Ships;
 using UnityEngine;
 
 namespace ShootEmUp.Level
@@ -11,14 +12,10 @@ namespace ShootEmUp.Level
             _ship.Died += EndGame;
         }
 
-        private void OnDisable()
-        {
-            _ship.Died -= EndGame;
-        }
-
-        private void EndGame()
+        private void EndGame(Ship ship)
         {
             Time.timeScale = 0f;
+            _ship.Died -= EndGame;
         }
     }
 }
