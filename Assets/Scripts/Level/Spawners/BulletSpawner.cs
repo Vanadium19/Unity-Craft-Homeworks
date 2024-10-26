@@ -6,16 +6,7 @@ namespace ShootEmUp.Level.Spawners
 {
     public class BulletSpawner : MonoBehaviour
     {
-        [SerializeField] private Transform _poolContainer;
-        [SerializeField] private Transform _worldContainer;
-        [SerializeField] private Bullet _prefab;
-
-        private BulletsPool _bulletsPool;
-
-        private void Awake()
-        {
-            _bulletsPool = new(_poolContainer, _worldContainer, _prefab);
-        }
+        [SerializeField] private BulletsPool _bulletsPool;
 
         public void Spawn(bool isEnemy,
                           int damage,
@@ -24,7 +15,7 @@ namespace ShootEmUp.Level.Spawners
                           Vector3 position,
                           Vector2 velocity)
         {
-            var bullet = _bulletsPool.Pull();
+            Bullet bullet = _bulletsPool.Pull();
 
             bullet.SetAttackInfo(isEnemy, damage);
             bullet.SetColorAndLayer(color, layer);

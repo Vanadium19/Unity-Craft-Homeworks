@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 7936085547460007407}
   - component: {fileID: 5568771391735819375}
   - component: {fileID: 659620479434099170}
-  - component: {fileID: 4982386870435565909}
-  - component: {fileID: 8408676506997041345}
-  - component: {fileID: 1937589920140571882}
+  - component: {fileID: 1254431464379768592}
+  - component: {fileID: 4433881551891981685}
   m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
@@ -152,7 +151,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &4982386870435565909
+--- !u!114 &1254431464379768592
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,13 +160,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 559606060570185700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38735c7d29e1a37408a3fe439e439d35, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c9b28e42506ff6419053f435e3b6fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startHealth: 5
-  _moveAgent: {fileID: 8408676506997041345}
-  _attackAgent: {fileID: 1937589920140571882}
---- !u!114 &8408676506997041345
+  _isEnemy: 1
+  _health:
+    _startHealth: 5
+  _mover:
+    _speed: 8
+    _rigidbody: {fileID: 659620479434099170}
+  _gun:
+    _firePosition: {fileID: 3195880656587174614}
+    _color: {r: 1, g: 0.07439016, b: 0, a: 1}
+    _layer: 13
+    _bulletSpeed: 2
+    _damage: 1
+--- !u!114 &4433881551891981685
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,26 +184,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 559606060570185700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 285f933d380a3ee4ba5316fab5635d5b, type: 3}
+  m_Script: {fileID: 11500000, guid: ac768bc04cc74ef42afd344d331b7492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 4
---- !u!114 &1937589920140571882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 559606060570185700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b5f23d85fd696f458786df10409193c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _firePosition: {fileID: 3195880656587174614}
-  _bulletSpeed: 2
-  _delay: 1
-  _damage: 1
+  _shootDelay: 1
+  _ship: {fileID: 1254431464379768592}
 --- !u!1 &2239154907127902911
 GameObject:
   m_ObjectHideFlags: 0

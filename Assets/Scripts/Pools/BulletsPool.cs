@@ -5,11 +5,6 @@ namespace ShootEmUp.Pools
 {
     public class BulletsPool : Pool<Bullet>
     {
-        public BulletsPool(Transform poolContainer,
-                           Transform worldContainer,
-                           Bullet prefab) : base(poolContainer, worldContainer, prefab) { }
-
-
         protected override void OnPulled(Bullet spawnableObject)
         {
             base.OnPulled(spawnableObject);

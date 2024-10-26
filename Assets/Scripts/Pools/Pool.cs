@@ -3,20 +3,12 @@ using UnityEngine;
 
 namespace ShootEmUp.Pools
 {
-    public abstract class Pool<T> where T : MonoBehaviour
+    public abstract class Pool<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private readonly Transform _poolContainer;
-        private readonly Transform _worldContainer;
-        private readonly Queue<T> _objects;
-        private readonly T _prefab;
+        [SerializeField] private Transform _worldContainer;
+        [SerializeField] private T _prefab;
 
-        public Pool(Transform poolContainer, Transform worldContainer, T prefab)
-        {
-            _poolContainer = poolContainer;
-            _worldContainer = worldContainer;
-            _objects = new();
-            _prefab = prefab;
-        }
+        private Queue<T> _objects = new();
 
         public T Pull()
         {
@@ -43,7 +35,7 @@ namespace ShootEmUp.Pools
         protected virtual void OnPushed(T spawnableObject)
         {
             spawnableObject.gameObject.SetActive(false);
-            spawnableObject.transform.SetParent(_poolContainer);
+            spawnableObject.transform.SetParent(transform);
         }
 
         protected virtual void OnSpawned(T spawnableObject) { }

@@ -7,24 +7,11 @@ namespace ShootEmUp.Level.Spawners
 {
     public class EnemySpawner : MonoBehaviour
     {
-        private readonly WaitForSeconds _delay = new WaitForSeconds(2f);
+        private readonly WaitForSeconds _delay = new(2f);
 
-        [SerializeField] private BulletSpawner _bulletSpawner;
-        [SerializeField] private EnemyShip _enemyPrefab;
-        [SerializeField] private Transform _player;
-
-        [SerializeField] private Transform _container;
-        [SerializeField] private Transform _worldTransform;
-
+        [SerializeField] private EnemyPool _pool;
         [SerializeField] private Transform[] _spawnPositions;
         [SerializeField] private Transform[] _attackPositions;
-
-        private EnemyPool _pool;
-
-        private void Awake()
-        {
-            _pool = new(_container, _worldTransform, _enemyPrefab, _bulletSpawner, _player);
-        }
 
         private void Start()
         {
@@ -39,11 +26,10 @@ namespace ShootEmUp.Level.Spawners
 
                 var enemy = _pool.Pull();
 
-                enemy.ResetHealth();
                 enemy.transform.position = GetRandomPoint(_spawnPositions);
 
                 Vector3 attackPosition = GetRandomPoint(_attackPositions);
-                enemy.SetDestination(attackPosition);
+                enemy.StartMove(attackPosition);
             }
         }
 

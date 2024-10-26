@@ -5,17 +5,17 @@ namespace ShootEmUp.Level
 {
     public class EndGameObserver : MonoBehaviour
     {
-        [SerializeField] private Ship _ship;
+        [SerializeField] private Ship _player;
 
         private void OnEnable()
         {
-            _ship.Died += EndGame;
+            _player.OnShipDestroyed += EndGame;
         }
 
         private void EndGame(Ship ship)
         {
             Time.timeScale = 0f;
-            _ship.Died -= EndGame;
+            ship.OnShipDestroyed -= EndGame;
         }
     }
 }

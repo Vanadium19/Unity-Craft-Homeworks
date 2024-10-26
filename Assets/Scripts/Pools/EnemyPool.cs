@@ -1,44 +1,42 @@
 using ShootEmUp.Level.Spawners;
 using ShootEmUp.Ships;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ShootEmUp.Pools
 {
-    public class EnemyPool : Pool<EnemyShip>
+    public class EnemyPool : Pool<EnemyAI>
     {
-        private readonly BulletSpawner _bulletSpawner;
-        private readonly Transform _player;
+        [SerializeField] private BulletSpawner _bulletSpawner;
+        [SerializeField] private Transform _player;
 
-        public EnemyPool(Transform poolContainer,
-                         Transform worldContainer,
-                         EnemyShip prefab,
-                         BulletSpawner bulletSpawner,
-                         Transform player) : base(poolContainer, worldContainer, prefab)
-        {
-            _bulletSpawner = bulletSpawner;
-            _player = player;
-        }
+        private Dictionary<Ship, EnemyAI> _shipsAI = new();
 
-        protected override void OnPulled(EnemyShip spawnableObject)
+        protected override void OnPulled(EnemyAI spawnableObject)
         {
             base.OnPulled(spawnableObject);
-            spawnableObject.Died += OnEnemyDied;
+
+            _shipsAI.Add(spawnableObject.Ship, spawnableObject);
+            spawnableObject.Ship.OnShipDestroyed += OnEnemyDied;
         }
 
-        protected override void OnPushed(EnemyShip spawnableObject)
+        protected override void OnPushed(EnemyAI spawnableObject)
         {
             base.OnPushed(spawnableObject);
-            spawnableObject.Died -= OnEnemyDied;
+
+            _shipsAI.Remove(spawnableObject.Ship);
+            spawnableObject.Ship.OnShipDestroyed -= OnEnemyDied;
         }
 
-        protected override void OnSpawned(EnemyShip spawnableObject)
+        protected override void OnSpawned(EnemyAI spawnableObject)
         {
-            spawnableObject.Initialize(_player, _bulletSpawner);
+            spawnableObject.Initialize(_bulletSpawner, _player);
         }
 
         private void OnEnemyDied(Ship enemy)
         {
-            Push((EnemyShip)enemy);
+            if (_shipsAI.ContainsKey(enemy))
+                Push(_shipsAI[enemy]);
         }
     }
 }
