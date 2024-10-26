@@ -1,5 +1,4 @@
 using ShootEmUp.Ships.Weapons;
-using UnityEngine;
 
 namespace ShootEmUp.Pools
 {

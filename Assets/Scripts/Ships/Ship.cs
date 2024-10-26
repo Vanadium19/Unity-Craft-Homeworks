@@ -1,5 +1,6 @@
 using System;
 using ShootEmUp.Level.Spawners;
+using ShootEmUp.Ships.HealthComponents;
 using ShootEmUp.Ships.Movement;
 using ShootEmUp.Ships.Weapons;
 using UnityEngine;

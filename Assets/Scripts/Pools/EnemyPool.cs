@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using ShootEmUp.Level.Spawners;
 using ShootEmUp.Ships;
-using System.Collections.Generic;
+using ShootEmUp.Ships.Controllers;
 using UnityEngine;
 
 namespace ShootEmUp.Pools

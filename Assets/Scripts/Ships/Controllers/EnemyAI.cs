@@ -1,62 +1,65 @@
 using ShootEmUp.Level.Spawners;
-using ShootEmUp.Ships;
+using ShootEmUp.Ships.Controllers.Agents;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+namespace ShootEmUp.Ships.Controllers
 {
-    [SerializeField] private AttackAgent _attackAgent;
-    [SerializeField] private MoveAgent _moveAgent;
-    [SerializeField] private Ship _ship;
-
-    private Transform _transform;
-    private Transform _target;
-    private bool _isMove;
-
-    public Ship Ship => _ship;
-
-    private void Awake()
+    public class EnemyAI : MonoBehaviour
     {
-        _transform = transform;
-    }
+        [SerializeField] private AttackAgent _attackAgent;
+        [SerializeField] private MoveAgent _moveAgent;
+        [SerializeField] private Ship _ship;
 
-    private void OnEnable()
-    {
-        _attackAgent.Fired += Shoot;
-    }
+        private Transform _transform;
+        private Transform _target;
+        private bool _isMove;
 
-    private void Update()
-    {
-        if (_isMove)
+        public Ship Ship => _ship;
+
+        private void Awake()
         {
-            _ship.Move(_moveAgent.Direction);
-            _isMove = !_moveAgent.DestinationReached;
+            _transform = transform;
         }
 
-        if (!_isMove)
-            _attackAgent.Update();
-    }
+        private void OnEnable()
+        {
+            _attackAgent.Fired += Shoot;
+        }
 
-    private void OnDisable()
-    {
-        _attackAgent.Fired -= Shoot;
-    }
+        private void Update()
+        {
+            if (_isMove)
+            {
+                _ship.Move(_moveAgent.Direction);
+                _isMove = !_moveAgent.DestinationReached;
+            }
 
-    public void Initialize(BulletSpawner bulletSpawner, Transform target)
-    {
-        _target = target;
-        _ship.Initialize(bulletSpawner);
-    }
+            if (!_isMove)
+                _attackAgent.Update();
+        }
 
-    public void StartMove(Vector2 destination)
-    {
-        _isMove = true;
-        _moveAgent.SetDestination(destination);
-    }
+        private void OnDisable()
+        {
+            _attackAgent.Fired -= Shoot;
+        }
 
-    private void Shoot()
-    {
-        Vector2 direction = (_target.position - _transform.position).normalized;
+        public void Initialize(BulletSpawner bulletSpawner, Transform target)
+        {
+            _target = target;
+            _ship.Initialize(bulletSpawner);
+        }
 
-        _ship.Shoot(direction);
+        public void StartMove(Vector2 destination)
+        {
+            _isMove = true;
+            _moveAgent.SetDestination(destination);
+        }
+
+        private void Shoot()
+        {
+            Vector2 direction = (_target.position - _transform.position).normalized;
+
+            _ship.Shoot(direction);
+        }
     }
 }

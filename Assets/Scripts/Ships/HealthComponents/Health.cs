@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ShootEmUp.Ships
+namespace ShootEmUp.Ships.HealthComponents
 {
     [Serializable]
     public class Health

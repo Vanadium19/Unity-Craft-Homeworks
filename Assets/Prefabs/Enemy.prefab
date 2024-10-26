@@ -187,7 +187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac768bc04cc74ef42afd344d331b7492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shootDelay: 1
+  _attackAgent:
+    _shootDelay: 1
+  _moveAgent:
+    _transform: {fileID: 3470145497817149085}
   _ship: {fileID: 1254431464379768592}
 --- !u!1 &2239154907127902911
 GameObject:

@@ -1,6 +1,5 @@
 using System.Collections;
 using ShootEmUp.Pools;
-using ShootEmUp.Ships;
 using UnityEngine;
 
 namespace ShootEmUp.Level.Spawners
