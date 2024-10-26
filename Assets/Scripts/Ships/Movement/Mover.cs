@@ -5,7 +5,7 @@ namespace ShootEmUp.Ships.Movement
     [RequireComponent(typeof(Rigidbody2D))]
     public class Mover : MonoBehaviour
     {
-        [SerializeField] private float _speed;
+        [SerializeField] private float _speed = 5f;
 
         private Rigidbody2D _rigidbody;
 
