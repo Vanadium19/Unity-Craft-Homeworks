@@ -1,6 +1,6 @@
+using System;
 using ShootEmUp.Common;
 using ShootEmUp.Level.Spawners;
-using System;
 using UnityEngine;
 
 namespace ShootEmUp.Ships.AttackComponents

@@ -2,16 +2,15 @@ using UnityEngine;
 
 namespace ShootEmUp.Ships.Movement
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    public class Mover : MonoBehaviour
+    public class Mover
     {
-        [SerializeField] private float _speed = 5f;
-
+        private float _speed;
         private Rigidbody2D _rigidbody;
 
-        private void Awake()
+        public Mover(float speed, Rigidbody2D rigidbody)
         {
-            _rigidbody = GetComponent<Rigidbody2D>();
+            _speed = speed;
+            _rigidbody = rigidbody;
         }
 
         public void Move(Vector2 direction)
@@ -19,7 +18,7 @@ namespace ShootEmUp.Ships.Movement
             if (direction == Vector2.zero)
                 return;
 
-            Vector2 moveStep = direction * Time.fixedDeltaTime * _speed;
+            Vector2 moveStep = direction * Time.deltaTime * _speed;
             Vector2 targetPosition = _rigidbody.position + moveStep;
 
             _rigidbody.MovePosition(targetPosition);

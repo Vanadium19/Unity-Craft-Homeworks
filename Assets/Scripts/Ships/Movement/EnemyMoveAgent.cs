@@ -3,10 +3,12 @@ using UnityEngine;
 
 namespace ShootEmUp.Ships.Movement
 {
-    [RequireComponent(typeof(Mover))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyMoveAgent : MonoBehaviour
     {
         private readonly float _destinationLapping = 0.25f;
+
+        [SerializeField] private float _speed = 4f;
 
         private bool _isMove;
         private Mover _mover;
@@ -15,8 +17,10 @@ namespace ShootEmUp.Ships.Movement
 
         private void Awake()
         {
-            _mover = GetComponent<Mover>();
+            var rigidbody = GetComponent<Rigidbody2D>();
+
             _transform = transform;
+            _mover = new Mover(_speed, rigidbody);
         }
 
         public void StartMoving(Vector2 destination)
