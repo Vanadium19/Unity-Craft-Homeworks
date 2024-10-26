@@ -1,20 +1,23 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace ShootEmUp.Components.Movement
 {
-    public class EnemyMoveSource : MonoBehaviour, IMoveSource
+    [RequireComponent(typeof(Mover))]
+    public class EnemyMoveAgent : MonoBehaviour
     {
         private readonly float _destinationLapping = 0.25f;
 
-        private Vector2 _value;
-        private Transform _transform;
+        private Mover _mover;
         private Coroutine _moving;
-
-        public Vector2 Value => _value;
+        private Transform _transform;
 
         private void Awake()
         {
+            _mover = GetComponent<Mover>();
             _transform = transform;
         }
 
@@ -26,11 +29,6 @@ namespace ShootEmUp.Components.Movement
             _moving = StartCoroutine(Moving(destination));
         }
 
-        public bool CanShoot()
-        {
-            return _value == Vector2.zero;
-        }
-
         private IEnumerator Moving(Vector2 destination)
         {
             float distance = float.MaxValue;
@@ -39,11 +37,11 @@ namespace ShootEmUp.Components.Movement
             {
                 Vector3 path = destination - (Vector2)_transform.position;
                 distance = path.magnitude;
-                _value = path.normalized;
+
+                _mover.Move(path.normalized);
+
                 yield return null;
             }
-
-            _value = Vector3.zero;
         }
     }
 }

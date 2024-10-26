@@ -12,12 +12,12 @@ namespace ShootEmUp.Installers
     {
         [SerializeField] private float _shotDelay = 1f;
 
-        private EnemyMoveSource _moveSource;
+        //private EnemyMoveSource _moveSource;
         private Transform _target;
 
         public void StartMoving(Vector2 destination)
         {
-            _moveSource.StartMoving(destination);
+            //_moveSource.StartMoving(destination);
         }
 
         public void SetTarget(Transform target)
@@ -27,8 +27,8 @@ namespace ShootEmUp.Installers
 
         protected override void InitializeMover(float speed)
         {
-            _moveSource = gameObject.AddComponent<EnemyMoveSource>();
-            gameObject.AddComponent<Mover>().Initialize(_moveSource, speed);
+            //_moveSource = gameObject.AddComponent<EnemyMoveSource>();
+            //gameObject.AddComponent<Mover>().Initialize(_moveSource, speed);
         }
 
         protected override void InitializeWeapon(Transform worldBulletContainer, Transform firePoint, Bullet bullet, int damage, int bulletSpeed)

@@ -11,8 +11,8 @@ namespace ShootEmUp.Installers
     {
         protected override void InitializeMover(float speed)
         {
-            IMoveSource moveSource = gameObject.AddComponent<PlayerMoveSource>();
-            gameObject.AddComponent<Mover>().Initialize(moveSource, speed);
+            //IMoveSource moveSource = gameObject.AddComponent<PlayerMoveSource>();
+            //gameObject.AddComponent<Mover>().Initialize(moveSource, speed);
         }
 
         protected override void InitializeWeapon(Transform worldBulletContainer, Transform firePoint, Bullet bullet, int damage, int bulletSpeed)
