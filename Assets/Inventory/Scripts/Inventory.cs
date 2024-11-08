@@ -12,9 +12,10 @@ namespace Inventories
 {
     public sealed class Inventory : IEnumerable<Item>
     {
-        private const int RowIndex = 0;
-        private const int ColumnIndex = 1;
+        private const int RowIndex = 1;
+        private const int ColumnIndex = 0;
 
+        private HashSet<Item> _itemsHashSet;
         private Item[,] _items;
 
         public event Action<Item, Vector2Int> OnAdded;
@@ -31,7 +32,8 @@ namespace Inventories
             if (width <= 0 || height <= 0)
                 throw new ArgumentOutOfRangeException();
 
-            _items = new Item[height, width];
+            _items = new Item[width, height];
+            _itemsHashSet = new();
         }
 
         public Inventory(in int width,
@@ -42,12 +44,9 @@ namespace Inventories
                 throw new ArgumentNullException();
 
             foreach (var item in items)
+            {
                 AddItem(item.Key, item.Value);
-
-            Debug.Log($"{_items[0, 0]?.Name}, {_items[0, 1]?.Name}, {_items[0, 2]?.Name}, {_items[0, 3]?.Name}");
-            Debug.Log($"{_items[1, 0]?.Name}, {_items[1, 1]?.Name}, {_items[1, 2]?.Name}, {_items[1, 3]?.Name}");
-            Debug.Log($"{_items[2, 0]?.Name}, {_items[2, 1]?.Name}, {_items[2, 2]?.Name}, {_items[2, 3]?.Name}");
-            Debug.Log($"{_items[3, 0]?.Name}, {_items[3, 1]?.Name}, {_items[3, 2]?.Name}, {_items[3, 3]?.Name}");
+            }
         }
 
         public Inventory(in int width,
@@ -91,9 +90,9 @@ namespace Inventories
             if (!IsPositionWithSizeValid(item.Size, position))
                 return false;
 
-            for (int i = position.y; i < position.y + item.Size.y; i++)
+            for (int i = position.x; i < position.x + item.Size.x; i++)
             {
-                for (int j = position.x; j < position.x + item.Size.x; j++)
+                for (int j = position.y; j < position.y + item.Size.y; j++)
                 {
                     if (_items[i, j] != null)
                         return false;
@@ -118,6 +117,8 @@ namespace Inventories
 
             AddItemWithoutChecks(item, position);
 
+            _itemsHashSet.Add(item);
+
             OnAdded?.Invoke(item, position);
 
             return true;
@@ -125,10 +126,16 @@ namespace Inventories
 
         private void AddItemWithoutChecks(in Item item, in Vector2Int position)
         {
-            for (int i = position.y; i < position.y + item.Size.y; i++)
+            //Debug.Log($"W: {Width} H: {Height}");
+
+            //Debug.Log($"size: {item.Size} positions: {position}");
+
+            for (int i = position.x; i < position.x + item.Size.x; i++)
             {
-                for (int j = position.x; j < position.x + item.Size.x; j++)
+                for (int j = position.y; j < position.y + item.Size.y; j++)
                 {
+                    //Debug.Log($"i: {i} j: {j}");
+
                     _items[i, j] = item;
                 }
             }
@@ -234,9 +241,9 @@ namespace Inventories
 
         private bool IsPositionFree(in Vector2Int size, in Vector2Int position)
         {
-            for (int i = position.y; i < position.y + size.y; i++)
+            for (int i = position.x; i < position.x + size.x; i++)
             {
-                for (int j = position.x; j < position.x + size.x; j++)
+                for (int j = position.y; j < position.y + size.y; j++)
                 {
                     if (_items[i, j] != null)
                         return false;
@@ -259,12 +266,12 @@ namespace Inventories
         /// </summary>
         public bool IsOccupied(in Vector2Int position)
         {
-            return _items[position.y, position.x] != null;
+            return _items[position.x, position.y] != null;
         }
 
         public bool IsOccupied(in int x, in int y)
         {
-            return _items[y, x] != null;
+            return _items[x, y] != null;
         }
 
         /// <summary>
@@ -272,12 +279,12 @@ namespace Inventories
         /// </summary>
         public bool IsFree(in Vector2Int position)
         {
-            return _items[position.y, position.x] == null;
+            return _items[position.x, position.y] == null;
         }
 
         public bool IsFree(in int x, in int y)
         {
-            return _items[y, x] == null;
+            return _items[x, y] == null;
         }
 
         /// <summary>
@@ -298,6 +305,8 @@ namespace Inventories
 
             RemoveItemWithoutChecks(item, out position);
 
+            _itemsHashSet.Remove(item);
+
             OnRemoved?.Invoke(item, position);
 
             return true;
@@ -308,15 +317,15 @@ namespace Inventories
             position = default;
             var positionSet = false;
 
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < Width; j++)
+                for (int j = 0; j < Height; j++)
                 {
                     if (_items[i, j] == item)
                     {
                         if (!positionSet)
                         {
-                            position = new(j, i);
+                            position = new(i, j);
                             positionSet = true;
                         }
 
@@ -334,7 +343,7 @@ namespace Inventories
             if (!IsPositionValid(position))
                 throw new IndexOutOfRangeException();
 
-            var item = _items[position.y, position.x];
+            var item = _items[position.x, position.y];
 
             if (item == null)
                 throw new NullReferenceException();
@@ -354,7 +363,7 @@ namespace Inventories
             if (!IsPositionValid(position))
                 return false;
 
-            item = _items[position.y, position.x];
+            item = _items[position.x, position.y];
 
             return item != null;
         }
@@ -382,7 +391,7 @@ namespace Inventories
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    if (_items[j, i] == item)
+                    if (_items[i, j] == item)
                     {
                         positions[index] = new Vector2Int(i, j);
                         index++;
@@ -415,9 +424,9 @@ namespace Inventories
             if (Count == 0)
                 return;
 
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < Width; j++)
+                for (int j = 0; j < Height; j++)
                 {
                     _items[i, j] = default;
                 }
@@ -457,6 +466,8 @@ namespace Inventories
 
             RemoveItemWithoutChecks(item, out Vector2Int position);
 
+            //Debug.Log($"newPosition: {newPosition} position: {position}");
+
             if (CanAddItem(item, newPosition))
             {
                 position = newPosition;
@@ -472,33 +483,52 @@ namespace Inventories
         /// Reorganizes inventory space to make the free area uniform
         /// </summary>
         public void ReorganizeSpace()
-            => throw new NotImplementedException();
+        {
+            Dictionary<Item, Vector2Int> itemPositionPairs = new();
+
+            foreach (var item in this)
+            {
+                RemoveItemWithoutChecks(item, out Vector2Int position);
+                itemPositionPairs.Add(item, position);
+            }
+
+            var orderedPairs = itemPositionPairs.OrderByDescending(pair => pair.Key.Size.x * pair.Key.Size.y)
+                                                .ThenBy(pair => pair.Key.Name);
+
+            foreach (var pair in orderedPairs)
+            {
+                AddItem(pair.Key);
+            }
+        }
 
         /// <summary>
         /// Copies inventory items to a specified matrix
         /// </summary>
         public void CopyTo(in Item[,] matrix)
         {
-            throw new NotImplementedException();
-
-            //for (int i = 0; i < Height; i++)
-            //{
-            //    for (int j = 0; j < Width; j++)
-            //    {
-            //        _items[i, j] = matrix[i, j];
-            //    }
-            //}
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    matrix[i, j] = _items[i, j];
+                }
+            }
         }
 
         public IEnumerator<Item> GetEnumerator()
         {
             List<Item> items = new();
 
-            foreach (var item in _items)
+            for (int i = 0; i < Width; i++)
             {
-                if (item != null && !items.Contains(item))
+                for (int j = 0; j < Height; j++)
                 {
-                    items.Add(item);
+                    var item = _items[i, j];
+
+                    if (item != null && !items.Contains(item))
+                    {
+                        items.Add(item);
+                    }
                 }
             }
 

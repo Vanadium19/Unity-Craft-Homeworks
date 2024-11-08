@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 // ReSharper disable ExpressionIsAlwaysNull
 
@@ -13,21 +11,42 @@ namespace Inventories
     /// Don't modify
     public sealed class InventoryTests
     {
-        [Test]
-        public void TestInstantiate()
+        [TestCaseSource(nameof(InstantiateWithItemsCases))]
+        public void InstantiateWithItems(int width, int height, KeyValuePair<Item, Vector2Int>[] items)
         {
-            var item1 = new Item("1", 1, 2);
-            var item2 = new Item("2", 2, 2);
-            var item3 = new Item("3", 1, 4);
-            var item4 = new Item("4", 3, 2);
+        Arrange:
+            var inventory = new Inventory(width, height, items);
 
-            new Inventory(4, 4,
-                    new KeyValuePair<Item, Vector2Int>(item1, new Vector2Int(0, 0)),
-                    new KeyValuePair<Item, Vector2Int>(item2, new Vector2Int(1, 0)),
-                    new KeyValuePair<Item, Vector2Int>(item3, new Vector2Int(3, 0)),
-                    new KeyValuePair<Item, Vector2Int>(item4, new Vector2Int(0, 2)));
+        Assert:
+            Assert.AreEqual(width, inventory.Width);
+            Assert.AreEqual(height, inventory.Height);
 
-            Assert.IsTrue(true);
+            Assert.AreEqual(items.Length, inventory.Count);
+            Assert.AreEqual(items.Select(it => it.Key).ToHashSet(), inventory.ToHashSet());
+        }
+
+        private static IEnumerable<TestCaseData> InstantiateWithItemsCases()
+        {
+            yield return new TestCaseData(10, 10, new[]
+            {
+                new KeyValuePair<Item, Vector2Int>(new Item("A", 10, 10), new Vector2Int(0, 0)),
+            }).SetName("Full item");
+
+            yield return new TestCaseData(4, 4, new[]
+            {
+                new KeyValuePair<Item, Vector2Int>(new Item("A", 1, 2), new Vector2Int(0, 0)),
+                new KeyValuePair<Item, Vector2Int>(new Item("B", 1, 1), new Vector2Int(0, 3)),
+                new KeyValuePair<Item, Vector2Int>(new Item("C", 3, 2), new Vector2Int(1, 2)),
+                new KeyValuePair<Item, Vector2Int>(new Item("D", 2, 1), new Vector2Int(2, 0))
+            }).SetName("Half filling");
+
+            yield return new TestCaseData(4, 4, new[]
+            {
+                new KeyValuePair<Item, Vector2Int>(new Item("A", 2, 2), new Vector2Int(0, 0)),
+                new KeyValuePair<Item, Vector2Int>(new Item("B", 2, 2), new Vector2Int(2, 0)),
+                new KeyValuePair<Item, Vector2Int>(new Item("C", 2, 2), new Vector2Int(0, 2)),
+                new KeyValuePair<Item, Vector2Int>(new Item("D", 2, 2), new Vector2Int(2, 2))
+            }).SetName("Full dense");
         }
 
         [TestCase(5, 10)]
@@ -89,44 +108,6 @@ namespace Inventories
             {
                 var _ = new Inventory(width, height);
             });
-        }
-
-        [TestCaseSource(nameof(InstantiateWithItemsCases))]
-        public void InstantiateWithItems(int width, int height, KeyValuePair<Item, Vector2Int>[] items)
-        {
-            //Arrange:
-            var inventory = new Inventory(width, height, items);
-
-            //Assert:
-            Assert.AreEqual(width, inventory.Width);
-            Assert.AreEqual(height, inventory.Height);
-
-            Assert.AreEqual(items.Length, inventory.Count);
-            Assert.AreEqual(items.Select(it => it.Key).ToHashSet(), inventory.ToHashSet());
-        }
-
-        private static IEnumerable<TestCaseData> InstantiateWithItemsCases()
-        {
-            yield return new TestCaseData(10, 10, new[]
-            {
-                new KeyValuePair<Item, Vector2Int>(new Item("A", 10, 10), new Vector2Int(0, 0)),
-            }).SetName("Full item");
-
-            //yield return new TestCaseData(4, 4, new[]
-            //{
-            //    new KeyValuePair<Item, Vector2Int>(new Item("A", 1, 2), new Vector2Int(0, 0)),
-            //    new KeyValuePair<Item, Vector2Int>(new Item("B", 1, 1), new Vector2Int(0, 3)),
-            //    new KeyValuePair<Item, Vector2Int>(new Item("C", 3, 2), new Vector2Int(1, 2)),
-            //    new KeyValuePair<Item, Vector2Int>(new Item("D", 2, 1), new Vector2Int(2, 0))
-            //}).SetName("Half filling");
-
-            yield return new TestCaseData(4, 4, new[]
-            {
-                new KeyValuePair<Item, Vector2Int>(new Item("A", 2, 2), new Vector2Int(0, 0)),
-                new KeyValuePair<Item, Vector2Int>(new Item("B", 2, 2), new Vector2Int(2, 0)),
-                new KeyValuePair<Item, Vector2Int>(new Item("C", 2, 2), new Vector2Int(0, 2)),
-                new KeyValuePair<Item, Vector2Int>(new Item("D", 2, 2), new Vector2Int(2, 2))
-            }).SetName("Full dense");
         }
 
         [TestCaseSource(nameof(CanAddOnSpecifiedPositionCases))]
@@ -1142,34 +1123,34 @@ namespace Inventories
             yield return new TestCaseData(inventory, "F").Returns(0).SetName("Absent items");
         }
 
-        //[TestCaseSource(nameof(CopyToCases))]
-        //public void CopyTo(Inventory inventory, Item[,] expected, Item[,] actual)
-        //{
-        //    inventory.CopyTo(actual);
-        //    Assert.AreEqual(expected, actual);
-        //}
+        [TestCaseSource(nameof(CopyToCases))]
+        public void CopyTo(Inventory inventory, Item[,] expected, Item[,] actual)
+        {
+            inventory.CopyTo(actual);
+            Assert.AreEqual(expected, actual);
+        }
 
-        //private static IEnumerable<TestCaseData> CopyToCases()
-        //{
-        //    var x = new Item("X", 2, 2);
-        //    var y = new Item("Y", 1, 3);
-        //    var z = new Item("Z", 2, 1);
+        private static IEnumerable<TestCaseData> CopyToCases()
+        {
+            var x = new Item("X", 2, 2);
+            var y = new Item("Y", 1, 3);
+            var z = new Item("Z", 2, 1);
 
-        //    var inventory = new Inventory(3, 3,
-        //        new KeyValuePair<Item, Vector2Int>(x, new Vector2Int(0, 0)),
-        //        new KeyValuePair<Item, Vector2Int>(y, new Vector2Int(2, 0)),
-        //        new KeyValuePair<Item, Vector2Int>(z, new Vector2Int(0, 2))
-        //    );
+            var inventory = new Inventory(3, 3,
+                new KeyValuePair<Item, Vector2Int>(x, new Vector2Int(0, 0)),
+                new KeyValuePair<Item, Vector2Int>(y, new Vector2Int(2, 0)),
+                new KeyValuePair<Item, Vector2Int>(z, new Vector2Int(0, 2))
+            );
 
-        //    var expected = new[,]
-        //    {
-        //        {x, x, z},
-        //        {x, x, z},
-        //        {y, y, y}
-        //    };
-        //    var actual = new Item[3, 3];
-        //    yield return new TestCaseData(inventory, expected, actual).SetName("Sample");
-        //}
+            var expected = new[,]
+            {
+                {x, x, z},
+                {x, x, z},
+                {y, y, y}
+            };
+            var actual = new Item[3, 3];
+            yield return new TestCaseData(inventory, expected, actual).SetName("Sample");
+        }
 
         [TestCaseSource(nameof(MoveItemSuccessfulCases))]
         public void MoveItemSuccessful(Inventory inventory, Item item, Vector2Int position)
