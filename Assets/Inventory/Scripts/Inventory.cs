@@ -15,8 +15,8 @@ namespace Inventories
         private const int RowIndex = 1;
         private const int ColumnIndex = 0;
 
-        private HashSet<Item> _itemsHashSet;
         private Item[,] _items;
+        private HashSet<Item> _itemsHashSet;
 
         public event Action<Item, Vector2Int> OnAdded;
         public event Action<Item, Vector2Int> OnRemoved;
@@ -25,7 +25,7 @@ namespace Inventories
 
         public int Width => _items.GetLength(ColumnIndex);
         public int Height => _items.GetLength(RowIndex);
-        public int Count => this.ToHashSet().Count;
+        public int Count => _itemsHashSet.Count;
 
         public Inventory(in int width, in int height)
         {
@@ -44,9 +44,7 @@ namespace Inventories
                 throw new ArgumentNullException();
 
             foreach (var item in items)
-            {
                 AddItem(item.Key, item.Value);
-            }
         }
 
         public Inventory(in int width,
@@ -55,6 +53,9 @@ namespace Inventories
         {
             if (items == null)
                 throw new ArgumentNullException();
+
+            foreach (var item in items)
+                AddItem(item);
         }
 
         public Inventory(in int width,
@@ -63,6 +64,9 @@ namespace Inventories
         {
             if (items == null)
                 throw new ArgumentNullException();
+
+            foreach (var item in items)
+                AddItem(item.Key, item.Value);
         }
 
         public Inventory(in int width,
@@ -71,6 +75,9 @@ namespace Inventories
         {
             if (items == null)
                 throw new ArgumentNullException();
+
+            foreach (var item in items)
+                AddItem(item);
         }
 
         /// <summary>
@@ -117,8 +124,6 @@ namespace Inventories
 
             AddItemWithoutChecks(item, position);
 
-            _itemsHashSet.Add(item);
-
             OnAdded?.Invoke(item, position);
 
             return true;
@@ -126,19 +131,15 @@ namespace Inventories
 
         private void AddItemWithoutChecks(in Item item, in Vector2Int position)
         {
-            //Debug.Log($"W: {Width} H: {Height}");
-
-            //Debug.Log($"size: {item.Size} positions: {position}");
-
             for (int i = position.x; i < position.x + item.Size.x; i++)
             {
                 for (int j = position.y; j < position.y + item.Size.y; j++)
                 {
-                    //Debug.Log($"i: {i} j: {j}");
-
                     _items[i, j] = item;
                 }
             }
+
+            _itemsHashSet.Add(item);
         }
 
         public bool AddItem(in Item item, in int posX, in int posY)
@@ -258,7 +259,7 @@ namespace Inventories
         /// </summary>
         public bool Contains(in Item item)
         {
-            return this.ToHashSet().Contains(item);
+            return _itemsHashSet.Contains(item);
         }
 
         /// <summary>
@@ -291,7 +292,9 @@ namespace Inventories
         /// Removes a specified item if exists
         /// </summary>
         public bool RemoveItem(in Item item)
-            => throw new NotImplementedException();
+        {
+            return RemoveItem(item, out Vector2Int position);
+        }
 
         public bool RemoveItem(in Item item, out Vector2Int position)
         {
@@ -304,8 +307,6 @@ namespace Inventories
                 return false;
 
             RemoveItemWithoutChecks(item, out position);
-
-            _itemsHashSet.Remove(item);
 
             OnRemoved?.Invoke(item, position);
 
@@ -333,6 +334,8 @@ namespace Inventories
                     }
                 }
             }
+
+            _itemsHashSet.Remove(item);
         }
 
         /// <summary>
@@ -432,6 +435,8 @@ namespace Inventories
                 }
             }
 
+            _itemsHashSet.Clear();
+
             OnCleared?.Invoke();
         }
 
@@ -440,17 +445,7 @@ namespace Inventories
         /// </summary>
         public int GetItemCount(string name)
         {
-            int count = 0;
-
-            foreach (var item in this)
-            {
-                if (item.Name == name)
-                {
-                    count++;
-                }
-            }
-
-            return count;
+            return _itemsHashSet.Where(item => item.Name == name).Count();
         }
 
         /// <summary>
@@ -465,8 +460,6 @@ namespace Inventories
                 return false;
 
             RemoveItemWithoutChecks(item, out Vector2Int position);
-
-            //Debug.Log($"newPosition: {newPosition} position: {position}");
 
             if (CanAddItem(item, newPosition))
             {
@@ -484,21 +477,14 @@ namespace Inventories
         /// </summary>
         public void ReorganizeSpace()
         {
-            Dictionary<Item, Vector2Int> itemPositionPairs = new();
+            var orderedItems = _itemsHashSet.OrderByDescending(item => item.Size.x * item.Size.y)
+                                            .ThenBy(item => item.Name)
+                                            .ToArray();
 
-            foreach (var item in this)
-            {
-                RemoveItemWithoutChecks(item, out Vector2Int position);
-                itemPositionPairs.Add(item, position);
-            }
+            Clear();
 
-            var orderedPairs = itemPositionPairs.OrderByDescending(pair => pair.Key.Size.x * pair.Key.Size.y)
-                                                .ThenBy(pair => pair.Key.Name);
-
-            foreach (var pair in orderedPairs)
-            {
-                AddItem(pair.Key);
-            }
+            foreach (var item in orderedItems)
+                AddItem(item);
         }
 
         /// <summary>
@@ -517,22 +503,7 @@ namespace Inventories
 
         public IEnumerator<Item> GetEnumerator()
         {
-            List<Item> items = new();
-
-            for (int i = 0; i < Width; i++)
-            {
-                for (int j = 0; j < Height; j++)
-                {
-                    var item = _items[i, j];
-
-                    if (item != null && !items.Contains(item))
-                    {
-                        items.Add(item);
-                    }
-                }
-            }
-
-            return items.GetEnumerator();
+            return _itemsHashSet.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
