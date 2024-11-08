@@ -43,6 +43,11 @@ namespace Inventories
 
             foreach (var item in items)
                 AddItem(item.Key, item.Value);
+
+            Debug.Log($"{_items[0, 0]?.Name}, {_items[0, 1]?.Name}, {_items[0, 2]?.Name}, {_items[0, 3]?.Name}");
+            Debug.Log($"{_items[1, 0]?.Name}, {_items[1, 1]?.Name}, {_items[1, 2]?.Name}, {_items[1, 3]?.Name}");
+            Debug.Log($"{_items[2, 0]?.Name}, {_items[2, 1]?.Name}, {_items[2, 2]?.Name}, {_items[2, 3]?.Name}");
+            Debug.Log($"{_items[3, 0]?.Name}, {_items[3, 1]?.Name}, {_items[3, 2]?.Name}, {_items[3, 3]?.Name}");
         }
 
         public Inventory(in int width,
@@ -111,6 +116,15 @@ namespace Inventories
             if (!CanAddItem(item, position))
                 return false;
 
+            AddItemWithoutChecks(item, position);
+
+            OnAdded?.Invoke(item, position);
+
+            return true;
+        }
+
+        private void AddItemWithoutChecks(in Item item, in Vector2Int position)
+        {
             for (int i = position.y; i < position.y + item.Size.y; i++)
             {
                 for (int j = position.x; j < position.x + item.Size.x; j++)
@@ -118,10 +132,6 @@ namespace Inventories
                     _items[i, j] = item;
                 }
             }
-
-            OnAdded?.Invoke(item, position);
-
-            return true;
         }
 
         public bool AddItem(in Item item, in int posX, in int posY)
@@ -279,13 +289,24 @@ namespace Inventories
         public bool RemoveItem(in Item item, out Vector2Int position)
         {
             position = default;
-            var positionSet = false;
 
             if (item == null)
                 return false;
 
             if (!Contains(item))
                 return false;
+
+            RemoveItemWithoutChecks(item, out position);
+
+            OnRemoved?.Invoke(item, position);
+
+            return true;
+        }
+
+        private void RemoveItemWithoutChecks(in Item item, out Vector2Int position)
+        {
+            position = default;
+            var positionSet = false;
 
             for (int i = 0; i < Height; i++)
             {
@@ -303,10 +324,6 @@ namespace Inventories
                     }
                 }
             }
-
-            OnRemoved?.Invoke(item, position);
-
-            return true;
         }
 
         /// <summary>
@@ -431,7 +448,25 @@ namespace Inventories
         /// Moves a specified item to a target position if it exists
         /// </summary>
         public bool MoveItem(in Item item, in Vector2Int newPosition)
-            => throw new NotImplementedException();
+        {
+            if (item == null)
+                throw new ArgumentNullException();
+
+            if (!Contains(item))
+                return false;
+
+            RemoveItemWithoutChecks(item, out Vector2Int position);
+
+            if (CanAddItem(item, newPosition))
+            {
+                position = newPosition;
+                OnMoved?.Invoke(item, position);
+            }
+
+            AddItemWithoutChecks(item, position);
+
+            return position == newPosition;
+        }
 
         /// <summary>
         /// Reorganizes inventory space to make the free area uniform
@@ -444,14 +479,15 @@ namespace Inventories
         /// </summary>
         public void CopyTo(in Item[,] matrix)
         {
-            for (int i = 0; i < Height; i++)
-            {
-                for (int j = 0; j < Width; j++)
-                {
-                    _items[i, j] = matrix[i, j];
-                }
-            }
+            throw new NotImplementedException();
 
+            //for (int i = 0; i < Height; i++)
+            //{
+            //    for (int j = 0; j < Width; j++)
+            //    {
+            //        _items[i, j] = matrix[i, j];
+            //    }
+            //}
         }
 
         public IEnumerator<Item> GetEnumerator()
