@@ -93,16 +93,7 @@ namespace Inventories
             if (!IsPositionWithSizeValid(item.Size, position))
                 return false;
 
-            for (int i = position.x; i < position.x + item.Size.x; i++)
-            {
-                for (int j = position.y; j < position.y + item.Size.y; j++)
-                {
-                    if (_items[i, j] != null)
-                        return false;
-                }
-            }
-
-            return true;
+            return IsPositionFree(item.Size, position);
         }
 
         public bool CanAddItem(in Item item, in int posX, in int posY)
@@ -338,8 +329,7 @@ namespace Inventories
                 {
                     if (_items[i, j] == item)
                     {
-                        positions[index] = new Vector2Int(i, j);
-                        index++;
+                        positions[index++] = new Vector2Int(i, j);
                     }
                 }
             }
