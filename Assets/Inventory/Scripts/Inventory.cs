@@ -23,17 +23,13 @@ namespace Inventories
         public event Action<Item, Vector2Int> OnMoved;
         public event Action OnCleared;
 
-        public int Width => _items.GetLength(ColumnIndex);
-        public int Height => _items.GetLength(RowIndex);
-        public int Count => _itemsHashSet.Count;
-
         public Inventory(in int width, in int height)
         {
             if (width <= 0 || height <= 0)
                 throw new ArgumentOutOfRangeException();
 
-            _items = new Item[width, height];
             _itemsHashSet = new();
+            _items = new Item[width, height];
         }
 
         public Inventory(in int width,
@@ -80,19 +76,17 @@ namespace Inventories
                 AddItem(item);
         }
 
+        public int Width => _items.GetLength(ColumnIndex);
+        public int Height => _items.GetLength(RowIndex);
+        public int Count => _itemsHashSet.Count;
+
         /// <summary>
         /// Checks for adding an item on a specified position
         /// </summary>
         public bool CanAddItem(in Item item, in Vector2Int position)
         {
-            if (item == null)
+            if (!IsItemValid(item))
                 return false;
-
-            if (Contains(item))
-                return false;
-
-            if (!IsSizeValid(item.Size))
-                throw new ArgumentException();
 
             if (!IsPositionWithSizeValid(item.Size, position))
                 return false;
@@ -152,14 +146,8 @@ namespace Inventories
         /// </summary>
         public bool CanAddItem(in Item item)
         {
-            if (item == null)
+            if (!IsItemValid(item))
                 return false;
-
-            if (Contains(item))
-                return false;
-
-            if (!IsSizeValid(item.Size))
-                throw new ArgumentException();
 
             return FindFreePosition(item.Size, out Vector2Int position);
         }
@@ -169,20 +157,11 @@ namespace Inventories
         /// </summary>
         public bool AddItem(in Item item)
         {
-            if (item == null)
+            if (!IsItemValid(item))
                 return false;
-
-            if (Contains(item))
-                return false;
-
-            if (!IsSizeValid(item.Size))
-                throw new ArgumentException();
 
             if (FindFreePosition(item.Size, out Vector2Int position))
-            {
-                AddItem(item, position);
-                return true;
-            }
+                return AddItem(item, position);
 
             return false;
         }
@@ -238,6 +217,20 @@ namespace Inventories
                    && position.y >= 0
                    && position.x < Width
                    && position.y < Height;
+        }
+
+        public bool IsItemValid(Item item)
+        {
+            if (item == null)
+                return false;
+
+            if (Contains(item))
+                return false;
+
+            if (!IsSizeValid(item.Size))
+                throw new ArgumentException();
+
+            return true;
         }
 
         private bool IsPositionFree(in Vector2Int size, in Vector2Int position)
@@ -508,7 +501,7 @@ namespace Inventories
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _items.GetEnumerator();
+            return _itemsHashSet.GetEnumerator();
         }
     }
 }
