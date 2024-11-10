@@ -200,55 +200,6 @@ namespace Inventories
             return true;
         }
 
-        private bool IsSizeValid(Vector2Int size)
-        {
-            return size.x > 0 && size.y > 0;
-        }
-
-        private bool IsPositionWithSizeValid(in Vector2Int size, in Vector2Int position)
-        {
-            return position.x >= 0
-                   && position.y >= 0
-                   && position.x + size.x <= Width
-                   && position.y + size.y <= Height;
-        }
-
-        private bool IsPositionValid(in Vector2Int position)
-        {
-            return position.x >= 0
-                   && position.y >= 0
-                   && position.x < Width
-                   && position.y < Height;
-        }
-
-        public bool IsItemValid(Item item)
-        {
-            if (item == null)
-                return false;
-
-            if (Contains(item))
-                return false;
-
-            if (!IsSizeValid(item.Size))
-                throw new ArgumentException();
-
-            return true;
-        }
-
-        private bool IsPositionFree(in Vector2Int size, in Vector2Int position)
-        {
-            for (int i = position.x; i < position.x + size.x; i++)
-            {
-                for (int j = position.y; j < position.y + size.y; j++)
-                {
-                    if (_items[i, j] != null)
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
         /// <summary>
         /// Checks if a specified item exists
         /// </summary>
@@ -501,5 +452,58 @@ namespace Inventories
         {
             return _itemsHashSet.GetEnumerator();
         }
+
+        #region Checks
+
+        private bool IsSizeValid(Vector2Int size)
+        {
+            return size.x > 0 && size.y > 0;
+        }
+
+        private bool IsPositionWithSizeValid(in Vector2Int size, in Vector2Int position)
+        {
+            return position.x >= 0
+                   && position.y >= 0
+                   && position.x + size.x <= Width
+                   && position.y + size.y <= Height;
+        }
+
+        private bool IsPositionValid(in Vector2Int position)
+        {
+            return position.x >= 0
+                   && position.y >= 0
+                   && position.x < Width
+                   && position.y < Height;
+        }
+
+        public bool IsItemValid(Item item)
+        {
+            if (item == null)
+                return false;
+
+            if (Contains(item))
+                return false;
+
+            if (!IsSizeValid(item.Size))
+                throw new ArgumentException();
+
+            return true;
+        }
+
+        private bool IsPositionFree(in Vector2Int size, in Vector2Int position)
+        {
+            for (int i = position.x; i < position.x + size.x; i++)
+            {
+                for (int j = position.y; j < position.y + size.y; j++)
+                {
+                    if (_items[i, j] != null)
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }
