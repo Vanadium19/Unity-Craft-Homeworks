@@ -15,6 +15,8 @@ namespace Inventories
         private const int RowIndex = 1;
         private const int ColumnIndex = 0;
 
+        private readonly Vector2Int _invalidPosition = new(-1, -1);
+
         private Item[,] _items;
         private HashSet<Item> _itemsHashSet;
 
@@ -308,8 +310,7 @@ namespace Inventories
 
         private void RemoveItemWithoutChecks(in Item item, out Vector2Int position)
         {
-            position = default;
-            var positionSet = false;
+            position = _invalidPosition;
 
             for (int i = 0; i < Width; i++)
             {
@@ -317,11 +318,8 @@ namespace Inventories
                 {
                     if (_items[i, j] == item)
                     {
-                        if (!positionSet)
-                        {
+                        if (position == _invalidPosition)
                             position = new(i, j);
-                            positionSet = true;
-                        }
 
                         _items[i, j] = default;
                     }
