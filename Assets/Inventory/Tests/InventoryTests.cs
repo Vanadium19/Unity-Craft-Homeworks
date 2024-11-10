@@ -11,44 +11,6 @@ namespace Inventories
     /// Don't modify
     public sealed class InventoryTests
     {
-        [TestCaseSource(nameof(InstantiateWithItemsCases))]
-        public void InstantiateWithItems(int width, int height, KeyValuePair<Item, Vector2Int>[] items)
-        {
-        Arrange:
-            var inventory = new Inventory(width, height, items);
-
-        Assert:
-            Assert.AreEqual(width, inventory.Width);
-            Assert.AreEqual(height, inventory.Height);
-
-            Assert.AreEqual(items.Length, inventory.Count);
-            Assert.AreEqual(items.Select(it => it.Key).ToHashSet(), inventory.ToHashSet());
-        }
-
-        private static IEnumerable<TestCaseData> InstantiateWithItemsCases()
-        {
-            yield return new TestCaseData(10, 10, new[]
-            {
-                new KeyValuePair<Item, Vector2Int>(new Item("A", 10, 10), new Vector2Int(0, 0)),
-            }).SetName("Full item");
-
-            yield return new TestCaseData(4, 4, new[]
-            {
-                new KeyValuePair<Item, Vector2Int>(new Item("A", 1, 2), new Vector2Int(0, 0)),
-                new KeyValuePair<Item, Vector2Int>(new Item("B", 1, 1), new Vector2Int(0, 3)),
-                new KeyValuePair<Item, Vector2Int>(new Item("C", 3, 2), new Vector2Int(1, 2)),
-                new KeyValuePair<Item, Vector2Int>(new Item("D", 2, 1), new Vector2Int(2, 0))
-            }).SetName("Half filling");
-
-            yield return new TestCaseData(4, 4, new[]
-            {
-                new KeyValuePair<Item, Vector2Int>(new Item("A", 2, 2), new Vector2Int(0, 0)),
-                new KeyValuePair<Item, Vector2Int>(new Item("B", 2, 2), new Vector2Int(2, 0)),
-                new KeyValuePair<Item, Vector2Int>(new Item("C", 2, 2), new Vector2Int(0, 2)),
-                new KeyValuePair<Item, Vector2Int>(new Item("D", 2, 2), new Vector2Int(2, 2))
-            }).SetName("Full dense");
-        }
-
         [TestCase(5, 10)]
         [TestCase(3, 2)]
         [TestCase(1, 100)]
@@ -64,10 +26,10 @@ namespace Inventories
             Assert.AreEqual(0, inventory.Count);
 
             for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    Assert.IsTrue(inventory.IsFree(x, y));
-                }
+            for (int y = 0; y < height; y++)
+            {
+                Assert.IsTrue(inventory.IsFree(x, y));
+            }
         }
 
         [Test]
@@ -76,22 +38,22 @@ namespace Inventories
             //Assert:
             Assert.Catch<ArgumentNullException>(() =>
             {
-                var _ = new Inventory(5, 3, (IEnumerable<KeyValuePair<Item, Vector2Int>>)null);
+                var _ = new Inventory(5, 3, (IEnumerable<KeyValuePair<Item, Vector2Int>>) null);
             });
 
             Assert.Catch<ArgumentNullException>(() =>
             {
-                var _ = new Inventory(5, 3, (KeyValuePair<Item, Vector2Int>[])null);
+                var _ = new Inventory(5, 3, (KeyValuePair<Item, Vector2Int>[]) null);
             });
 
             Assert.Catch<ArgumentNullException>(() =>
             {
-                var _ = new Inventory(5, 3, (IEnumerable<Item>)null);
+                var _ = new Inventory(5, 3, (IEnumerable<Item>) null);
             });
 
             Assert.Catch<ArgumentNullException>(() =>
             {
-                var _ = new Inventory(5, 3, (Item[])null);
+                var _ = new Inventory(5, 3, (Item[]) null);
             });
         }
 
@@ -173,10 +135,10 @@ namespace Inventories
 
             //Pre-assert:
             for (int x = position.x; x < position.x + item.Size.x; x++)
-                for (int y = position.y; y < position.y + item.Size.y; y++)
-                {
-                    Assert.IsTrue(inventory.IsFree(x, y));
-                }
+            for (int y = position.y; y < position.y + item.Size.y; y++)
+            {
+                Assert.IsTrue(inventory.IsFree(x, y));
+            }
 
             //Act:
             bool success = inventory.AddItem(item, position);
@@ -189,8 +151,8 @@ namespace Inventories
             Assert.IsTrue(inventory.Contains(item));
 
             for (int x = position.x; x < position.x + item.Size.x; x++)
-                for (int y = position.y; y < position.y + item.Size.y; y++)
-                    Assert.IsTrue(inventory.IsOccupied(x, y));
+            for (int y = position.y; y < position.y + item.Size.y; y++)
+                Assert.IsTrue(inventory.IsOccupied(x, y));
         }
 
         private static IEnumerable<TestCaseData> AddOnSpecifiedPositionSuccessfulCases()
@@ -395,6 +357,44 @@ namespace Inventories
                 new Item("Y", 2, 2),
                 new Vector2Int(1, 1)
             ).SetName("Full Intersect");
+        }
+
+        [TestCaseSource(nameof(InstantiateWithItemsCases))]
+        public void InstantiateWithItems(int width, int height, KeyValuePair<Item, Vector2Int>[] items)
+        {
+            //Arrange:
+            var inventory = new Inventory(width, height, items);
+
+            //Assert:
+            Assert.AreEqual(width, inventory.Width);
+            Assert.AreEqual(height, inventory.Height);
+
+            Assert.AreEqual(items.Length, inventory.Count);
+            Assert.AreEqual(items.Select(it => it.Key).ToHashSet(), inventory.ToHashSet());
+        }
+
+        private static IEnumerable<TestCaseData> InstantiateWithItemsCases()
+        {
+            yield return new TestCaseData(10, 10, new[]
+            {
+                new KeyValuePair<Item, Vector2Int>(new Item("A", 10, 10), new Vector2Int(0, 0)),
+            }).SetName("Full item");
+
+            yield return new TestCaseData(4, 4, new[]
+            {
+                new KeyValuePair<Item, Vector2Int>(new Item("A", 1, 2), new Vector2Int(0, 0)),
+                new KeyValuePair<Item, Vector2Int>(new Item("B", 1, 1), new Vector2Int(0, 3)),
+                new KeyValuePair<Item, Vector2Int>(new Item("C", 3, 2), new Vector2Int(1, 2)),
+                new KeyValuePair<Item, Vector2Int>(new Item("A", 2, 1), new Vector2Int(2, 0))
+            }).SetName("Half filling");
+
+            yield return new TestCaseData(4, 4, new[]
+            {
+                new KeyValuePair<Item, Vector2Int>(new Item("A", 2, 2), new Vector2Int(0, 0)),
+                new KeyValuePair<Item, Vector2Int>(new Item("B", 2, 2), new Vector2Int(2, 0)),
+                new KeyValuePair<Item, Vector2Int>(new Item("C", 2, 2), new Vector2Int(0, 2)),
+                new KeyValuePair<Item, Vector2Int>(new Item("D", 2, 2), new Vector2Int(2, 2))
+            }).SetName("Full dense");
         }
 
         [TestCaseSource(nameof(ContainsCases))]
@@ -609,10 +609,10 @@ namespace Inventories
 
             //Pre-assert:
             for (int x = expectedPosition.x; x < expectedPosition.x + item.Size.x; x++)
-                for (int y = expectedPosition.y; y < expectedPosition.y + item.Size.y; y++)
-                {
-                    Assert.IsTrue(inventory.IsFree(x, y));
-                }
+            for (int y = expectedPosition.y; y < expectedPosition.y + item.Size.y; y++)
+            {
+                Assert.IsTrue(inventory.IsFree(x, y));
+            }
 
             //Act:
             bool success = inventory.AddItem(item);
@@ -626,10 +626,10 @@ namespace Inventories
             Assert.IsTrue(inventory.Contains(item));
 
             for (int x = expectedPosition.x; x < expectedPosition.x + item.Size.x; x++)
-                for (int y = expectedPosition.y; y < expectedPosition.y + item.Size.y; y++)
-                {
-                    Assert.IsTrue(inventory.IsOccupied(x, y));
-                }
+            for (int y = expectedPosition.y; y < expectedPosition.y + item.Size.y; y++)
+            {
+                Assert.IsTrue(inventory.IsOccupied(x, y));
+            }
         }
 
         private static IEnumerable<TestCaseData> AddOnFreePositionSuccessfulCases()
@@ -800,10 +800,10 @@ namespace Inventories
             Assert.IsTrue(inventory.Contains(item));
 
             for (int x = expectedPosition.x; x < expectedPosition.x + item.Size.x; x++)
-                for (int y = expectedPosition.y; y < expectedPosition.y + item.Size.y; y++)
-                {
-                    Assert.IsTrue(inventory.IsOccupied(x, y));
-                }
+            for (int y = expectedPosition.y; y < expectedPosition.y + item.Size.y; y++)
+            {
+                Assert.IsTrue(inventory.IsOccupied(x, y));
+            }
 
             //Act:
             bool success = inventory.RemoveItem(item, out Vector2Int actualPosition);
@@ -818,10 +818,10 @@ namespace Inventories
             Assert.IsFalse(inventory.Contains(item));
 
             for (int x = expectedPosition.x; x < expectedPosition.x + item.Size.x; x++)
-                for (int y = expectedPosition.y; y < expectedPosition.y + item.Size.y; y++)
-                {
-                    Assert.IsTrue(inventory.IsFree(x, y));
-                }
+            for (int y = expectedPosition.y; y < expectedPosition.y + item.Size.y; y++)
+            {
+                Assert.IsTrue(inventory.IsFree(x, y));
+            }
         }
 
         private static IEnumerable<TestCaseData> RemoveSuccessfulCases()
@@ -1073,10 +1073,10 @@ namespace Inventories
             Assert.AreEqual(Array.Empty<Item>(), inventory.ToArray());
 
             for (int x = 0; x < inventory.Width; x++)
-                for (int y = 0; y < inventory.Height; y++)
-                {
-                    Assert.IsTrue(inventory.IsFree(x, y));
-                }
+            for (int y = 0; y < inventory.Height; y++)
+            {
+                Assert.IsTrue(inventory.IsFree(x, y));
+            }
         }
 
         [Test]
@@ -1318,7 +1318,7 @@ namespace Inventories
         {
             //Act:
             inventory.ReorganizeSpace();
-
+            
             //Assert:
             Item[,] actual = new Item[inventory.Width, inventory.Height];
             inventory.CopyTo(actual);
