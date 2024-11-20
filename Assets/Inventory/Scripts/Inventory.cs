@@ -172,23 +172,24 @@ namespace Inventories
             if (!IsPositionWithSizeValid(size, freePosition))
                 return false;
 
-            while (!IsPositionFree(size, freePosition))
+            return FindFreePositionWithoutChecks(size, out freePosition);
+        }
+
+        private bool FindFreePositionWithoutChecks(in Vector2Int size, out Vector2Int freePosition)
+        {
+            for (int i = 0; i <= Height - size.y; i++)
             {
-                freePosition = new(++freePosition.x, freePosition.y);
-
-                if (freePosition.x + size.x > Width)
+                for (int j = 0; j <= Width - size.x; j++)
                 {
-                    freePosition = new(0, ++freePosition.y);
+                    freePosition = new(j, i);
 
-                    if (freePosition.y + size.y > Height)
-                    {
-                        freePosition = default;
-                        return false;
-                    }
+                    if (IsPositionFree(size, freePosition))
+                        return true;
                 }
             }
 
-            return true;
+            freePosition = default;
+            return false;
         }
 
         /// <summary>
@@ -352,13 +353,7 @@ namespace Inventories
             if (Count == 0)
                 return;
 
-            for (int i = 0; i < Width; i++)
-            {
-                for (int j = 0; j < Height; j++)
-                {
-                    _itemsMatrix[i, j] = default;
-                }
-            }
+            Array.Clear(_itemsMatrix, 0, _itemsMatrix.Length);
 
             _items.Clear();
 
@@ -416,10 +411,15 @@ namespace Inventories
                                      .ThenBy(item => item.Key.Name)
                                      .ToArray();
 
-            Clear();
+            Array.Clear(_itemsMatrix, 0, _itemsMatrix.Length);
+
+            _items.Clear();
 
             foreach (var item in orderedItems)
-                AddItem(item.Key);
+            {
+                FindFreePositionWithoutChecks(item.Key.Size, out Vector2Int position);
+                AddItemWithoutChecks(item.Key, position);
+            }
         }
 
         /// <summary>
@@ -427,13 +427,7 @@ namespace Inventories
         /// </summary>
         public void CopyTo(in Item[,] matrix)
         {
-            for (int i = 0; i < Width; i++)
-            {
-                for (int j = 0; j < Height; j++)
-                {
-                    matrix[i, j] = _itemsMatrix[i, j];
-                }
-            }
+            Array.Copy(_itemsMatrix, matrix, _itemsMatrix.Length);
         }
 
         public IEnumerator<Item> GetEnumerator()
