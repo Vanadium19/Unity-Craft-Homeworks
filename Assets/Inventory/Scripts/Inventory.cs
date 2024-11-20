@@ -17,8 +17,8 @@ namespace Inventories
 
         private readonly Vector2Int _invalidPosition = new(-1, -1);
 
-        private Item[,] _items;
-        private HashSet<Item> _itemsHashSet;
+        private Item[,] _itemsMatrix;
+        private Dictionary<Item, Vector2Int> _items;
 
         public event Action<Item, Vector2Int> OnAdded;
         public event Action<Item, Vector2Int> OnRemoved;
@@ -30,8 +30,8 @@ namespace Inventories
             if (width <= 0 || height <= 0)
                 throw new ArgumentOutOfRangeException();
 
-            _itemsHashSet = new();
-            _items = new Item[width, height];
+            _items = new();
+            _itemsMatrix = new Item[width, height];
         }
 
         public Inventory(in int width,
@@ -78,9 +78,9 @@ namespace Inventories
                 AddItem(item);
         }
 
-        public int Width => _items.GetLength(ColumnIndex);
-        public int Height => _items.GetLength(RowIndex);
-        public int Count => _itemsHashSet.Count;
+        public int Width => _itemsMatrix.GetLength(ColumnIndex);
+        public int Height => _itemsMatrix.GetLength(RowIndex);
+        public int Count => _items.Count;
 
         /// <summary>
         /// Checks for adding an item on a specified position
@@ -122,11 +122,11 @@ namespace Inventories
             {
                 for (int j = position.y; j < position.y + item.Size.y; j++)
                 {
-                    _items[i, j] = item;
+                    _itemsMatrix[i, j] = item;
                 }
             }
 
-            _itemsHashSet.Add(item);
+            _items.Add(item, position);
         }
 
         public bool AddItem(in Item item, in int posX, in int posY)
@@ -196,7 +196,7 @@ namespace Inventories
         /// </summary>
         public bool Contains(in Item item)
         {
-            return _itemsHashSet.Contains(item);
+            return item == null ? false : _items.ContainsKey(item);
         }
 
         /// <summary>
@@ -204,12 +204,12 @@ namespace Inventories
         /// </summary>
         public bool IsOccupied(in Vector2Int position)
         {
-            return _items[position.x, position.y] != null;
+            return _itemsMatrix[position.x, position.y] != null;
         }
 
         public bool IsOccupied(in int x, in int y)
         {
-            return _items[x, y] != null;
+            return _itemsMatrix[x, y] != null;
         }
 
         /// <summary>
@@ -217,12 +217,12 @@ namespace Inventories
         /// </summary>
         public bool IsFree(in Vector2Int position)
         {
-            return _items[position.x, position.y] == null;
+            return _itemsMatrix[position.x, position.y] == null;
         }
 
         public bool IsFree(in int x, in int y)
         {
-            return _items[x, y] == null;
+            return _itemsMatrix[x, y] == null;
         }
 
         /// <summary>
@@ -252,23 +252,17 @@ namespace Inventories
 
         private void RemoveItemWithoutChecks(in Item item, out Vector2Int position)
         {
-            position = _invalidPosition;
+            position = _items[item];
 
-            for (int i = 0; i < Width; i++)
+            for (int i = position.x; i < position.x + item.Size.x; i++)
             {
-                for (int j = 0; j < Height; j++)
+                for (int j = position.y; j < position.y + item.Size.y; j++)
                 {
-                    if (_items[i, j] == item)
-                    {
-                        if (position == _invalidPosition)
-                            position = new(i, j);
-
-                        _items[i, j] = default;
-                    }
+                    _itemsMatrix[i, j] = default;
                 }
             }
 
-            _itemsHashSet.Remove(item);
+            _items.Remove(item);
         }
 
         /// <summary>
@@ -279,7 +273,7 @@ namespace Inventories
             if (!IsPositionValid(position))
                 throw new IndexOutOfRangeException();
 
-            var item = _items[position.x, position.y];
+            var item = _itemsMatrix[position.x, position.y];
 
             if (item == null)
                 throw new NullReferenceException();
@@ -299,7 +293,7 @@ namespace Inventories
             if (!IsPositionValid(position))
                 return false;
 
-            item = _items[position.x, position.y];
+            item = _itemsMatrix[position.x, position.y];
 
             return item != null;
         }
@@ -321,16 +315,15 @@ namespace Inventories
                 throw new KeyNotFoundException();
 
             int index = 0;
+            Vector2Int position = _items[item];
+
             var positions = new Vector2Int[item.Size.x * item.Size.y];
 
-            for (int i = 0; i < Width; i++)
+            for (int i = position.x; i < position.x + item.Size.x; i++)
             {
-                for (int j = 0; j < Height; j++)
+                for (int j = position.y; j < position.y + item.Size.y; j++)
                 {
-                    if (_items[i, j] == item)
-                    {
-                        positions[index++] = new Vector2Int(i, j);
-                    }
+                    positions[index++] = new Vector2Int(i, j);
                 }
             }
 
@@ -363,11 +356,11 @@ namespace Inventories
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    _items[i, j] = default;
+                    _itemsMatrix[i, j] = default;
                 }
             }
 
-            _itemsHashSet.Clear();
+            _items.Clear();
 
             OnCleared?.Invoke();
         }
@@ -377,7 +370,17 @@ namespace Inventories
         /// </summary>
         public int GetItemCount(string name)
         {
-            return _itemsHashSet.Where(item => item.Name == name).Count();
+            int count = 0;
+
+            foreach (var item in _items)
+            {
+                if (item.Key.Name == name)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         /// <summary>
@@ -409,14 +412,14 @@ namespace Inventories
         /// </summary>
         public void ReorganizeSpace()
         {
-            var orderedItems = _itemsHashSet.OrderByDescending(item => item.Size.x * item.Size.y)
-                                            .ThenBy(item => item.Name)
-                                            .ToArray();
+            var orderedItems = _items.OrderByDescending(item => item.Key.Size.x * item.Key.Size.y)
+                                     .ThenBy(item => item.Key.Name)
+                                     .ToArray();
 
             Clear();
 
             foreach (var item in orderedItems)
-                AddItem(item);
+                AddItem(item.Key);
         }
 
         /// <summary>
@@ -428,19 +431,19 @@ namespace Inventories
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    matrix[i, j] = _items[i, j];
+                    matrix[i, j] = _itemsMatrix[i, j];
                 }
             }
         }
 
         public IEnumerator<Item> GetEnumerator()
         {
-            return _itemsHashSet.GetEnumerator();
+            return _items.Keys.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _itemsHashSet.GetEnumerator();
+            return _items.GetEnumerator();
         }
 
         #region Checks
@@ -486,7 +489,7 @@ namespace Inventories
             {
                 for (int j = position.y; j < position.y + size.y; j++)
                 {
-                    if (_items[i, j] != null)
+                    if (_itemsMatrix[i, j] != null)
                         return false;
                 }
             }
