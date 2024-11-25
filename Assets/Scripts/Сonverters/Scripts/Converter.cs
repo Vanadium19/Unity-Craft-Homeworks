@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.UI.DefaultControls;
 
 namespace Converters
 {
@@ -67,16 +63,7 @@ namespace Converters
 
         public void Add(IEnumerable<Resource> resources, out IReadOnlyList<Resource> extraResources)
         {
-            if (resources == null)
-                throw new ArgumentNullException();
-
-            foreach (var resource in resources)
-            {
-                if (resource == null)
-                {
-                    throw new ArgumentException();
-                }
-            }
+            CheckResources(resources);
 
             List<Resource> extra = new();
 
@@ -93,6 +80,19 @@ namespace Converters
 
         public void Add(IEnumerable<Resource> resources)
         {
+            CheckResources(resources);
+
+            foreach (var resource in resources)
+            {
+                if (_loadingArea.Count == _loadingAreaCapacity)
+                    break;
+
+                _loadingArea.Enqueue(resource);
+            }
+        }
+
+        private void CheckResources(IEnumerable<Resource> resources)
+        {
             if (resources == null)
                 throw new ArgumentNullException();
 
@@ -102,14 +102,6 @@ namespace Converters
                 {
                     throw new ArgumentException();
                 }
-            }
-
-            foreach (var resource in resources)
-            {
-                if (_loadingArea.Count == _loadingAreaCapacity)
-                    break;
-
-                _loadingArea.Enqueue(resource);
             }
         }
 
@@ -121,6 +113,7 @@ namespace Converters
             {
                 Add(_conversionResources);
                 _conversionResources.Clear();
+                _elapsedTime = 0f;
             }
         }
 
@@ -130,6 +123,9 @@ namespace Converters
                 throw new ArgumentException();
 
             if (!_enabled)
+                return;
+
+            if (_unloadingArea.Count == _unloadingAreaCapacity)
                 return;
 
             if (_loadingArea.Count == 0 && _conversionResources.Count == 0)
@@ -149,7 +145,13 @@ namespace Converters
 
         private void StartConvert()
         {
-            for (int i = 0; i < TakenResourcesCount; i++)
+            int takenResourcesCount = _takenResourcesCount;
+            int freeProductSpace = _unloadingAreaCapacity - _unloadingArea.Count;
+
+            if (takenResourcesCount > freeProductSpace)
+                takenResourcesCount = (int)Mathf.Ceil(freeProductSpace / _proportion);
+
+            for (int i = 0; i < takenResourcesCount; i++)
             {
                 if (_loadingArea.TryDequeue(out Resource resource))
                 {

@@ -1,11 +1,8 @@
-using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.UI.DefaultControls;
 
 namespace Converters
 {
@@ -147,19 +144,19 @@ namespace Converters
 
             var converter = new Converter(10, 20, 2, 4, 2f, false);
 
-            converter.Add(resources, out var extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, deltaTimes, 0f).SetName("Converter disabled");
 
             converter = new Converter(10, 20, 2, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, deltaTimes, deltaTimes.Sum()).SetName("Converter enabled");
 
             converter = new Converter(10, 20, 2, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, new float[] { 1f, 2f, 0.5f }, 0.5f).SetName("When next conversion started");
 
@@ -201,25 +198,25 @@ namespace Converters
 
             var converter = new Converter(10, 20, 2, 4, 2f, false);
 
-            converter.Add(resources, out var extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, deltaTimes, 0, 4).SetName("Converter disabled");
 
             converter = new Converter(10, 20, 3, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, new float[] { 1f }, 3, 1).SetName("Simple");
 
             converter = new Converter(10, 20, 3, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, deltaTimes, 1, 0).SetName("When start new loop");
 
             converter = new Converter(10, 20, 3, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, new float[] { 1f, 1f, 1f, 1f, 1f }, 0, 0).SetName("When resources ended");
 
@@ -250,37 +247,37 @@ namespace Converters
 
             var converter = new Converter(10, 20, 2, 4, 2f, false);
 
-            converter.Add(resources, out var extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, deltaTimes, 0).SetName("Converter disabled");
 
             converter = new Converter(10, 20, 2, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, new float[] { 1f }, 0).SetName("Didn't have time to convert");
 
             converter = new Converter(10, 20, 2, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, deltaTimes, 4).SetName("Simle");
 
             converter = new Converter(10, 20, 2, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, new float[] { 1f, 1f, 1f, 1f, 1f }, 8).SetName("When resources ended");
 
             converter = new Converter(10, 20, 3, 4, 2f, true);
 
-            converter.Add(new Resource[] { new Resource(), new Resource(), new Resource(), new Resource(), new Resource() }, out extra);
+            converter.Add(new Resource[] { new Resource(), new Resource(), new Resource(), new Resource(), new Resource() });
 
             yield return new TestCaseData(converter, new float[] { 1f, 1f, 1f, 1f, 1f }, 6).SetName("When complicated proportion");
 
             converter = new Converter(10, 6, 2, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, new float[] { 1f, 1f, 1f, 1f, 1f }, 6).SetName("When unloading area capacity ended");
 
@@ -310,6 +307,7 @@ namespace Converters
 
             //Assert
             Assert.AreEqual(expectedLoadingAreaCount, converter.LoadingAreaCount);
+            Assert.AreEqual(0f, converter.ElapsedTime);
         }
 
         public static IEnumerable<TestCaseData> OnDisableCases()
@@ -321,22 +319,92 @@ namespace Converters
 
             var converter = new Converter(10, 20, 4, 4, 5f, true);
 
-            converter.Add(resources, out var extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, new Resource[0], deltaTimes, 4).SetName("Simple");
 
             converter = new Converter(10, 20, 2, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            converter.Add(resources);
 
             yield return new TestCaseData(converter, new Resource[0], deltaTimes, 2).SetName("There wasn't enough time for all the resources");
 
             converter = new Converter(10, 20, 2, 4, 2f, true);
 
-            converter.Add(resources, out extra);
+            resources = new Resource[]
+            {
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource()
+            };
+
+            converter.Add(resources);
+
+            yield return new TestCaseData(converter,
+                                          new Resource[] { new Resource(), new Resource(), new Resource(), new Resource() },
+                                          deltaTimes,
+                                          10).SetName("Part burns");
+        }
+
+        [TestCaseSource(nameof(UnloadingAreaIsFullCases))]
+        public void WhenUnloadingAreaIsFullConverterDoesNotWork(Converter converter,
+                                                                float[] deltaTimes,
+                                                                int expectedLoadingAreaCount,
+                                                                int expectedUnloadingAreaCount)
+        {
+            Debug.Log(converter.LoadingAreaCount);
+
+            //Act
+            foreach (var deltaTime in deltaTimes)
+            {
+                converter.Update(deltaTime);
+            }
+
+            //Assert
+            Assert.AreEqual(expectedLoadingAreaCount, converter.LoadingAreaCount);
+            Assert.AreEqual(expectedUnloadingAreaCount, converter.UnloadingAreaCount);
+            Assert.AreEqual(0f, converter.ElapsedTime);
+        }
+
+        public static IEnumerable<TestCaseData> UnloadingAreaIsFullCases()
+        {
+            //Arrange
+            var deltaTimes = new float[] { 1f, 1f, 0.5f };
+
+            var resources = new Resource[]
+            {
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource(),
+                new Resource()
+            };
+
+            var converter = new Converter(4, 2, 1, 2, 1f, true);
+
+            converter.Add(resources, out var extra);
+
+            yield return new TestCaseData(converter, deltaTimes, 3, 2).SetName("Simple");
+
+            converter = new Converter(8, 4, 2, 3, 1f, true);
+
             converter.Add(resources, out extra);
 
-            yield return new TestCaseData(converter, resources, deltaTimes, 10).SetName("Part burns");
+            yield return new TestCaseData(converter, deltaTimes, 5, 4).SetName("When need take one less");
+
+            converter = new Converter(8, 5, 2, 3, 1f, true);
+
+            converter.Add(resources, out extra);
+
+            yield return new TestCaseData(converter, deltaTimes, 4, 5).SetName("When need take one more");
         }
     }
 }
