@@ -91,20 +91,6 @@ namespace Converters
             }
         }
 
-        private void CheckResources(IEnumerable<Resource> resources)
-        {
-            if (resources == null)
-                throw new ArgumentNullException();
-
-            foreach (var resource in resources)
-            {
-                if (resource == null)
-                {
-                    throw new ArgumentException();
-                }
-            }
-        }
-
         public void SetActive(bool value)
         {
             _enabled = value;
@@ -173,6 +159,20 @@ namespace Converters
             }
 
             _conversionResources.Clear();
+        }
+
+        private void CheckResources(IEnumerable<Resource> resources)
+        {
+            if (resources == null)
+                throw new ArgumentNullException();
+
+            foreach (var resource in resources)
+            {
+                if (resource == null)
+                {
+                    throw new ArgumentException();
+                }
+            }
         }
     }
 }
