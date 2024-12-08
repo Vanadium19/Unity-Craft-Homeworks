@@ -20,40 +20,20 @@ namespace Converters
         private bool _enabled;
         private float _elapsedTime;
 
-        public Converter(int loadingAreaCapacity,
-                         int unloadingAreaCapacity,
-                         int takenResourcesCount,
-                         int givenResourcesCount,
-                         float conversionTime,
-                         bool enabled = false)
+        public Converter(ConverterArguments arguments, bool enabled = false)
         {
-            if (loadingAreaCapacity <= 0)
-                throw new ArgumentException();
-
-            if (unloadingAreaCapacity <= 0)
-                throw new ArgumentException();
-
-            if (takenResourcesCount <= 0)
-                throw new ArgumentException();
-
-            if (givenResourcesCount <= 0)
-                throw new ArgumentException();
-
-            if (conversionTime <= 0)
-                throw new ArgumentException();
-
-            _loadingArea = new Queue<Resource>(loadingAreaCapacity);
-            _unloadingArea = new Queue<Product>(unloadingAreaCapacity);
-            _conversionResources = new List<Resource>(takenResourcesCount);
+            _loadingArea = new Queue<Resource>(arguments.LoadingAreaCapacity);
+            _unloadingArea = new Queue<Product>(arguments.UnloadingAreaCapacity);
+            _conversionResources = new List<Resource>(arguments.TakenResourcesCount);
             _enabled = enabled;
             _elapsedTime = 0f;
 
-            _loadingAreaCapacity = loadingAreaCapacity;
-            _unloadingAreaCapacity = unloadingAreaCapacity;
-            _takenResourcesCount = takenResourcesCount;
-            _givenResourcesCount = givenResourcesCount;
-            _conversionTime = conversionTime;
-            _proportion = (float)givenResourcesCount / takenResourcesCount;
+            _loadingAreaCapacity = arguments.LoadingAreaCapacity;
+            _unloadingAreaCapacity = arguments.UnloadingAreaCapacity;
+            _takenResourcesCount = arguments.TakenResourcesCount;
+            _givenResourcesCount = arguments.GivenResourcesCount;
+            _conversionTime = arguments.ConversionTime;
+            _proportion = (float)_givenResourcesCount / _takenResourcesCount;
         }
 
         public bool Enabled => _enabled;
