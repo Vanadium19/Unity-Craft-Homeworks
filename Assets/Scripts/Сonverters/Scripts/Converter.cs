@@ -27,14 +27,20 @@ namespace Converters
                          float conversionTime,
                          bool enabled = false)
         {
-            if (loadingAreaCapacity <= 0
-                || unloadingAreaCapacity <= 0
-                || takenResourcesCount <= 0
-                || givenResourcesCount <= 0
-                || conversionTime <= 0)
-            {
+            if (loadingAreaCapacity <= 0)
                 throw new ArgumentException();
-            }
+
+            if (unloadingAreaCapacity <= 0)
+                throw new ArgumentException();
+
+            if (takenResourcesCount <= 0)
+                throw new ArgumentException();
+
+            if (givenResourcesCount <= 0)
+                throw new ArgumentException();
+
+            if (conversionTime <= 0)
+                throw new ArgumentException();
 
             _loadingArea = new Queue<Resource>(loadingAreaCapacity);
             _unloadingArea = new Queue<Product>(unloadingAreaCapacity);
