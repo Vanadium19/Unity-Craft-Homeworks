@@ -53,11 +53,16 @@ namespace Converters
 
             if (_loadingAreaCount > _loadingAreaCapacity)
             {
+                IEnumerator<Resource> enumerator = resources.GetEnumerator();
                 int extraResourcesCount = _loadingAreaCount - _loadingAreaCapacity;
+
                 _loadingAreaCount = _loadingAreaCapacity;
 
                 for (int i = 0; i < extraResourcesCount; i++)
-                    extra.Add(new Resource());
+                {
+                    enumerator.MoveNext();
+                    extra.Add(enumerator.Current);
+                }
             }
 
             extraResources = extra;
