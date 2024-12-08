@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.Port;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.UI.DefaultControls;
 
 namespace Converters
 {

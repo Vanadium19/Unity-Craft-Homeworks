@@ -1,29 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Converters
 {
     public class Converter
     {
-        private readonly Queue<Resource> _loadingArea;
-        private readonly Queue<Product> _unloadingArea;
-        private readonly List<Resource> _conversionResources;
-
         private readonly int _loadingAreaCapacity;
         private readonly int _unloadingAreaCapacity;
         private readonly int _takenResourcesCount;
         private readonly int _givenResourcesCount;
-        public readonly float _conversionTime;
+        private readonly float _conversionTime;
+
+        private int _loadingAreaCount;
+        private int _unloadingAreaCount;
+        private int _conversionResourcesCount;
 
         private bool _enabled;
         private float _elapsedTime;
 
         public Converter(ConverterArguments arguments, bool enabled = false)
         {
-            _loadingArea = new Queue<Resource>(arguments.LoadingAreaCapacity);
-            _unloadingArea = new Queue<Product>(arguments.UnloadingAreaCapacity);
-            _conversionResources = new List<Resource>(arguments.TakenResourcesCount);
             _enabled = enabled;
             _elapsedTime = 0f;
 
@@ -36,14 +34,14 @@ namespace Converters
 
         public bool Enabled => _enabled;
         public float ElapsedTime => _elapsedTime;
-        public int LoadingAreaCount => _loadingArea.Count;
+        public int LoadingAreaCount => _loadingAreaCount;
         public int LoadingAreaCapacity => _loadingAreaCapacity;
         public int UnloadingAreaCapacity => _unloadingAreaCapacity;
-        public int UnloadingAreaCount => _unloadingArea.Count;
+        public int UnloadingAreaCount => _unloadingAreaCount;
         public int TakenResourcesCount => _takenResourcesCount;
         public int GivenResourcesCount => _givenResourcesCount;
         public float ConversionTime => _conversionTime;
-        public int ConversionResourcesCount => _conversionResources.Count;
+        public int ConversionResourcesCount => _conversionResourcesCount;
 
         public void Add(IEnumerable<Resource> resources, out IReadOnlyList<Resource> extraResources)
         {
@@ -51,12 +49,15 @@ namespace Converters
 
             List<Resource> extra = new();
 
-            foreach (var resource in resources)
+            _loadingAreaCount += resources.Count();
+
+            if (_loadingAreaCount > _loadingAreaCapacity)
             {
-                if (_loadingArea.Count < _loadingAreaCapacity)
-                    _loadingArea.Enqueue(resource);
-                else
-                    extra.Add(resource);
+                int extraResourcesCount = _loadingAreaCount - _loadingAreaCapacity;
+                _loadingAreaCount = _loadingAreaCapacity;
+
+                for (int i = 0; i < extraResourcesCount; i++)
+                    extra.Add(new Resource());
             }
 
             extraResources = extra;
@@ -66,23 +67,17 @@ namespace Converters
         {
             CheckResources(resources);
 
-            foreach (var resource in resources)
-            {
-                if (_loadingArea.Count == _loadingAreaCapacity)
-                    break;
-
-                _loadingArea.Enqueue(resource);
-            }
+            _loadingAreaCount = Mathf.Min(_loadingAreaCount + resources.Count(), _loadingAreaCapacity);
         }
 
         public void SetActive(bool value)
         {
             _enabled = value;
 
-            if (!value)
+            if (!value && _conversionResourcesCount > 0)
             {
-                Add(_conversionResources);
-                _conversionResources.Clear();
+                Add(_conversionResourcesCount);
+                _conversionResourcesCount = 0;
                 _elapsedTime = 0f;
             }
         }
@@ -95,13 +90,13 @@ namespace Converters
             if (!_enabled)
                 return;
 
-            if (_unloadingAreaCapacity - _unloadingArea.Count < _givenResourcesCount)
+            if (_unloadingAreaCapacity - _unloadingAreaCount < _givenResourcesCount)
                 return;
 
-            if (_loadingArea.Count < _takenResourcesCount && _conversionResources.Count == 0)
+            if (_loadingAreaCount < _takenResourcesCount && _conversionResourcesCount == 0)
                 return;
 
-            if (_conversionResources.Count == 0)
+            if (_conversionResourcesCount == 0)
                 StartConvert();
 
             _elapsedTime += deltaTime;
@@ -115,21 +110,22 @@ namespace Converters
 
         private void StartConvert()
         {
-            for (int i = 0; i < _takenResourcesCount; i++)
-            {
-                if (_loadingArea.TryDequeue(out Resource resource))
-                {
-                    _conversionResources.Add(resource);
-                }
-            }
+            _loadingAreaCount -= _takenResourcesCount;
+            _conversionResourcesCount = _takenResourcesCount;
         }
 
         private void EndConvert()
         {
-            for (int i = 0; i < _givenResourcesCount; i++)
-                _unloadingArea.Enqueue(new Product());
+            _unloadingAreaCount += _givenResourcesCount;
+            _conversionResourcesCount = 0;
+        }
 
-            _conversionResources.Clear();
+        private void Add(int resourcesCount)
+        {
+            if (resourcesCount <= 0)
+                throw new ArgumentException();
+
+            _loadingAreaCount = Mathf.Min(_loadingAreaCount + resourcesCount, _loadingAreaCapacity);
         }
 
         private void CheckResources(IEnumerable<Resource> resources)
