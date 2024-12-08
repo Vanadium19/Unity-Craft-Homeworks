@@ -191,6 +191,7 @@ namespace Converters
             yield return StartConvertConverterDisabledCase(resources, deltaTimes).SetName("Converter disabled");
             yield return StartConvertSimpleCase(resources, new float[] { 1f }).SetName("Simple");
             yield return StartConvertWhenStartNewLoopCase(resources, deltaTimes).SetName("When start new loop");
+            yield return StartConvertWhenNotEnoughResourcesCase(resources, deltaTimes).SetName("When not enough resources");
             yield return StartConvertWhenResourcesEndedCase(resources, new float[] { 1f, 1f, 1f, 1f, 1f }).SetName("When resources ended");
             yield return StartConvertWithEmptyLoadingAreaCase(resources, deltaTimes).SetName("With empty loading area");
         }
@@ -215,16 +216,25 @@ namespace Converters
 
         private static TestCaseData StartConvertWhenStartNewLoopCase(Resource[] resources, float[] deltaTimes)
         {
+            var converter = new Converter(new ConverterArguments(10, 20, 2, 4, 2f), true);
+
+            converter.Add(resources);
+
+            return new TestCaseData(converter, deltaTimes, 2, 0);
+        }
+
+        private static TestCaseData StartConvertWhenNotEnoughResourcesCase(Resource[] resources, float[] deltaTimes)
+        {
             var converter = new Converter(new ConverterArguments(10, 20, 3, 4, 2f), true);
 
             converter.Add(resources);
 
-            return new TestCaseData(converter, deltaTimes, 1, 0);
+            return new TestCaseData(converter, deltaTimes, 0, 1);
         }
 
         private static TestCaseData StartConvertWhenResourcesEndedCase(Resource[] resources, float[] deltaTimes)
         {
-            var converter = new Converter(new ConverterArguments(10, 20, 3, 4, 2f), true);
+            var converter = new Converter(new ConverterArguments(10, 20, 4, 4, 2f), true);
 
             converter.Add(resources);
 
@@ -262,21 +272,6 @@ namespace Converters
             yield return EndConvertDidNotHaveTimeToConvertCase(resources, new float[] { 1f }).SetName("Didn't have time to convert");
             yield return EndConvertSimpleCase(resources, deltaTimes).SetName("Simle");
             yield return EndConvertWhenResourcesEndedCase(resources, new float[] { 1f, 1f, 1f, 1f, 1f }).SetName("When resources ended");
-            yield return EndConvertWhenComplicatedProportionCase(new Resource[]
-            {
-                new Resource(),
-                new Resource(),
-                new Resource(),
-                new Resource(),
-                new Resource()
-            }, new float[]
-            {
-                1f,
-                1f,
-                1f,
-                1f,
-                1f
-            }).SetName("When complicated proportion");
             yield return EndConvertWhenUnloadingAreaCapacityEndedCase(resources, new float[]
             {
                 1f,
@@ -324,22 +319,13 @@ namespace Converters
             return new TestCaseData(converter, deltaTimes, 8);
         }
 
-        private static TestCaseData EndConvertWhenComplicatedProportionCase(Resource[] resources, float[] deltaTimes)
-        {
-            var converter = new Converter(new ConverterArguments(10, 20, 3, 4, 2f), true);
-
-            converter.Add(resources);
-
-            return new TestCaseData(converter, deltaTimes, 6);
-        }
-
         private static TestCaseData EndConvertWhenUnloadingAreaCapacityEndedCase(Resource[] resources, float[] deltaTimes)
         {
             var converter = new Converter(new ConverterArguments(10, 6, 2, 4, 2f), true);
 
             converter.Add(resources);
 
-            return new TestCaseData(converter, deltaTimes, 6);
+            return new TestCaseData(converter, deltaTimes, 4);
         }
 
         private static TestCaseData EndConvertWithEmptyLoadingAreaCase(Resource[] resources, float[] deltaTimes)
@@ -454,21 +440,10 @@ namespace Converters
             //Arrange
             var deltaTimes = new float[] { 1f, 1f, 0.5f };
 
-            var resources = new Resource[]
-            {
-                new Resource(),
-                new Resource(),
-                new Resource(),
-                new Resource(),
-                new Resource(),
-                new Resource(),
-                new Resource(),
-                new Resource()
-            };
+            var resources = new Resource[] { new Resource(), new Resource(), new Resource(), new Resource() };
 
             yield return UnloadingAreaFullSimpleCase(resources, deltaTimes).SetName("Simple");
-            yield return UnloadingAreaFullWhenNeedTakeOneLessCase(resources, deltaTimes).SetName("When need take one less");
-            yield return UnloadingAreaFullWhenNeedTakeOneMoreCase(resources, deltaTimes).SetName("When need take one more");
+            yield return UnloadingAreaFullWhenNotEnoughFreePositionsCase(resources, deltaTimes).SetName("When not enough free positions");
         }
 
         private static TestCaseData UnloadingAreaFullSimpleCase(Resource[] resources, float[] deltaTimes)
@@ -480,22 +455,13 @@ namespace Converters
             return new TestCaseData(converter, deltaTimes, 3, 2);
         }
 
-        private static TestCaseData UnloadingAreaFullWhenNeedTakeOneLessCase(Resource[] resources, float[] deltaTimes)
+        private static TestCaseData UnloadingAreaFullWhenNotEnoughFreePositionsCase(Resource[] resources, float[] deltaTimes)
         {
-            var converter = new Converter(new ConverterArguments(8, 4, 2, 3, 1f), true);
+            var converter = new Converter(new ConverterArguments(4, 2, 2, 3, 1f), true);
 
             converter.Add(resources);
 
-            return new TestCaseData(converter, deltaTimes, 5, 4);
-        }
-
-        private static TestCaseData UnloadingAreaFullWhenNeedTakeOneMoreCase(Resource[] resources, float[] deltaTimes)
-        {
-            var converter = new Converter(new ConverterArguments(8, 5, 2, 3, 1f), true);
-
-            converter.Add(resources);
-
-            return new TestCaseData(converter, deltaTimes, 4, 5);
+            return new TestCaseData(converter, deltaTimes, 4, 0);
         }
     }
 }

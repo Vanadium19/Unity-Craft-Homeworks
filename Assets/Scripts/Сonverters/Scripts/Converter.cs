@@ -15,7 +15,6 @@ namespace Converters
         private readonly int _takenResourcesCount;
         private readonly int _givenResourcesCount;
         public readonly float _conversionTime;
-        private readonly float _proportion;
 
         private bool _enabled;
         private float _elapsedTime;
@@ -33,7 +32,6 @@ namespace Converters
             _takenResourcesCount = arguments.TakenResourcesCount;
             _givenResourcesCount = arguments.GivenResourcesCount;
             _conversionTime = arguments.ConversionTime;
-            _proportion = (float)_givenResourcesCount / _takenResourcesCount;
         }
 
         public bool Enabled => _enabled;
@@ -97,10 +95,10 @@ namespace Converters
             if (!_enabled)
                 return;
 
-            if (_unloadingArea.Count == _unloadingAreaCapacity)
+            if (_unloadingAreaCapacity - _unloadingArea.Count < _givenResourcesCount)
                 return;
 
-            if (_loadingArea.Count == 0 && _conversionResources.Count == 0)
+            if (_loadingArea.Count < _takenResourcesCount && _conversionResources.Count == 0)
                 return;
 
             if (_conversionResources.Count == 0)
@@ -117,13 +115,7 @@ namespace Converters
 
         private void StartConvert()
         {
-            int takenResourcesCount = _takenResourcesCount;
-            int freeProductSpace = _unloadingAreaCapacity - _unloadingArea.Count;
-
-            if (takenResourcesCount > freeProductSpace)
-                takenResourcesCount = (int)Mathf.Ceil(freeProductSpace / _proportion);
-
-            for (int i = 0; i < takenResourcesCount; i++)
+            for (int i = 0; i < _takenResourcesCount; i++)
             {
                 if (_loadingArea.TryDequeue(out Resource resource))
                 {
@@ -134,15 +126,8 @@ namespace Converters
 
         private void EndConvert()
         {
-            int productCount = (int)(_conversionResources.Count * _proportion);
-
-            for (int i = 0; i < productCount; i++)
-            {
-                if (_unloadingArea.Count == _unloadingAreaCapacity)
-                    break;
-
+            for (int i = 0; i < _givenResourcesCount; i++)
                 _unloadingArea.Enqueue(new Product());
-            }
 
             _conversionResources.Clear();
         }
