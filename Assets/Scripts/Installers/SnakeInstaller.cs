@@ -35,16 +35,16 @@ namespace Installers
                 .AsSingle()
                 .WithArguments(MaxLevel);
 
-            Container.BindInterfacesAndSelfTo<Coin>()
-                .FromInstance(_coinPrefab)
-                .AsCached();
-
             Container.BindInterfacesTo<WorldBounds>()
                 .FromInstance(_worldBounds)
                 .AsSingle();
+            
+            Container.Bind<Coin>()
+                .FromInstance(_coinPrefab)
+                .AsCached();
 
             //Core
-            Container.BindInterfacesTo<CoinSpawner>()
+            Container.BindInterfacesAndSelfTo<CoinSpawner>()
                 .AsSingle()
                 .NonLazy();
 
