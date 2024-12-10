@@ -11,6 +11,7 @@ namespace Core
     {
         private readonly IDifficulty _difficulty;
         private readonly IWorldBounds _bounds;
+
         private readonly CoinPool _coinPool;
         private readonly Dictionary<Vector2Int, Coin> _spawnedCoins;
 
@@ -18,8 +19,8 @@ namespace Core
         {
             _difficulty = difficulty;
             _bounds = bounds;
-            _coinPool = coinPool;
 
+            _coinPool = coinPool;
             _spawnedCoins = new Dictionary<Vector2Int, Coin>();
         }
 
@@ -45,12 +46,6 @@ namespace Core
             return result;
         }
 
-        private void SpawnCoins()
-        {
-            for (int i = 0; i < _difficulty.Current; i++)
-                Spawn();
-        }
-
         private void Spawn()
         {
             var position = GetPosition();
@@ -67,6 +62,12 @@ namespace Core
                 position = _bounds.GetRandomPosition();
 
             return position;
+        }
+
+        private void SpawnCoins()
+        {
+            for (int i = 0; i < _difficulty.Current; i++)
+                Spawn();
         }
     }
 }

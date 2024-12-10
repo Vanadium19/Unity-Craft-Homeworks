@@ -26,14 +26,21 @@ namespace Core
 
         public void Initialize()
         {
-            _snake.OnMoved += OnSnakeMoved;
-
             UpdateLevel();
+
+            _snake.OnMoved += OnSnakeMoved;
         }
 
         public void Dispose()
         {
             _snake.OnMoved -= OnSnakeMoved;
+        }
+
+        private void UpdateLevel()
+        {
+            _coinCount = 0;
+            _difficulty.Next(out _currentDifficulty);
+            _snake.SetSpeed(_currentDifficulty);
         }
 
         private void OnSnakeMoved(Vector2Int position)
@@ -43,7 +50,7 @@ namespace Core
                 _snake.SetActive(false);
                 Debug.Log("Snake is out of bounds");
             }
-            
+
             if (_coinSpawner.TryRemoveCoin(position, out ICoin coin))
             {
                 _snake.Expand(coin.Bones);
@@ -52,13 +59,6 @@ namespace Core
 
             if (_coinCount == _difficulty.Current)
                 UpdateLevel();
-        }
-
-        private void UpdateLevel()
-        {
-            _coinCount = 0;
-            _difficulty.Next(out _currentDifficulty);
-            _snake.SetSpeed(_currentDifficulty);
         }
     }
 }

@@ -44,19 +44,9 @@ namespace Installers
                 .FromInstance(_coinPrefab)
                 .AsCached();
 
-            //Pool
-            Container.BindMemoryPool<Coin, CoinPool>()
-                .ExpandByOneAtATime()
-                .FromComponentInNewPrefab(_coinPrefab)
-                .WithGameObjectName("Coin")
-                .UnderTransform(_coinsParent)
-                .AsSingle();
+            CoinInstaller.Install(Container, _coinPrefab, _coinsParent);
 
             //Core
-            Container.BindInterfacesAndSelfTo<CoinSpawner>()
-                .AsSingle()
-                .NonLazy();
-
             Container.BindInterfacesTo<GameManager>()
                 .AsSingle()
                 .NonLazy();
