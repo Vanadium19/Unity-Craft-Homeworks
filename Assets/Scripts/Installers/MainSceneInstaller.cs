@@ -38,13 +38,7 @@ namespace Installers
             CoinInstaller.Install(Container, _coinPrefab, _coinsParent);
 
             //Core
-            Container.BindInterfacesTo<LevelManager>()
-                .AsSingle()
-                .NonLazy();
-
-            Container.BindInterfacesTo<GameFinisher>()
-                .AsSingle()
-                .NonLazy();
+            SystemInstaller.Install(Container);
         }
     }
 }
