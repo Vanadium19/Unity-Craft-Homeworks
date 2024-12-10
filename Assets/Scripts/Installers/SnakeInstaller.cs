@@ -15,6 +15,7 @@ namespace Installers
         [SerializeField] private Snake _snake;
         [SerializeField] private Coin _coinPrefab;
         [SerializeField] private WorldBounds _worldBounds;
+        [SerializeField] private Transform _coinsParent;
 
         public override void InstallBindings()
         {
@@ -38,10 +39,18 @@ namespace Installers
             Container.BindInterfacesTo<WorldBounds>()
                 .FromInstance(_worldBounds)
                 .AsSingle();
-            
+
             Container.Bind<Coin>()
                 .FromInstance(_coinPrefab)
                 .AsCached();
+
+            //Pool
+            Container.BindMemoryPool<Coin, CoinPool>()
+                .ExpandByOneAtATime()
+                .FromComponentInNewPrefab(_coinPrefab)
+                .WithGameObjectName("Coin")
+                .UnderTransform(_coinsParent)
+                .AsSingle();
 
             //Core
             Container.BindInterfacesAndSelfTo<CoinSpawner>()

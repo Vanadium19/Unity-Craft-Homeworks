@@ -1,5 +1,6 @@
 using System;
 using Modules;
+using SnakeGame;
 using UnityEngine;
 using Zenject;
 
@@ -8,17 +9,19 @@ namespace Core
     public class GameManager : IInitializable, IDisposable
     {
         private readonly IDifficulty _difficulty;
-        private ISnake _snake;
-        private CoinSpawner _coinSpawner;
+        private readonly IWorldBounds _worldBounds;
+        private readonly ISnake _snake;
+        private readonly ICoinSpawner _coinSpawner;
 
         private int _coinCount;
         private int _currentDifficulty;
 
-        public GameManager(IDifficulty difficulty, ISnake snake, CoinSpawner coinSpawner)
+        public GameManager(IDifficulty difficulty, ISnake snake, ICoinSpawner coinSpawner, IWorldBounds worldBounds)
         {
             _difficulty = difficulty;
             _snake = snake;
             _coinSpawner = coinSpawner;
+            _worldBounds = worldBounds;
         }
 
         public void Initialize()
@@ -35,6 +38,12 @@ namespace Core
 
         private void OnSnakeMoved(Vector2Int position)
         {
+            if (!_worldBounds.IsInBounds(position))
+            {
+                _snake.SetActive(false);
+                Debug.Log("Snake is out of bounds");
+            }
+            
             if (_coinSpawner.TryRemoveCoin(position, out ICoin coin))
             {
                 _snake.Expand(coin.Bones);
