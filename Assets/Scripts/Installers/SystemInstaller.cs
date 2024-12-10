@@ -1,8 +1,9 @@
+using Core;
 using Zenject;
 
-namespace Core
+namespace Installers
 {
-    public class SystemInstaller : Installer<SystemInstaller> 
+    public class SystemInstaller : Installer<SystemInstaller>
     {
         public override void InstallBindings()
         {

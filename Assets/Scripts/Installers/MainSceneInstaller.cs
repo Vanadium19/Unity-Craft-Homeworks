@@ -1,7 +1,4 @@
-using Core;
 using Modules;
-using PlayerInput;
-using Player;
 using SnakeGame;
 using UnityEngine;
 using Zenject;

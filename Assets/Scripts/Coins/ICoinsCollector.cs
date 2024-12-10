@@ -1,7 +1,6 @@
 using System;
-using Modules;
 
-namespace Core
+namespace Coins
 {
     public interface ICoinsCollector
     {

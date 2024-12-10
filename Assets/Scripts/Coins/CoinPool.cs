@@ -2,7 +2,7 @@ using Modules;
 using UnityEngine;
 using Zenject;
 
-namespace Core
+namespace Coins
 {
     public class CoinPool : MonoMemoryPool<Vector3, Coin>
     {

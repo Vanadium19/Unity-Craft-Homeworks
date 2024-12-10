@@ -1,4 +1,4 @@
-using Core;
+using Coins;
 using Modules;
 using UnityEngine;
 using Zenject;

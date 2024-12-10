@@ -3,7 +3,7 @@ using Modules;
 using UnityEngine;
 using Zenject;
 
-namespace Core
+namespace Coins
 {
     public class CoinsCollector : IInitializable, IDisposable, ICoinsCollector
     {

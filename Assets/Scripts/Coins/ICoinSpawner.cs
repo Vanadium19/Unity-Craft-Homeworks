@@ -1,7 +1,7 @@
 using Modules;
 using UnityEngine;
 
-namespace Core
+namespace Coins
 {
     public interface ICoinSpawner
     {

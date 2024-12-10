@@ -5,7 +5,7 @@ using SnakeGame;
 using UnityEngine;
 using Zenject;
 
-namespace Core
+namespace Coins
 {
     public class CoinSpawner : IInitializable, IDisposable, ICoinSpawner
     {
@@ -25,7 +25,7 @@ namespace Core
         }
 
         public int CoinsCount => _spawnedCoins.Count;
-        
+
         public void Initialize()
         {
             _difficulty.OnStateChanged += SpawnCoins;
