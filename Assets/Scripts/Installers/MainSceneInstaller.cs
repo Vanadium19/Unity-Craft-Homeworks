@@ -31,6 +31,9 @@ namespace Installers
                 .FromInstance(_worldBounds)
                 .AsSingle();
 
+            Container.BindInterfacesTo<Score>()
+                .AsSingle();
+
             //Coin
             CoinInstaller.Install(Container, _coinPrefab, _coinsParent);
 

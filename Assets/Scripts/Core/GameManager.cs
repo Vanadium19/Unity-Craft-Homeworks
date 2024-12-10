@@ -11,17 +11,23 @@ namespace Core
         private readonly IDifficulty _difficulty;
         private readonly IWorldBounds _worldBounds;
         private readonly ISnake _snake;
+        private readonly IScore _score;
         private readonly ICoinSpawner _coinSpawner;
 
         private int _coinCount;
         private int _currentDifficulty;
 
-        public GameManager(IDifficulty difficulty, ISnake snake, ICoinSpawner coinSpawner, IWorldBounds worldBounds)
+        public GameManager(IDifficulty difficulty,
+            ISnake snake,
+            ICoinSpawner coinSpawner,
+            IWorldBounds worldBounds,
+            IScore score)
         {
             _difficulty = difficulty;
             _snake = snake;
             _coinSpawner = coinSpawner;
             _worldBounds = worldBounds;
+            _score = score;
         }
 
         public void Initialize()
@@ -54,6 +60,7 @@ namespace Core
             if (_coinSpawner.TryRemoveCoin(position, out ICoin coin))
             {
                 _snake.Expand(coin.Bones);
+                _score.Add(coin.Score);
                 _coinCount++;
             }
 
