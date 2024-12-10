@@ -24,6 +24,8 @@ namespace Core
             _spawnedCoins = new Dictionary<Vector2Int, Coin>();
         }
 
+        public int CoinsCount => _spawnedCoins.Count;
+        
         public void Initialize()
         {
             _difficulty.OnStateChanged += SpawnCoins;

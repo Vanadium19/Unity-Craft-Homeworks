@@ -8,10 +8,10 @@ namespace Installers
     public class CoinInstaller : Installer<Coin, Transform, CoinInstaller>
     {
         private const string CoinName = "Coin";
-        
+
         [Inject] private Coin _coinPrefab;
         [Inject] private Transform _coinsParent;
-        
+
         public override void InstallBindings()
         {
             Container.BindMemoryPool<Coin, CoinPool>()
@@ -20,8 +20,12 @@ namespace Installers
                 .WithGameObjectName(CoinName)
                 .UnderTransform(_coinsParent)
                 .AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<CoinSpawner>()
+                .AsSingle()
+                .NonLazy();
+
+            Container.BindInterfacesTo<CoinsCollector>()
                 .AsSingle()
                 .NonLazy();
         }

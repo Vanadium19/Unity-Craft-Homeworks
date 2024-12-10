@@ -1540,6 +1540,7 @@ MonoBehaviour:
   _snake: {fileID: 1446817787}
   _coinPrefab: {fileID: 1221131666036007499, guid: f37c023e6b8b06149a4215320dd7e482, type: 3}
   _worldBounds: {fileID: 1431199845}
+  _coinsParent: {fileID: 1909183774}
 --- !u!4 &1887138855
 Transform:
   m_ObjectHideFlags: 0
@@ -1554,6 +1555,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2099872115}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1909183773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1909183774}
+  m_Layer: 0
+  m_Name: '[Coins]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1909183774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909183773}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1914371281
 GameObject:
@@ -2024,5 +2056,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1431199844}
   - {fileID: 679975517}
+  - {fileID: 1909183774}
   - {fileID: 1764093825}
   - {fileID: 2099872115}
