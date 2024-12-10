@@ -1538,6 +1538,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _snake: {fileID: 1446817787}
+  _coinPrefab: {fileID: 1221131666036007499, guid: f37c023e6b8b06149a4215320dd7e482, type: 3}
+  _worldBounds: {fileID: 1431199845}
 --- !u!4 &1887138855
 Transform:
   m_ObjectHideFlags: 0
