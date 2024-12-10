@@ -41,6 +41,10 @@ namespace Installers
             Container.BindInterfacesTo<LevelManager>()
                 .AsSingle()
                 .NonLazy();
+
+            Container.BindInterfacesTo<GameFinisher>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

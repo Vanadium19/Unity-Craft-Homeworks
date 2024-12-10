@@ -1,16 +1,16 @@
 using System;
 using Modules;
-using SnakeGame;
-using UnityEngine;
 using Zenject;
 
 namespace Core
 {
-    public class LevelManager : IInitializable, IDisposable
+    public class LevelManager : IInitializable, IDisposable, ILevelManager
     {
         private readonly ICoinsCollector _coinsCollector;
         private readonly IDifficulty _difficulty;
         private readonly ISnake _snake;
+
+        public event Action LevelsEnded;
 
         public LevelManager(ICoinsCollector coinsCollector,
             IDifficulty difficulty,
@@ -35,7 +35,9 @@ namespace Core
 
         private void UpdateLevel()
         {
-            _difficulty.Next(out int difficulty);
+            if (!_difficulty.Next(out int difficulty))
+                LevelsEnded?.Invoke();
+
             _snake.SetSpeed(difficulty);
         }
     }
