@@ -1,6 +1,7 @@
+using Modules;
 using Zenject;
 
-namespace Modules
+namespace Player
 {
     public class SnakeMoveController : ITickable
     {

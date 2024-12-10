@@ -1,4 +1,6 @@
-namespace Modules
+using Modules;
+
+namespace Player
 {
     public interface IMoveInput
     {

@@ -1,4 +1,5 @@
 using Modules;
+using Player;
 using UnityEngine;
 
 namespace PlayerInput
