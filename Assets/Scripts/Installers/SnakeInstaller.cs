@@ -1,25 +1,16 @@
-using Core;
 using Modules;
-using PlayerInput;
 using Player;
-using SnakeGame;
-using UnityEngine;
+using PlayerInput;
 using Zenject;
 
 namespace Installers
 {
-    public class SnakeInstaller : MonoInstaller
+    public class SnakeInstaller : Installer<Snake, SnakeInstaller>
     {
-        private const int MaxLevel = 9;
-
-        [SerializeField] private Snake _snake;
-        [SerializeField] private Coin _coinPrefab;
-        [SerializeField] private WorldBounds _worldBounds;
-        [SerializeField] private Transform _coinsParent;
-
+        [Inject] private Snake _snake;
+        
         public override void InstallBindings()
         {
-            //Snake
             Container.BindInterfacesTo<Snake>()
                 .FromInstance(_snake)
                 .AsSingle();
@@ -28,26 +19,6 @@ namespace Installers
                 .AsSingle();
 
             Container.BindInterfacesTo<SnakeMoveController>()
-                .AsSingle()
-                .NonLazy();
-
-            //Components
-            Container.BindInterfacesTo<Difficulty>()
-                .AsSingle()
-                .WithArguments(MaxLevel);
-
-            Container.BindInterfacesTo<WorldBounds>()
-                .FromInstance(_worldBounds)
-                .AsSingle();
-
-            Container.Bind<Coin>()
-                .FromInstance(_coinPrefab)
-                .AsCached();
-
-            CoinInstaller.Install(Container, _coinPrefab, _coinsParent);
-
-            //Core
-            Container.BindInterfacesTo<GameManager>()
                 .AsSingle()
                 .NonLazy();
         }
