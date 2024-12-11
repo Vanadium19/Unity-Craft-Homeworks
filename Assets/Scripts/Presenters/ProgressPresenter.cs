@@ -8,40 +8,36 @@ namespace Presenters
 {
     public class ProgressPresenter : IInitializable, IDisposable
     {
-        private readonly ICoinsCollector _coinsCollector;
+        private readonly IScore _score;
         private readonly IDifficulty _difficulty;
-        private IGameUI _gameUI;
+        private readonly IGameUI _gameUI;
 
-        private int _currentScore;
-
-        public ProgressPresenter(ICoinsCollector coinsCollector,
+        public ProgressPresenter(IScore score,
             IDifficulty difficulty,
             IGameUI gameUI)
         {
-            _coinsCollector = coinsCollector;
+            _score = score;
             _difficulty = difficulty;
             _gameUI = gameUI;
         }
 
         public void Initialize()
         {
-            _gameUI.SetScore(_currentScore.ToString());
+            _gameUI.SetScore(_score.Current.ToString());
 
             _difficulty.OnStateChanged += OnOnStateChanged;
-            _coinsCollector.CoinCollected += OnCoinCollected;
+            _score.OnStateChanged += OnCoinCollected;
         }
 
         public void Dispose()
         {
             _difficulty.OnStateChanged -= OnOnStateChanged;
-            _coinsCollector.CoinCollected -= OnCoinCollected;
+            _score.OnStateChanged -= OnCoinCollected;
         }
 
-        private void OnCoinCollected(ICoin coin)
+        private void OnCoinCollected(int score)
         {
-            _currentScore += coin.Score;
-
-            _gameUI.SetScore(_currentScore.ToString());
+            _gameUI.SetScore(score.ToString());
         }
 
         private void OnOnStateChanged()
