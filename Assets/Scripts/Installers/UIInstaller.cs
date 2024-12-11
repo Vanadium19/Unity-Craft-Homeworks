@@ -1,28 +1,21 @@
-using Presenters;
-using UI;
+using SnakeGame;
 using Zenject;
 
 namespace Installers
 {
-    public class UIInstaller : Installer<ScoreView, LevelView, UIInstaller>
+    public class UIInstaller : Installer<GameUI, UIInstaller>
     {
-        private readonly ScoreView _scoreView;
-        private readonly LevelView _levelView;
+        private readonly GameUI _gameUI;
 
-        public UIInstaller(ScoreView scoreView, LevelView levelView)
+        public UIInstaller(GameUI gameUI)
         {
-            _scoreView = scoreView;
-            _levelView = levelView;
+            _gameUI = gameUI;
         }
 
         public override void InstallBindings()
         {
-            Container.Bind<ScoreView>()
-                .FromInstance(_scoreView)
-                .AsSingle();
-
-            Container.Bind<LevelView>()
-                .FromInstance(_levelView)
+            Container.BindInterfacesTo<GameUI>()
+                .FromInstance(_gameUI)
                 .AsSingle();
         }
     }

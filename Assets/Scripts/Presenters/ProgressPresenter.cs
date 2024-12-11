@@ -1,7 +1,7 @@
 using System;
 using UseCases.Coins;
 using Modules;
-using UI;
+using SnakeGame;
 using Zenject;
 
 namespace Presenters
@@ -10,26 +10,22 @@ namespace Presenters
     {
         private readonly ICoinsCollector _coinsCollector;
         private readonly IDifficulty _difficulty;
-        
-        private readonly ScoreView _scoreView;
-        private readonly LevelView _levelView;
+        private IGameUI _gameUI;
 
         private int _currentScore;
 
         public ProgressPresenter(ICoinsCollector coinsCollector,
             IDifficulty difficulty,
-            ScoreView scoreView,
-            LevelView levelView)
+            IGameUI gameUI)
         {
             _coinsCollector = coinsCollector;
             _difficulty = difficulty;
-            _scoreView = scoreView;
-            _levelView = levelView;
+            _gameUI = gameUI;
         }
 
         public void Initialize()
         {
-            _scoreView.SetScore(_currentScore.ToString());
+            _gameUI.SetScore(_currentScore.ToString());
 
             _difficulty.OnStateChanged += OnOnStateChanged;
             _coinsCollector.CoinCollected += OnCoinCollected;
@@ -45,12 +41,12 @@ namespace Presenters
         {
             _currentScore += coin.Score;
 
-            _scoreView.SetScore($"Score: {_currentScore}");
+            _gameUI.SetScore(_currentScore.ToString());
         }
 
         private void OnOnStateChanged()
         {
-            _levelView.SetLevel($"Level: {_difficulty.Current}/{_difficulty.Max}");
+            _gameUI.SetDifficulty(_difficulty.Current, _difficulty.Max);
         }
     }
 }

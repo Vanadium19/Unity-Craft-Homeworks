@@ -1,4 +1,5 @@
 using System;
+using SnakeGame;
 using UnityEngine;
 using UseCases.System;
 using Zenject;
@@ -8,17 +9,12 @@ namespace Presenters
     public class GameFinishPresenter : IInitializable, IDisposable
     {
         private readonly IGameFinisher _gameFinisher;
-        
-        private readonly GameObject _winPopup;
-        private readonly GameObject _losePopup;
+        private readonly IGameUI _gameUI;
 
-        public GameFinishPresenter(IGameFinisher gameFinisher,
-            GameObject winPopup,
-            GameObject losePopup)
+        public GameFinishPresenter(IGameFinisher gameFinisher, IGameUI gameUI)
         {
             _gameFinisher = gameFinisher;
-            _winPopup = winPopup;
-            _losePopup = losePopup;
+            _gameUI = gameUI;
         }
 
         public void Initialize()
@@ -33,10 +29,7 @@ namespace Presenters
         
         private void FinishGame(bool isWin)
         {
-            if (isWin)
-                _winPopup.SetActive(true);
-            else
-                _losePopup.SetActive(true);
+            _gameUI.GameOver(isWin);
         }
     }
 }

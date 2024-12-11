@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UseCases.System
 {
-    internal class LevelManager : IInitializable, IDisposable, ILevelManager
+    public class LevelManager : IInitializable, IDisposable, ILevelManager
     {
         private readonly ICoinsCollector _coinsCollector;
         private readonly IDifficulty _difficulty;

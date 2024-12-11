@@ -6,7 +6,7 @@ using Zenject;
 
 namespace UseCases.System
 {
-    internal class GameFinisher : IInitializable, IDisposable, IGameFinisher
+    public class GameFinisher : IInitializable, IDisposable, IGameFinisher
     {
         private readonly ISnake _snake;
         private readonly IWorldBounds _bounds;

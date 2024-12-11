@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UseCases.Coins
 {
-    internal class CoinsCollector : IInitializable, IDisposable, ICoinsCollector
+    public class CoinsCollector : IInitializable, IDisposable, ICoinsCollector
     {
         private readonly ICoinSpawner _coinSpawner;
         private readonly ISnake _snake;

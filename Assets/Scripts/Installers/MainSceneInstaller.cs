@@ -1,6 +1,5 @@
 using Modules;
 using SnakeGame;
-using UI;
 using UnityEngine;
 using Zenject;
 
@@ -16,10 +15,7 @@ namespace Installers
         [SerializeField] private Transform _coinsParent;
 
         [Header("UI Elements")]
-        [SerializeField] private ScoreView _scoreView;
-        [SerializeField] private LevelView _levelView;
-        [SerializeField] private GameObject _winPopup;
-        [SerializeField] private GameObject _losePopup;
+        [SerializeField] private GameUI _gameUI;
 
         public override void InstallBindings()
         {
@@ -32,14 +28,14 @@ namespace Installers
             //Coin
             CoinsInstaller.Install(Container, _coinPrefab, _coinsParent);
 
-            //System
-            SystemInstaller.Install(Container);
-            
             //UI
-            UIInstaller.Install(Container, _scoreView, _levelView);
+            UIInstaller.Install(Container, _gameUI);
             
             //Presenters
-            PresentersInstaller.Install(Container, _winPopup, _losePopup);
+            PresentersInstaller.Install(Container);
+            
+            //System
+            SystemInstaller.Install(Container);
         }
     }
 }

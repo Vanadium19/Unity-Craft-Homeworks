@@ -7,7 +7,7 @@ using Zenject;
 
 namespace UseCases.Coins
 {
-    internal class CoinSpawner : IInitializable, IDisposable, ICoinSpawner
+    public class CoinSpawner : IInitializable, IDisposable, ICoinSpawner
     {
         private readonly IDifficulty _difficulty;
         private readonly IWorldBounds _bounds;
