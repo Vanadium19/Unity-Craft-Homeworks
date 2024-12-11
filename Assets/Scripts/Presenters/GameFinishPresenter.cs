@@ -1,6 +1,5 @@
 using System;
 using SnakeGame;
-using UnityEngine;
 using UseCases.System;
 using Zenject;
 
