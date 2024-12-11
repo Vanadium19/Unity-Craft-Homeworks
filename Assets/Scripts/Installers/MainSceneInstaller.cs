@@ -30,13 +30,16 @@ namespace Installers
             ModulesInstaller.Install(Container,_worldBounds);
 
             //Coin
-            CoinInstaller.Install(Container, _coinPrefab, _coinsParent);
+            CoinsInstaller.Install(Container, _coinPrefab, _coinsParent);
 
+            //System
+            SystemInstaller.Install(Container);
+            
             //UI
             UIInstaller.Install(Container, _scoreView, _levelView);
-
-            //Core
-            SystemInstaller.Install(Container, _winPopup, _losePopup);
+            
+            //Presenters
+            PresentersInstaller.Install(Container, _winPopup, _losePopup);
         }
     }
 }

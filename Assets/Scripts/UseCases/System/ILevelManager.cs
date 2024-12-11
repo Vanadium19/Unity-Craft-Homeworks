@@ -1,6 +1,6 @@
 using System;
 
-namespace Core
+namespace UseCases.System
 {
     public interface ILevelManager
     {

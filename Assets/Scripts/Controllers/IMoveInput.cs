@@ -1,6 +1,6 @@
 using Modules;
 
-namespace Player
+namespace Controllers
 {
     public interface IMoveInput
     {

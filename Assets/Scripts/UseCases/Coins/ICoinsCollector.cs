@@ -1,7 +1,7 @@
 using System;
 using Modules;
 
-namespace Coins
+namespace UseCases.Coins
 {
     public interface ICoinsCollector
     {

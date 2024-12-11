@@ -6,8 +6,14 @@ namespace Installers
 {
     public class UIInstaller : Installer<ScoreView, LevelView, UIInstaller>
     {
-        [Inject] private ScoreView _scoreView;
-        [Inject] private LevelView _levelView;
+        private readonly ScoreView _scoreView;
+        private readonly LevelView _levelView;
+
+        public UIInstaller(ScoreView scoreView, LevelView levelView)
+        {
+            _scoreView = scoreView;
+            _levelView = levelView;
+        }
 
         public override void InstallBindings()
         {
@@ -18,10 +24,6 @@ namespace Installers
             Container.Bind<LevelView>()
                 .FromInstance(_levelView)
                 .AsSingle();
-
-            Container.BindInterfacesTo<ProgressPresenter>()
-                .AsSingle()
-                .NonLazy();
         }
     }
 }

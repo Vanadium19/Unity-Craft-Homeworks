@@ -5,9 +5,9 @@ using SnakeGame;
 using UnityEngine;
 using Zenject;
 
-namespace Coins
+namespace UseCases.Coins
 {
-    public class CoinSpawner : IInitializable, IDisposable, ICoinSpawner
+    internal class CoinSpawner : IInitializable, IDisposable, ICoinSpawner
     {
         private readonly IDifficulty _difficulty;
         private readonly IWorldBounds _bounds;

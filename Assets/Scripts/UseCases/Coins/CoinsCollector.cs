@@ -3,9 +3,9 @@ using Modules;
 using UnityEngine;
 using Zenject;
 
-namespace Coins
+namespace UseCases.Coins
 {
-    public class CoinsCollector : IInitializable, IDisposable, ICoinsCollector
+    internal class CoinsCollector : IInitializable, IDisposable, ICoinsCollector
     {
         private readonly ICoinSpawner _coinSpawner;
         private readonly ISnake _snake;

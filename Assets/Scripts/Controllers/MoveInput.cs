@@ -1,8 +1,7 @@
 using Modules;
-using Player;
 using UnityEngine;
 
-namespace PlayerInput
+namespace Controllers
 {
     public class MoveInput : IMoveInput
     {

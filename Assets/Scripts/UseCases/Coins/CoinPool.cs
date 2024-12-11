@@ -2,9 +2,9 @@ using Modules;
 using UnityEngine;
 using Zenject;
 
-namespace Coins
+namespace UseCases.Coins
 {
-    public class CoinPool : MonoMemoryPool<Vector3, Coin>
+    internal class CoinPool : MonoMemoryPool<Vector3, Coin>
     {
         protected override void Reinitialize(Vector3 position, Coin coin)
         {

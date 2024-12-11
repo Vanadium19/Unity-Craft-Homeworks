@@ -1,6 +1,5 @@
 using Modules;
-using Player;
-using PlayerInput;
+using Controllers;
 using Zenject;
 
 namespace Installers

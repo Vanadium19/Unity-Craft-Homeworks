@@ -4,29 +4,21 @@ using SnakeGame;
 using UnityEngine;
 using Zenject;
 
-namespace Core
+namespace UseCases.System
 {
-    public class GameFinisher : IInitializable, IDisposable
+    internal class GameFinisher : IInitializable, IDisposable, IGameFinisher
     {
         private readonly ISnake _snake;
         private readonly IWorldBounds _bounds;
         private readonly ILevelManager _levelManager;
 
-        private readonly GameObject _winPopup;
-        private readonly GameObject _losePopup;
-
-        public GameFinisher(ISnake snake,
-            IWorldBounds bounds,
-            ILevelManager levelManager,
-            GameObject winPopup,
-            GameObject losePopup)
+        public event Action<bool> GameFinished;
+        
+        public GameFinisher(ISnake snake, IWorldBounds bounds, ILevelManager levelManager)
         {
             _snake = snake;
             _bounds = bounds;
             _levelManager = levelManager;
-
-            _winPopup = winPopup;
-            _losePopup = losePopup;
         }
 
         public void Initialize()
@@ -52,11 +44,7 @@ namespace Core
         private void FinishGame()
         {
             _snake.SetActive(false);
-
-            if (_levelManager.IsWin)
-                _winPopup.SetActive(true);
-            else
-                _losePopup.SetActive(true);
+            GameFinished?.Invoke(_levelManager.IsWin);
         }
     }
 }

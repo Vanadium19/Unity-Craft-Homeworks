@@ -1,5 +1,5 @@
 using System;
-using Coins;
+using UseCases.Coins;
 using Modules;
 using UI;
 using Zenject;

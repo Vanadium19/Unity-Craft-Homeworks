@@ -1,11 +1,11 @@
 using System;
-using Coins;
+using UseCases.Coins;
 using Modules;
 using Zenject;
 
-namespace Core
+namespace UseCases.System
 {
-    public class LevelManager : IInitializable, IDisposable, ILevelManager
+    internal class LevelManager : IInitializable, IDisposable, ILevelManager
     {
         private readonly ICoinsCollector _coinsCollector;
         private readonly IDifficulty _difficulty;
