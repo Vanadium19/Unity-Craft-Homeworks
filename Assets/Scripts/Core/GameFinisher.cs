@@ -12,14 +12,21 @@ namespace Core
         private readonly IWorldBounds _bounds;
         private readonly ILevelManager _levelManager;
 
+        private readonly GameObject _winPopup;
+        private readonly GameObject _losePopup;
 
         public GameFinisher(ISnake snake,
             IWorldBounds bounds,
-            ILevelManager levelManager)
+            ILevelManager levelManager,
+            GameObject winPopup,
+            GameObject losePopup)
         {
             _snake = snake;
             _bounds = bounds;
             _levelManager = levelManager;
+
+            _winPopup = winPopup;
+            _losePopup = losePopup;
         }
 
         public void Initialize()
@@ -45,7 +52,11 @@ namespace Core
         private void FinishGame()
         {
             _snake.SetActive(false);
-            Debug.Log("Game finished");
+
+            if (_levelManager.IsWin)
+                _winPopup.SetActive(true);
+            else
+                _losePopup.SetActive(true);
         }
     }
 }

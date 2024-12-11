@@ -1557,6 +1557,8 @@ MonoBehaviour:
   _coinsParent: {fileID: 1909183774}
   _scoreView: {fileID: 1914371285}
   _levelView: {fileID: 1202478203}
+  _winPopup: {fileID: 1178697326}
+  _losePopup: {fileID: 1338628983}
 --- !u!4 &1887138855
 Transform:
   m_ObjectHideFlags: 0

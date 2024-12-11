@@ -10,6 +10,8 @@ namespace Core
         private readonly ICoinsCollector _coinsCollector;
         private readonly IDifficulty _difficulty;
         private readonly ISnake _snake;
+        
+        private bool _isWin;
 
         public event Action LevelsEnded;
 
@@ -21,6 +23,8 @@ namespace Core
             _difficulty = difficulty;
             _snake = snake;
         }
+
+        public bool IsWin => _isWin;
 
         public void Initialize()
         {
@@ -37,7 +41,10 @@ namespace Core
         private void UpdateLevel()
         {
             if (!_difficulty.Next(out int difficulty))
+            {
+                _isWin = true;
                 LevelsEnded?.Invoke();
+            }
 
             _snake.SetSpeed(difficulty);
         }
