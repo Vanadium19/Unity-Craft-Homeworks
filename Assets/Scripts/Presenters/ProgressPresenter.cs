@@ -23,19 +23,19 @@ namespace Presenters
 
         public void Initialize()
         {
-            _gameUI.SetScore(_score.Current.ToString());
+            OnScoreChanged(_score.Current);
 
             _difficulty.OnStateChanged += OnOnStateChanged;
-            _score.OnStateChanged += OnCoinCollected;
+            _score.OnStateChanged += OnScoreChanged;
         }
 
         public void Dispose()
         {
             _difficulty.OnStateChanged -= OnOnStateChanged;
-            _score.OnStateChanged -= OnCoinCollected;
+            _score.OnStateChanged -= OnScoreChanged;
         }
 
-        private void OnCoinCollected(int score)
+        private void OnScoreChanged(int score)
         {
             _gameUI.SetScore(score.ToString());
         }
