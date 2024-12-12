@@ -6,7 +6,7 @@ namespace Installers
 {
     public class ModulesInstaller : Installer<WorldBounds, ModulesInstaller>
     {
-        private const int MaxLevel = 3;
+        private const int MaxLevel = 9;
         
         [Inject] private WorldBounds _worldBounds;
         
