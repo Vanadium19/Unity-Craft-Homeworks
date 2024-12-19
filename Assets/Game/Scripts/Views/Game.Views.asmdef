@@ -1,0 +1,19 @@
+{
+    "name": "Game.Views",
+    "rootNamespace": "",
+    "references": [
+        "Unity.TextMeshPro",
+        "UIComponents",
+        "Zenject",
+        "dotweenModules"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

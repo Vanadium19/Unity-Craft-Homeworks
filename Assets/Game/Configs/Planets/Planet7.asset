@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb34049e1e2c4ce3b5f1a9a7bbc04fcd, type: 3}
+  m_Name: Planet7
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Planet #7
+  <PurchasePrice>k__BackingField: 1000000
+  <MaxLevel>k__BackingField: 10
+  <IncomeDuration>k__BackingField: 3600
+  <PopulationPeriod>k__BackingField: 1
+  _upgradePriceTable:
+    _prices: a0860100400d0300e0930400801a060020a10700c027090060ae0a0000350c00a0bb0d0040420f00
+    _multiplier: 100000
+  _incomeTable:
+    _startStatValue: 1000000
+    _endStatValue: 500000000
+    _statValueStep: 49900000
+    _statValues: 20ac080300160206e07ffb08c0e9f40ba053ee0e80bde7116027e1144091da1720fbd31a0065cd1d
+  _lockedIcon: {fileID: 21300000, guid: f35f45402c8994ed892bcf0d0d95f703, type: 3}
+  _unlockedIcon: {fileID: 21300000, guid: bf03b8e59368c4021ae88028bbd5eecc, type: 3}
