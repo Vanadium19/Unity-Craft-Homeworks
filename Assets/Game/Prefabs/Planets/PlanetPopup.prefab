@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5364966909751367753}
   - component: {fileID: 5146271484780636146}
+  - component: {fileID: 2369608364531943514}
   m_Layer: 5
   m_Name: PlanetPopup
   m_TagString: Untagged
@@ -264,6 +265,25 @@ MonoBehaviour:
   hiddenScale: {x: 0, y: 0, z: 0}
   shownScale: {x: 1, y: 1, z: 1}
   bounceIntensity: 1.2
+--- !u!114 &2369608364531943514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860805340701978150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de58a11c6ce4773a641d2ae4eedfb42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 328163744762118583}
+  _button: {fileID: 3885529525276896717}
+  _name: {fileID: 9209584536786063595}
+  _population: {fileID: 2821577711935674451}
+  _level: {fileID: 5472911088123096804}
+  _income: {fileID: 159619003737596086}
+  _upgradePrice: {fileID: 2019871224800427396}
 --- !u!1 &965717003820527526
 GameObject:
   m_ObjectHideFlags: 0
