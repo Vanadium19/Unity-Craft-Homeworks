@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Game.Views
@@ -9,7 +10,8 @@ namespace Game.Views
     {
         [Header("Button")]
         [SerializeField] private Image _icon;
-        [SerializeField] private Button _button;
+        [SerializeField] private Button _upgradeButton;
+        [SerializeField] private Button _closeButton;
 
         [Header("Info")]
         [SerializeField] private TMP_Text _name;
@@ -18,16 +20,18 @@ namespace Game.Views
         [SerializeField] private TMP_Text _income;
         [SerializeField] private TMP_Text _upgradePrice;
 
-        public event Action PlanetUpgraded;
+        public event Action UpdateButtonClicked;
 
         private void OnEnable()
         {
-            _button.onClick.AddListener(UpgradePlanet);
+            _upgradeButton.onClick.AddListener(UpgradePlanet);
+            _closeButton.onClick.AddListener(ClosePopup);
         }
 
         private void OnDisable()
         {
-            _button.onClick.RemoveListener(UpgradePlanet);
+            _upgradeButton.onClick.RemoveListener(UpgradePlanet);
+            _closeButton.onClick.RemoveListener(ClosePopup);
         }
 
         public void SetName(string name)
@@ -35,21 +39,36 @@ namespace Game.Views
             _name.text = name;
         }
 
-        public void ShowInfo(string population, string level, string income)
+        public void Open()
         {
-            _population.text = population;
-            _level.text = level;
-            _income.text = income;
+            gameObject.SetActive(true);
         }
 
-        public void SetPrice(string price)
+        public void ShowInfo(int population, int level, int income)
         {
-            _upgradePrice.text = price;
+            _population.text = population.ToString();
+            _level.text = level.ToString();
+            _income.text = income.ToString();
+        }
+
+        public void SetPrice(int price)
+        {
+            _upgradePrice.text = price.ToString();
+        }
+
+        public void SetIcon(Sprite icon)
+        {
+            _icon.sprite = icon;
         }
 
         private void UpgradePlanet()
         {
-            PlanetUpgraded?.Invoke();
+            UpdateButtonClicked?.Invoke();
+        }
+
+        private void ClosePopup()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
