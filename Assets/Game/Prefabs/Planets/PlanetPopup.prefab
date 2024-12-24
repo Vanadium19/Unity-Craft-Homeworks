@@ -278,7 +278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 328163744762118583}
-  _button: {fileID: 3885529525276896717}
+  _upgradeButton: {fileID: 3885529525276896717}
+  _closeButton: {fileID: 4860622370961867766}
   _name: {fileID: 9209584536786063595}
   _population: {fileID: 2821577711935674451}
   _level: {fileID: 5472911088123096804}
