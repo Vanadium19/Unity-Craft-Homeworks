@@ -9,11 +9,15 @@ namespace Game.Views
 {
     public class PlanetPopup : MonoBehaviour
     {
-        [Header("Button")] [SerializeField] private Image _icon;
+        [SerializeField] private Image _icon;
+        [SerializeField] private GameObject _pricePanel;
+        
+        [Header("Button")]
         [SerializeField] private Button _upgradeButton;
         [SerializeField] private Button _closeButton;
 
-        [Header("Info")] [SerializeField] private TMP_Text _name;
+        [Header("Info")]
+        [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _population;
         [SerializeField] private TMP_Text _level;
         [SerializeField] private TMP_Text _income;
@@ -52,6 +56,11 @@ namespace Game.Views
         public void SetLevel(int level, int maxLevel)
         {
             _level.text = $"Level: {level}/{maxLevel}";
+
+            var canUpgrade = level < maxLevel;
+            
+            _upgradeButton.interactable = canUpgrade;
+            _pricePanel.SetActive(canUpgrade);
         }
 
         public void SetPopulation(int population)

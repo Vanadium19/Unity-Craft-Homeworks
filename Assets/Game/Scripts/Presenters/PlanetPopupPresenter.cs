@@ -48,14 +48,12 @@ namespace Game.Presenters
                 .AddTo(_disposable);
 
             SetPlanetParams();
+            _planetPopup.SetName(planet.Name);
             
             if (!_currentPlanet.IsUnlocked)
                 _currentPlanet.OnUnlocked += UnlockPlanet;
 
             _currentPlanet.OnUpgraded += UpgradePlanet;
-
-            _planetPopup.SetName(planet.Name);
-            _planetPopup.SetPrice(planet.Price);
         }
 
         private void UnlockPlanet()
@@ -70,6 +68,7 @@ namespace Game.Presenters
             _planetPopup.SetIcon(_currentPlanet.GetIcon(_currentPlanet.IsUnlocked));
             _planetPopup.SetLevel(_currentPlanet.Level, _currentPlanet.MaxLevel);
             _planetPopup.SetIncome(_currentPlanet.MinuteIncome);
+            _planetPopup.SetPrice(_currentPlanet.Price);
         }
 
         private void UpgradePlanet()

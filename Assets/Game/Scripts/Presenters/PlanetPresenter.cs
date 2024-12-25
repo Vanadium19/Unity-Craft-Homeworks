@@ -31,6 +31,12 @@ namespace Game.Presenters
         {
             _button.OnHold += OnHold;
             _planet.OnPopulationChanged += ChangePopulation;
+            
+            _planetView.Initialize(_planet.IsUnlocked);
+            _planetView.SetPrice(_planet.Price);
+            
+            if (!_planet.IsUnlocked)
+                _planet.OnUnlocked += UnlockPlanet;
         }
 
         public void Dispose()
@@ -47,6 +53,13 @@ namespace Game.Presenters
         private void ChangePopulation(int population)
         {
             _population.Value = population;
+        }
+
+        private void UnlockPlanet()
+        {
+            _planetView.Initialize(_planet.IsUnlocked);
+            
+            _planet.OnUnlocked -= UnlockPlanet;
         }
     }
 }

@@ -19,11 +19,21 @@ namespace Game.Views
         [Header("Text")]
         [SerializeField] private TMP_Text _price;
 
+        private void Start()
+        {
+            _coinIcon.SetActive(false);
+        }
+
         public void Initialize(bool isUnlocked)
         {
+            _progressBar.SetActive(isUnlocked);
             _lockIcon.SetActive(!isUnlocked);
-            _progressBar.SetActive(!isUnlocked);
             _pricePanel.SetActive(!isUnlocked);
+        }
+
+        public void SetPrice(int price)
+        {
+            _price.text = price.ToString();
         }
     }
 }
