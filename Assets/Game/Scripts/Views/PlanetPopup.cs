@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -8,19 +9,18 @@ namespace Game.Views
 {
     public class PlanetPopup : MonoBehaviour
     {
-        [Header("Button")]
-        [SerializeField] private Image _icon;
+        [Header("Button")] [SerializeField] private Image _icon;
         [SerializeField] private Button _upgradeButton;
         [SerializeField] private Button _closeButton;
 
-        [Header("Info")]
-        [SerializeField] private TMP_Text _name;
+        [Header("Info")] [SerializeField] private TMP_Text _name;
         [SerializeField] private TMP_Text _population;
         [SerializeField] private TMP_Text _level;
         [SerializeField] private TMP_Text _income;
         [SerializeField] private TMP_Text _upgradePrice;
 
         public event Action UpdateButtonClicked;
+        public event Action PopupClosed;
 
         private void OnEnable()
         {
@@ -44,11 +44,19 @@ namespace Game.Views
             gameObject.SetActive(true);
         }
 
-        public void ShowInfo(int population, int level, int income)
+        public void SetIncome(int income)
         {
-            _population.text = population.ToString();
-            _level.text = level.ToString();
-            _income.text = income.ToString();
+            _income.text = $"Income: {income} / sec";
+        }
+
+        public void SetLevel(int level, int maxLevel)
+        {
+            _level.text = $"Level: {level}/{maxLevel}";
+        }
+
+        public void SetPopulation(int population)
+        {
+            _population.text = $"Population: {population}";
         }
 
         public void SetPrice(int price)
@@ -68,6 +76,7 @@ namespace Game.Views
 
         private void ClosePopup()
         {
+            PopupClosed?.Invoke();
             gameObject.SetActive(false);
         }
     }

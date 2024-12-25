@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="224d6b22-cfa7-4e5c-94e3-31056799dfe2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Unity-Craft-Homeworks/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Unity-Craft-Homeworks/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPopupPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPopupPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/PlanetPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Views/Game.Views.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Views/Game.Views.asmdef" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Views/PlanetPopup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Views/PlanetPopup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +102,7 @@
       <updated>1735060207021</updated>
       <workItem from="1735060208451" duration="298000" />
       <workItem from="1735060520239" duration="10109000" />
-      <workItem from="1735119117641" duration="427000" />
+      <workItem from="1735119117641" duration="3192000" />
     </task>
     <servers />
   </component>

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Views;
 using Modules.Planets;
+using UniRx;
 using UnityEngine;
 
 namespace Game.Presenters
@@ -9,8 +10,11 @@ namespace Game.Presenters
     {
         private readonly PlanetPopup _planetPopup;
         private readonly IEnumerable<PlanetPresenter> _presenters;
-        
+
+        private readonly CompositeDisposable _disposable = new();
+
         private IPlanet _currentPlanet;
+        private PlanetPresenter _currentPresenter;
 
         public PlanetPopupPresenter(PlanetPopup planetPopup, IEnumerable<PlanetPresenter> presenters)
         {
@@ -24,30 +28,58 @@ namespace Game.Presenters
                 presenter.Opened += OpenPlanet;
 
             _planetPopup.UpdateButtonClicked += UpgradePlanet;
+            _planetPopup.PopupClosed += OnPopupClosed;
         }
 
         public void Dispose()
         {
             foreach (var presenter in _presenters)
                 presenter.Opened -= OpenPlanet;
-            
+
             _planetPopup.UpdateButtonClicked -= UpgradePlanet;
+            _planetPopup.PopupClosed -= OnPopupClosed;
         }
 
-        private void OpenPlanet(IPlanet planet)
+        private void OpenPlanet(IPlanet planet, PlanetPresenter presenter)
         {
             _planetPopup.Open();
             _currentPlanet = planet;
+            _currentPresenter = presenter;
+
+            presenter.Population.Subscribe(_planetPopup.SetPopulation)
+                .AddTo(_disposable);
+
+            SetPlanetParams();
             
+            if (!_currentPlanet.IsUnlocked)
+                _currentPlanet.OnUnlocked += UnlockPlanet;
+
             _planetPopup.SetName(planet.Name);
-            _planetPopup.ShowInfo(planet.Population, planet.Level, planet.MinuteIncome);
             _planetPopup.SetPrice(planet.Price);
-            _planetPopup.SetIcon(planet.GetIcon(planet.IsUnlocked));
+        }
+
+        private void UnlockPlanet()
+        {
+            SetPlanetParams();
+
+            _currentPlanet.OnUnlocked -= UnlockPlanet;
+        }
+
+        private void SetPlanetParams()
+        {
+            _planetPopup.SetIcon(_currentPlanet.GetIcon(_currentPlanet.IsUnlocked));
+            _planetPopup.SetLevel(_currentPlanet.Level, _currentPlanet.MaxLevel);
+            _planetPopup.SetIncome(_currentPlanet.MinuteIncome);
         }
 
         private void UpgradePlanet()
         {
             _currentPlanet.UnlockOrUpgrade();
+        }
+
+        private void OnPopupClosed()
+        {
+            _disposable.Clear();
         }
     }
 }

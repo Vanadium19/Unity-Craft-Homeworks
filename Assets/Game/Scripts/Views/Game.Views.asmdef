@@ -5,7 +5,8 @@
         "Unity.TextMeshPro",
         "UIComponents",
         "Zenject",
-        "dotweenModules"
+        "dotweenModules",
+        "UniRx"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
