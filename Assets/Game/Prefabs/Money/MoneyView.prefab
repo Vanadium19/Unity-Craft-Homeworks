@@ -220,6 +220,7 @@ GameObject:
   - component: {fileID: 8460962601618271506}
   - component: {fileID: 4035766591218761423}
   - component: {fileID: 4556502046767129200}
+  - component: {fileID: 3906713211263430957}
   m_Layer: 5
   m_Name: MoneyView
   m_TagString: Untagged
@@ -286,3 +287,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1.2
+--- !u!114 &3906713211263430957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7207275897469232668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a494e514fda17488dbcfaaeeda344e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _money: {fileID: 3299675748291971791}

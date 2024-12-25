@@ -8,6 +8,7 @@ namespace Game.Views
     {
         [SerializeField] private PlanetPopup _planetPopup;
         [SerializeField] private SmartButton[] _buttons;
+        [SerializeField] private MoneyView _moneyView;
 
         public override void InstallBindings()
         {
@@ -17,6 +18,10 @@ namespace Game.Views
 
             Container.Bind<SmartButton[]>()
                 .FromInstance(_buttons)
+                .AsSingle();
+
+            Container.Bind<MoneyView>()
+                .FromInstance(_moneyView)
                 .AsSingle();
         }
     }

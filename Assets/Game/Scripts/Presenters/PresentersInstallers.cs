@@ -14,6 +14,10 @@ namespace Game.Presenters
             Container.BindInterfacesTo<PlanetsPresenter>()
                 .AsSingle()
                 .NonLazy();
+            
+            Container.BindInterfacesTo<MoneyPresenter>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }
