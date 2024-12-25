@@ -495,11 +495,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e31033b08f34bd7917137b07b1c9478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _progressBar: {fileID: 5564512366540979095}
+  _incomePanel: {fileID: 5564512366540979095}
   _pricePanel: {fileID: 6850814019076832775}
   _coinIcon: {fileID: 320550912344372757}
   _lockIcon: {fileID: 7085741634984397813}
   _price: {fileID: 5444377921757551026}
+  _time: {fileID: 8019802931863089282}
+  _progressBar: {fileID: 6948507870913343312}
 --- !u!1 &5564512366540979095
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ namespace Game.Presenters
 {
     public class PlanetPresenter
     {
+        private PlanetIncomePresenter _incomePresenter;
         private readonly PlanetView _planetView;
         private readonly SmartButton _button;
         private readonly IPlanet _planet;
@@ -29,6 +30,9 @@ namespace Game.Presenters
 
         public void Initialize()
         {
+            _incomePresenter = new PlanetIncomePresenter(_planet, _planetView);
+            _incomePresenter.Initialize();
+            
             _button.OnHold += OnHold;
             _button.OnClick += OnClick;
             _planet.OnPopulationChanged += ChangePopulation;
@@ -42,6 +46,8 @@ namespace Game.Presenters
 
         public void Dispose()
         {
+            _incomePresenter.Dispose();
+            
             _button.OnHold -= OnHold;
             _button.OnClick -= OnClick;
             _planet.OnPopulationChanged -= ChangePopulation;

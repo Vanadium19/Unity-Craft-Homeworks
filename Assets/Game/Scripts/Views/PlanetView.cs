@@ -9,7 +9,7 @@ namespace Game.Views
     public class PlanetView : MonoBehaviour
     {
         [Header("Panels")]
-        [SerializeField] private GameObject _progressBar;
+        [SerializeField] private GameObject _incomePanel;
         [SerializeField] private GameObject _pricePanel;
         
         [Header("Icons")]
@@ -18,6 +18,10 @@ namespace Game.Views
 
         [Header("Text")]
         [SerializeField] private TMP_Text _price;
+        [SerializeField] private TMP_Text _time;
+        
+        [Header("Bars")]
+        [SerializeField] private Image _progressBar;
 
         private void Start()
         {
@@ -26,7 +30,7 @@ namespace Game.Views
 
         public void Initialize(bool isUnlocked)
         {
-            _progressBar.SetActive(isUnlocked);
+            _incomePanel.SetActive(isUnlocked);
             _lockIcon.SetActive(!isUnlocked);
             _pricePanel.SetActive(!isUnlocked);
         }
@@ -34,6 +38,12 @@ namespace Game.Views
         public void SetPrice(int price)
         {
             _price.text = price.ToString();
+        }
+
+        public void SetProgress(float progress, float time)
+        {
+            _progressBar.fillAmount = progress;
+            _time.text = $"{(int)(time / 60f)}m:{(int)(time % 60f)}s";
         }
     }
 }
