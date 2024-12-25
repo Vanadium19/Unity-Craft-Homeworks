@@ -1,5 +1,6 @@
 using Modules.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Game.Views
@@ -7,8 +8,8 @@ namespace Game.Views
     public sealed class ViewsInstaller : MonoInstaller
     {
         [SerializeField] private PlanetPopup _planetPopup;
-        [SerializeField] private SmartButton[] _buttons;
         [SerializeField] private MoneyView _moneyView;
+        [SerializeField] private PlanetView[] _planetViews;
 
         public override void InstallBindings()
         {
@@ -16,8 +17,8 @@ namespace Game.Views
                 .FromInstance(_planetPopup)
                 .AsSingle();
 
-            Container.Bind<SmartButton[]>()
-                .FromInstance(_buttons)
+            Container.Bind<PlanetView[]>()
+                .FromInstance(_planetViews)
                 .AsSingle();
 
             Container.Bind<MoneyView>()

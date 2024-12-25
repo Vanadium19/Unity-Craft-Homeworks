@@ -443,6 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1226517422905731925}
   - component: {fileID: 7486801599208217449}
+  - component: {fileID: 6138162583084090838}
   m_Layer: 5
   m_Name: PlanetView
   m_TagString: Untagged
@@ -482,6 +483,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080244410604157239}
   m_CullTransparentMesh: 1
+--- !u!114 &6138162583084090838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080244410604157239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e31033b08f34bd7917137b07b1c9478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _progressBar: {fileID: 383599552409175847}
+  _pricePanel: {fileID: 6850814019076832775}
+  _coinIcon: {fileID: 320550912344372757}
+  _lockIcon: {fileID: 7085741634984397813}
+  _price: {fileID: 5444377921757551026}
 --- !u!1 &5564512366540979095
 GameObject:
   m_ObjectHideFlags: 0
