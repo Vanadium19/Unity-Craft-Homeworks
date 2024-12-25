@@ -14,7 +14,6 @@ namespace Game.Presenters
         private readonly CompositeDisposable _disposable = new();
 
         private IPlanet _currentPlanet;
-        private PlanetPresenter _currentPresenter;
 
         public PlanetPopupPresenter(PlanetPopup planetPopup, IEnumerable<PlanetPresenter> presenters)
         {
@@ -44,7 +43,6 @@ namespace Game.Presenters
         {
             _planetPopup.Open();
             _currentPlanet = planet;
-            _currentPresenter = presenter;
 
             presenter.Population.Subscribe(_planetPopup.SetPopulation)
                 .AddTo(_disposable);
@@ -53,6 +51,8 @@ namespace Game.Presenters
             
             if (!_currentPlanet.IsUnlocked)
                 _currentPlanet.OnUnlocked += UnlockPlanet;
+
+            _currentPlanet.OnUpgraded += UpgradePlanet;
 
             _planetPopup.SetName(planet.Name);
             _planetPopup.SetPrice(planet.Price);
@@ -77,8 +77,14 @@ namespace Game.Presenters
             _currentPlanet.UnlockOrUpgrade();
         }
 
+        private void UpgradePlanet(int upgradedPlanet)
+        {
+            SetPlanetParams();
+        }
+
         private void OnPopupClosed()
         {
+            _currentPlanet.OnUpgraded += UpgradePlanet;
             _disposable.Clear();
         }
     }
