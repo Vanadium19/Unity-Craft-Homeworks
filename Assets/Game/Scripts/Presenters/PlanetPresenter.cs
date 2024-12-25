@@ -30,6 +30,7 @@ namespace Game.Presenters
         public void Initialize()
         {
             _button.OnHold += OnHold;
+            _button.OnClick += OnClick;
             _planet.OnPopulationChanged += ChangePopulation;
             
             _planetView.Initialize(_planet.IsUnlocked);
@@ -42,12 +43,19 @@ namespace Game.Presenters
         public void Dispose()
         {
             _button.OnHold -= OnHold;
+            _button.OnClick -= OnClick;
             _planet.OnPopulationChanged -= ChangePopulation;
         }
 
         private void OnHold()
         {
             Opened?.Invoke(_planet, this);
+        }
+
+        private void OnClick()
+        {
+            if (!_planet.IsUnlocked)
+                _planet.Unlock();
         }
 
         private void ChangePopulation(int population)
