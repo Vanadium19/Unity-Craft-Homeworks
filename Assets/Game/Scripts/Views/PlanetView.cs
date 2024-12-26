@@ -46,6 +46,9 @@ namespace Game.Views
         {
             _progressBar.fillAmount = progress;
             _time.text = $"{(int)(time / 60f)}m:{(int)(time % 60f)}s";
+
+            _coinIcon.SetActive(progress >= 1f);
+            _incomePanel.SetActive(progress < 1f);
         }
     }
 }
