@@ -300,3 +300,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _money: {fileID: 3299675748291971791}
+  _coin: {fileID: 6204055655084186918}

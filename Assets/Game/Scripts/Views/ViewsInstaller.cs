@@ -10,6 +10,7 @@ namespace Game.Views
         [SerializeField] private PlanetPopup _planetPopup;
         [SerializeField] private MoneyView _moneyView;
         [SerializeField] private PlanetView[] _planetViews;
+        [SerializeField] private ParticleAnimator _particleAnimator;
 
         public override void InstallBindings()
         {
@@ -23,6 +24,10 @@ namespace Game.Views
 
             Container.Bind<MoneyView>()
                 .FromInstance(_moneyView)
+                .AsSingle();
+            
+            Container.Bind<ParticleAnimator>()
+                .FromInstance(_particleAnimator)
                 .AsSingle();
         }
     }

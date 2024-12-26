@@ -9,19 +9,28 @@ namespace Game.Presenters
 {
     public class PlanetPresenter
     {
-        private PlanetIncomePresenter _incomePresenter;
         private readonly PlanetView _planetView;
         private readonly SmartButton _button;
         private readonly IPlanet _planet;
+        private readonly ParticleAnimator _particleAnimator;
+        private readonly Vector3 _moneyViewPosition;
 
         private readonly ReactiveProperty<int> _population = new();
 
+        private PlanetIncomePresenter _incomePresenter;
+
         public event Action<IPlanet, PlanetPresenter> Opened;
 
-        public PlanetPresenter(IPlanet planet, PlanetView planetView)
+        public PlanetPresenter(IPlanet planet,
+            PlanetView planetView,
+            ParticleAnimator particleAnimator,
+            Vector3 moneyViewPosition)
         {
             _planet = planet;
             _planetView = planetView;
+            
+            _particleAnimator = particleAnimator;
+            _moneyViewPosition = moneyViewPosition;
 
             _button = _planetView.GetComponentInChildren<SmartButton>();
         }
@@ -64,7 +73,10 @@ namespace Game.Presenters
                 _planet.Unlock();
 
             if (_planet.IsIncomeReady)
+            {
                 _planet.GatherIncome();
+                _particleAnimator.Emit(_planetView.CoinPosition, _moneyViewPosition);
+            }
         }
 
         private void ChangePopulation(int population)

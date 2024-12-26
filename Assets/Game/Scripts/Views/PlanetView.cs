@@ -23,6 +23,8 @@ namespace Game.Views
         [Header("Bars")]
         [SerializeField] private Image _progressBar;
 
+        public Vector3 CoinPosition => _coinIcon.transform.position;
+        
         private void Start()
         {
             _coinIcon.SetActive(false);
