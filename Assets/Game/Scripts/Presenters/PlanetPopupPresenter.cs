@@ -69,6 +69,9 @@ namespace Game.Presenters
             _planetPopup.SetLevel(_currentPlanet.Level, _currentPlanet.MaxLevel);
             _planetPopup.SetIncome(_currentPlanet.MinuteIncome);
             _planetPopup.SetPrice(_currentPlanet.Price);
+
+            if (_currentPlanet.IsMaxLevel)
+                _planetPopup.EnableUpgradeButton(false);
         }
 
         private void UpgradePlanet()

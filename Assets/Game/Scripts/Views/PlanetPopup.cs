@@ -56,11 +56,6 @@ namespace Game.Views
         public void SetLevel(int level, int maxLevel)
         {
             _level.text = $"Level: {level}/{maxLevel}";
-
-            var canUpgrade = level < maxLevel;
-            
-            _upgradeButton.interactable = canUpgrade;
-            _pricePanel.SetActive(canUpgrade);
         }
 
         public void SetPopulation(int population)
@@ -76,6 +71,12 @@ namespace Game.Views
         public void SetIcon(Sprite icon)
         {
             _icon.sprite = icon;
+        }
+
+        public void EnableUpgradeButton(bool value)
+        {
+            _upgradeButton.interactable = value;
+            _pricePanel.SetActive(value);
         }
 
         private void UpgradePlanet()
