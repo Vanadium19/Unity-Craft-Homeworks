@@ -8,7 +8,7 @@ namespace Modules.Money
     {
         event MoneyChangedDelegate OnMoneyChanged;
         event MoneyEarnedDelegate OnMoneyEarned;
-        event MoneySpentDelegate OnMoneySpent;
+        event MoneySpentDelegate ChangeMoney;
         
         int Money { get; }
 

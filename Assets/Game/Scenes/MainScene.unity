@@ -1377,6 +1377,7 @@ MonoBehaviour:
   - {fileID: 1838571070}
   - {fileID: 1000499689}
   - {fileID: 1932540039}
+  _particleAnimator: {fileID: 1465214280}
 --- !u!1 &974007725
 GameObject:
   m_ObjectHideFlags: 0

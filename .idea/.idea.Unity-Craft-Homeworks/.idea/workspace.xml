@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="224d6b22-cfa7-4e5c-94e3-31056799dfe2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Unity-Craft-Homeworks/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Unity-Craft-Homeworks/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/MoneyPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Presenters/MoneyPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Views/Game.Views.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Views/Game.Views.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Views/MoneyView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Views/MoneyView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/MoneyStorage/Scripts/IMoneyStorage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Modules/MoneyStorage/Scripts/IMoneyStorage.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/MoneyStorage/Scripts/MoneyStorage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Modules/MoneyStorage/Scripts/MoneyStorage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
     </list>
@@ -19,6 +24,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Modules/UIComponents/SmartButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@b0d01ca75f/Runtime/CompilerServices/StateMachineRunner.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -104,7 +110,7 @@
       <workItem from="1735119117641" duration="9309000" />
       <workItem from="1735128575592" duration="637000" />
       <workItem from="1735197742541" duration="996000" />
-      <workItem from="1735209400065" duration="3085000" />
+      <workItem from="1735209400065" duration="13257000" />
     </task>
     <servers />
   </component>

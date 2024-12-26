@@ -19,18 +19,19 @@ namespace Game.Presenters
 
         public void Initialize()
         {
-            _moneyStorage.OnMoneyChanged += ChangeMoney;
             _view.SetMoney(_moneyStorage.Money);
+            
+            _moneyStorage.OnMoneyChanged += SpendMoney;
         }
 
         public void Dispose()
         {
-            _moneyStorage.OnMoneyChanged -= ChangeMoney;
+            _moneyStorage.OnMoneyChanged -= SpendMoney;
         }
 
-        private void ChangeMoney(int newValue, int prevValue)
+        private void SpendMoney(int newValue, int prevValue)
         {
-            _view.SetMoney(newValue);
+            _view.ChangeMoney(prevValue, newValue);
         }
     }
 }

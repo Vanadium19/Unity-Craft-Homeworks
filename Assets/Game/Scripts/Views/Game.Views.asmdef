@@ -6,7 +6,8 @@
         "UIComponents",
         "Zenject",
         "dotweenModules",
-        "UniRx"
+        "UniRx",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

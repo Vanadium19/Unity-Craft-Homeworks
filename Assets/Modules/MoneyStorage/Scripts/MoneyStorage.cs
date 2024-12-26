@@ -7,7 +7,7 @@ namespace Modules.Money
     {
         public event MoneyChangedDelegate OnMoneyChanged;
         public event MoneyEarnedDelegate OnMoneyEarned;
-        public event MoneySpentDelegate OnMoneySpent;
+        public event MoneySpentDelegate ChangeMoney;
 
         [ShowInInspector, ReadOnly]
         public int Money => _money;
@@ -50,7 +50,7 @@ namespace Modules.Money
             int previousMoney = _money;
 
             _money -= amount;
-            this.OnMoneySpent?.Invoke(_money, amount);
+            this.ChangeMoney?.Invoke(_money, amount);
             this.OnMoneyChanged?.Invoke(_money, previousMoney);
         }
 
