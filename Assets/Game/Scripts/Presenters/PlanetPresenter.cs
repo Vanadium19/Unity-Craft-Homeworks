@@ -62,6 +62,9 @@ namespace Game.Presenters
         {
             if (!_planet.IsUnlocked)
                 _planet.Unlock();
+
+            if (_planet.IsIncomeReady)
+                _planet.GatherIncome();
         }
 
         private void ChangePopulation(int population)
