@@ -6,17 +6,17 @@ namespace Game.Presenters
 {
     public class ParticleAnimatorPresenter : IPresenter
     {
+        private readonly IEnumerable<IPlanetPresenter> _planetPresenters;
         private readonly ParticleAnimator _particleAnimator;
         private readonly Vector3 _moneyViewPosition;
-        private readonly IEnumerable<PlanetPresenter> _planetPresenters;
 
-        public ParticleAnimatorPresenter(ParticleAnimator particleAnimator,
-            Vector3 moneyViewPosition,
-            IEnumerable<PlanetPresenter> planetPresenters)
+        public ParticleAnimatorPresenter(IEnumerable<IPlanetPresenter> planetPresenters,
+            ParticleAnimator particleAnimator,
+            Vector3 moneyViewPosition)
         {
+            _planetPresenters = planetPresenters;
             _particleAnimator = particleAnimator;
             _moneyViewPosition = moneyViewPosition;
-            _planetPresenters = planetPresenters;
         }
 
         public void Initialize()

@@ -6,15 +6,15 @@ namespace Game.Presenters
 {
     public class PlanetPopupPresenter : IPresenter
     {
+        private readonly IEnumerable<IPlanetPresenter> _presenters;
         private readonly PlanetPopup _planetPopup;
-        private readonly IEnumerable<PlanetPresenter> _presenters;
 
         private IPlanet _currentPlanet;
 
-        public PlanetPopupPresenter(PlanetPopup planetPopup, IEnumerable<PlanetPresenter> presenters)
+        public PlanetPopupPresenter(IEnumerable<IPlanetPresenter> presenters, PlanetPopup planetPopup)
         {
-            _planetPopup = planetPopup;
             _presenters = presenters;
+            _planetPopup = planetPopup;
         }
 
         public void Initialize()
