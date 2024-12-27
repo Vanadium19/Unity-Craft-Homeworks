@@ -1,7 +1,6 @@
 using System;
 using Game.Views;
 using Modules.Money;
-using UnityEngine;
 using Zenject;
 
 namespace Game.Presenters
@@ -20,7 +19,7 @@ namespace Game.Presenters
         public void Initialize()
         {
             _view.SetMoney(_moneyStorage.Money);
-            
+
             _moneyStorage.OnMoneyChanged += SpendMoney;
         }
 

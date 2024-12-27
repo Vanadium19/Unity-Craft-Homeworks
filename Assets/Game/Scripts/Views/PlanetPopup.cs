@@ -9,7 +9,7 @@ namespace Game.Views
     {
         [SerializeField] private Image _icon;
         [SerializeField] private GameObject _pricePanel;
-        
+
         [Header("Button")]
         [SerializeField] private Button _upgradeButton;
         [SerializeField] private Button _closeButton;
@@ -36,14 +36,14 @@ namespace Game.Views
             _closeButton.onClick.RemoveListener(ClosePopup);
         }
 
-        public void SetName(string name)
-        {
-            _name.text = name;
-        }
-
         public void Open()
         {
             gameObject.SetActive(true);
+        }
+
+        public void SetName(string name)
+        {
+            _name.text = name;
         }
 
         public void SetIncome(int income)

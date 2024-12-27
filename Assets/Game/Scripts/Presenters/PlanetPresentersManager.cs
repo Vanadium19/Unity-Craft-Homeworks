@@ -8,19 +8,19 @@ using Zenject;
 
 namespace Game.Presenters
 {
-    public class PlanetsPresenter : IInitializable, IDisposable
+    public class PlanetPresentersManager : IInitializable, IDisposable
     {
         private readonly IPlanet[] _planets;
-        
+
         private readonly PlanetView[] _planetViews;
         private readonly PlanetPopup _planetPopup;
-        
+
         private readonly ParticleAnimator _particleAnimator;
         private readonly Vector3 _moneyViewPosition;
 
         private readonly List<IPresenter> _presenters = new();
 
-        public PlanetsPresenter(IPlanet[] planets,
+        public PlanetPresentersManager(IPlanet[] planets,
             PlanetView[] planetViews,
             PlanetPopup planetPopup,
             ParticleAnimator particleAnimator,
@@ -30,10 +30,10 @@ namespace Game.Presenters
                 throw new ArgumentException();
 
             _planets = planets;
-            
+
             _planetViews = planetViews;
             _planetPopup = planetPopup;
-            
+
             _particleAnimator = particleAnimator;
             _moneyViewPosition = moneyView.CoinPosition;
         }

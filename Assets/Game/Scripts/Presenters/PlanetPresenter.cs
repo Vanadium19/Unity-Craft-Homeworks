@@ -28,10 +28,10 @@ namespace Game.Presenters
         {
             _button.OnHold += OnHold;
             _button.OnClick += OnClick;
-            
+
             _planetView.Initialize(_planet.IsUnlocked);
             _planetView.SetPrice(_planet.Price);
-            
+
             if (!_planet.IsUnlocked)
                 _planet.OnUnlocked += UnlockPlanet;
         }
@@ -40,6 +40,12 @@ namespace Game.Presenters
         {
             _button.OnHold -= OnHold;
             _button.OnClick -= OnClick;
+        }
+
+        private void GatherIncome()
+        {
+            _planet.GatherIncome();
+            IncomeGathered?.Invoke(_planetView.CoinPosition);
         }
 
         private void OnHold()
@@ -53,16 +59,13 @@ namespace Game.Presenters
                 _planet.Unlock();
 
             if (_planet.IsIncomeReady)
-            {
-                _planet.GatherIncome();
-                IncomeGathered?.Invoke(_planetView.CoinPosition);
-            }
+                GatherIncome();
         }
 
         private void UnlockPlanet()
         {
             _planetView.Initialize(_planet.IsUnlocked);
-            
+
             _planet.OnUnlocked -= UnlockPlanet;
         }
     }

@@ -1,6 +1,5 @@
 using Modules.UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Game.Views
@@ -25,7 +24,7 @@ namespace Game.Views
             Container.Bind<MoneyView>()
                 .FromInstance(_moneyView)
                 .AsSingle();
-            
+
             Container.Bind<ParticleAnimator>()
                 .FromInstance(_particleAnimator)
                 .AsSingle();

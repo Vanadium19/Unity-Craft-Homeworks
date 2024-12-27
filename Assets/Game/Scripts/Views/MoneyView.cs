@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
@@ -10,7 +9,7 @@ namespace Game.Views
     {
         private const string Id = "CoinAnimation";
         private const float FlyingCoinDelay = 0.8f;
-        
+
         [SerializeField] private TMP_Text _money;
         [SerializeField] private Transform _coin;
         [SerializeField] private float _animationDelay = 2f;
@@ -26,7 +25,7 @@ namespace Game.Views
             DOTween.Kill(Id);
             _isAnimating = false;
             _animationQueue.Clear();
-            
+
             _money.text = value.ToString();
         }
 
@@ -37,7 +36,7 @@ namespace Game.Views
                 SetMoney(newValue);
                 return;
             }
-            
+
             _animationQueue.Enqueue((prevValue, newValue));
 
             if (!_isAnimating)
@@ -54,7 +53,7 @@ namespace Game.Views
 
             var delay = _isAnimating ? 0 : FlyingCoinDelay;
             var values = _animationQueue.Dequeue();
-            
+
             _isAnimating = true;
 
             DOTween.To(() => values.prevValue,

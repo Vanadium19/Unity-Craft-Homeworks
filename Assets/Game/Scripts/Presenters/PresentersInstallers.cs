@@ -11,10 +11,10 @@ namespace Game.Presenters
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<PlanetsPresenter>()
+            Container.BindInterfacesTo<PlanetPresentersManager>()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.BindInterfacesTo<MoneyPresenter>()
                 .AsSingle()
                 .NonLazy();
