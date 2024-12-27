@@ -17,8 +17,6 @@ namespace Game.Presenters
 
         private readonly ReactiveProperty<int> _population = new();
 
-        private PlanetIncomePresenter _incomePresenter;
-
         public event Action<IPlanet, PlanetPresenter> Opened;
 
         public PlanetPresenter(IPlanet planet,
@@ -39,9 +37,6 @@ namespace Game.Presenters
 
         public void Initialize()
         {
-            _incomePresenter = new PlanetIncomePresenter(_planet, _planetView);
-            _incomePresenter.Initialize();
-            
             _button.OnHold += OnHold;
             _button.OnClick += OnClick;
             _planet.OnPopulationChanged += ChangePopulation;
@@ -55,8 +50,6 @@ namespace Game.Presenters
 
         public void Dispose()
         {
-            _incomePresenter.Dispose();
-            
             _button.OnHold -= OnHold;
             _button.OnClick -= OnClick;
             _planet.OnPopulationChanged -= ChangePopulation;

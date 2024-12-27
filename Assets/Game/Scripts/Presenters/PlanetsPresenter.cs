@@ -12,6 +12,7 @@ namespace Game.Presenters
     {
         private readonly IPlanet[] _planets;
         private readonly List<PlanetPresenter> _planetPresenters = new();
+        private readonly List<PlanetIncomePresenter> _incomPresenters = new();
         
         private readonly PlanetView[] _planetViews;
         private readonly PlanetPopup _planetPopup;
@@ -45,6 +46,10 @@ namespace Game.Presenters
                 var planetPresenter = new PlanetPresenter(_planets[i], _planetViews[i], _particleAnimator, _moneyViewPosition);
                 planetPresenter.Initialize();
                 _planetPresenters.Add(planetPresenter);
+                
+                var incomePresenter = new PlanetIncomePresenter(_planets[i], _planetViews[i]);
+                incomePresenter.Initialize();
+                _incomPresenters.Add(incomePresenter);
             }
 
             _planetPopupPresenter = new PlanetPopupPresenter(_planetPopup, _planetPresenters);
@@ -53,8 +58,11 @@ namespace Game.Presenters
 
         public void Dispose()
         {
-            foreach (var presenter in _planetPresenters)
-                presenter.Dispose();
+            for (int i = 0; i < _planetPresenters.Count; i++)
+            {
+                _planetPresenters[i].Dispose();
+                _incomPresenters[i].Dispose();
+            }
 
             _planetPopupPresenter.Dispose();
         }
