@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Game.Views;
 using Modules.Planets;
-using UniRx;
-using UnityEngine;
 
 namespace Game.Presenters
 {
@@ -10,8 +8,6 @@ namespace Game.Presenters
     {
         private readonly PlanetPopup _planetPopup;
         private readonly IEnumerable<PlanetPresenter> _presenters;
-
-        private readonly CompositeDisposable _disposable = new();
 
         private IPlanet _currentPlanet;
 
@@ -39,31 +35,22 @@ namespace Game.Presenters
             _planetPopup.PopupClosed -= OnPopupClosed;
         }
 
-        private void OpenPlanet(IPlanet planet, PlanetPresenter presenter)
+        private void OpenPlanet(IPlanet planet)
         {
             _planetPopup.Open();
             _currentPlanet = planet;
 
-            presenter.Population.Subscribe(_planetPopup.SetPopulation)
-                .AddTo(_disposable);
-
-            SetPlanetParams();
+            SetPlanetInfo();
             _planetPopup.SetName(planet.Name);
-            
+
             if (!_currentPlanet.IsUnlocked)
                 _currentPlanet.OnUnlocked += UnlockPlanet;
 
-            _currentPlanet.OnUpgraded += UpgradePlanet;
+            _currentPlanet.OnUpgraded += UpdatePlanetInfo;
+            _currentPlanet.OnPopulationChanged += ChangePopulation;
         }
 
-        private void UnlockPlanet()
-        {
-            SetPlanetParams();
-
-            _currentPlanet.OnUnlocked -= UnlockPlanet;
-        }
-
-        private void SetPlanetParams()
+        private void SetPlanetInfo()
         {
             _planetPopup.SetIcon(_currentPlanet.GetIcon(_currentPlanet.IsUnlocked));
             _planetPopup.SetLevel(_currentPlanet.Level, _currentPlanet.MaxLevel);
@@ -73,21 +60,33 @@ namespace Game.Presenters
             if (_currentPlanet.IsMaxLevel)
                 _planetPopup.EnableUpgradeButton(false);
         }
+        
+        private void UnlockPlanet()
+        {
+            SetPlanetInfo();
+
+            _currentPlanet.OnUnlocked -= UnlockPlanet;
+        }
 
         private void UpgradePlanet()
         {
             _currentPlanet.UnlockOrUpgrade();
         }
 
-        private void UpgradePlanet(int upgradedPlanet)
+        private void UpdatePlanetInfo(int upgradedPlanet)
         {
-            SetPlanetParams();
+            SetPlanetInfo();
+        }
+
+        private void ChangePopulation(int population)
+        {
+            _planetPopup.SetPopulation(population);
         }
 
         private void OnPopupClosed()
         {
-            _currentPlanet.OnUpgraded += UpgradePlanet;
-            _disposable.Clear();
+            _currentPlanet.OnUpgraded -= UpdatePlanetInfo;
+            _currentPlanet.OnPopulationChanged -= ChangePopulation;
         }
     }
 }

@@ -1,8 +1,6 @@
 using System;
 using TMPro;
-using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Game.Views

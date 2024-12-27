@@ -2,7 +2,6 @@ using System;
 using Game.Views;
 using Modules.Planets;
 using Modules.UI;
-using UniRx;
 using UnityEngine;
 
 namespace Game.Presenters
@@ -15,9 +14,7 @@ namespace Game.Presenters
         private readonly ParticleAnimator _particleAnimator;
         private readonly Vector3 _moneyViewPosition;
 
-        private readonly ReactiveProperty<int> _population = new();
-
-        public event Action<IPlanet, PlanetPresenter> Opened;
+        public event Action<IPlanet> Opened;
 
         public PlanetPresenter(IPlanet planet,
             PlanetView planetView,
@@ -33,13 +30,10 @@ namespace Game.Presenters
             _button = _planetView.GetComponentInChildren<SmartButton>();
         }
 
-        public IReadOnlyReactiveProperty<int> Population => _population;
-
         public void Initialize()
         {
             _button.OnHold += OnHold;
             _button.OnClick += OnClick;
-            _planet.OnPopulationChanged += ChangePopulation;
             
             _planetView.Initialize(_planet.IsUnlocked);
             _planetView.SetPrice(_planet.Price);
@@ -52,12 +46,11 @@ namespace Game.Presenters
         {
             _button.OnHold -= OnHold;
             _button.OnClick -= OnClick;
-            _planet.OnPopulationChanged -= ChangePopulation;
         }
 
         private void OnHold()
         {
-            Opened?.Invoke(_planet, this);
+            Opened?.Invoke(_planet);
         }
 
         private void OnClick()
@@ -70,11 +63,6 @@ namespace Game.Presenters
                 _planet.GatherIncome();
                 _particleAnimator.Emit(_planetView.CoinPosition, _moneyViewPosition);
             }
-        }
-
-        private void ChangePopulation(int population)
-        {
-            _population.Value = population;
         }
 
         private void UnlockPlanet()
