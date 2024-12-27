@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Converters
@@ -43,36 +41,28 @@ namespace Converters
         public float ConversionTime => _conversionTime;
         public int ConversionResourcesCount => _conversionResourcesCount;
 
-        public void Add(IEnumerable<Resource> resources, out IReadOnlyList<Resource> extraResources)
+        public void Add(int resourcesCount, out int extraResourcesCount)
         {
-            CheckResources(resources);
-
-            List<Resource> extra = new();
-
-            _loadingAreaCount += resources.Count();
+            if (resourcesCount <= 0)
+                throw new ArgumentException();
+            
+            extraResourcesCount = 0;
+            
+            _loadingAreaCount += resourcesCount;
 
             if (_loadingAreaCount > _loadingAreaCapacity)
             {
-                IEnumerator<Resource> enumerator = resources.GetEnumerator();
-                int extraResourcesCount = _loadingAreaCount - _loadingAreaCapacity;
-
+                extraResourcesCount = _loadingAreaCount - _loadingAreaCapacity;
                 _loadingAreaCount = _loadingAreaCapacity;
-
-                for (int i = 0; i < extraResourcesCount; i++)
-                {
-                    enumerator.MoveNext();
-                    extra.Add(enumerator.Current);
-                }
             }
-
-            extraResources = extra;
         }
-
-        public void Add(IEnumerable<Resource> resources)
+        
+        public void Add(int resourcesCount)
         {
-            CheckResources(resources);
+            if (resourcesCount < 0)
+                throw new ArgumentException();
 
-            _loadingAreaCount = Mathf.Min(_loadingAreaCount + resources.Count(), _loadingAreaCapacity);
+            _loadingAreaCount = Mathf.Min(_loadingAreaCount + resourcesCount, _loadingAreaCapacity);
         }
 
         public void SetActive(bool value)
@@ -123,28 +113,6 @@ namespace Converters
         {
             _unloadingAreaCount += _givenResourcesCount;
             _conversionResourcesCount = 0;
-        }
-
-        private void Add(int resourcesCount)
-        {
-            if (resourcesCount <= 0)
-                throw new ArgumentException();
-
-            _loadingAreaCount = Mathf.Min(_loadingAreaCount + resourcesCount, _loadingAreaCapacity);
-        }
-
-        private void CheckResources(IEnumerable<Resource> resources)
-        {
-            if (resources == null)
-                throw new ArgumentNullException();
-
-            foreach (var resource in resources)
-            {
-                if (resource == null)
-                {
-                    throw new ArgumentException();
-                }
-            }
         }
     }
 }
