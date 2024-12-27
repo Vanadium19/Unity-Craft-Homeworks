@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Presenters
 {
-    public class ParticleAnimatorPresenter
+    public class ParticleAnimatorPresenter : IPresenter
     {
         private readonly ParticleAnimator _particleAnimator;
         private readonly Vector3 _moneyViewPosition;

@@ -4,7 +4,7 @@ using Modules.Planets;
 
 namespace Game.Presenters
 {
-    public class PlanetPopupPresenter
+    public class PlanetPopupPresenter : IPresenter
     {
         private readonly PlanetPopup _planetPopup;
         private readonly IEnumerable<PlanetPresenter> _presenters;

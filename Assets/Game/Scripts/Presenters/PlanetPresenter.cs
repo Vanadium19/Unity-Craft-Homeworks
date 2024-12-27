@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Presenters
 {
-    public class PlanetPresenter
+    public class PlanetPresenter : IPresenter
     {
         private readonly PlanetView _planetView;
         private readonly SmartButton _button;

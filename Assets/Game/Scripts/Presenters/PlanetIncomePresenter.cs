@@ -3,7 +3,7 @@ using Modules.Planets;
 
 namespace Game.Presenters
 {
-    public class PlanetIncomePresenter
+    public class PlanetIncomePresenter : IPresenter
     {
         private readonly IPlanet _planet;
         private readonly PlanetView _view;
