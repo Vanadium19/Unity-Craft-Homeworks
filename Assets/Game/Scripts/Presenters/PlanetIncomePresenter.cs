@@ -1,6 +1,5 @@
 using Game.Views;
 using Modules.Planets;
-using UnityEngine;
 
 namespace Game.Presenters
 {

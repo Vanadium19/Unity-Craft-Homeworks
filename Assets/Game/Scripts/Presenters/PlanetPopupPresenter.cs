@@ -20,7 +20,7 @@ namespace Game.Presenters
         public void Initialize()
         {
             foreach (var presenter in _presenters)
-                presenter.Opened += OpenPlanet;
+                presenter.PopupOpened += OpenPlanet;
 
             _planetPopup.UpdateButtonClicked += UpgradePlanet;
             _planetPopup.PopupClosed += OnPopupClosed;
@@ -29,7 +29,7 @@ namespace Game.Presenters
         public void Dispose()
         {
             foreach (var presenter in _presenters)
-                presenter.Opened -= OpenPlanet;
+                presenter.PopupOpened -= OpenPlanet;
 
             _planetPopup.UpdateButtonClicked -= UpgradePlanet;
             _planetPopup.PopupClosed -= OnPopupClosed;

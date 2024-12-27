@@ -11,21 +11,15 @@ namespace Game.Presenters
         private readonly PlanetView _planetView;
         private readonly SmartButton _button;
         private readonly IPlanet _planet;
-        private readonly ParticleAnimator _particleAnimator;
-        private readonly Vector3 _moneyViewPosition;
 
-        public event Action<IPlanet> Opened;
+        public event Action<IPlanet> PopupOpened;
+        public event Action<Vector3> IncomeGathered;
 
         public PlanetPresenter(IPlanet planet,
-            PlanetView planetView,
-            ParticleAnimator particleAnimator,
-            Vector3 moneyViewPosition)
+            PlanetView planetView)
         {
             _planet = planet;
             _planetView = planetView;
-            
-            _particleAnimator = particleAnimator;
-            _moneyViewPosition = moneyViewPosition;
 
             _button = _planetView.GetComponentInChildren<SmartButton>();
         }
@@ -50,7 +44,7 @@ namespace Game.Presenters
 
         private void OnHold()
         {
-            Opened?.Invoke(_planet);
+            PopupOpened?.Invoke(_planet);
         }
 
         private void OnClick()
@@ -61,7 +55,7 @@ namespace Game.Presenters
             if (_planet.IsIncomeReady)
             {
                 _planet.GatherIncome();
-                _particleAnimator.Emit(_planetView.CoinPosition, _moneyViewPosition);
+                IncomeGathered?.Invoke(_planetView.CoinPosition);
             }
         }
 
