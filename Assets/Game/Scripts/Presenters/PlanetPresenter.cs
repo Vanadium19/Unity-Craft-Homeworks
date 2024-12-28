@@ -9,7 +9,6 @@ namespace Game.Presenters
     public class PlanetPresenter : IPlanetPresenter
     {
         private readonly PlanetView _planetView;
-        private readonly SmartButton _button;
         private readonly IPlanet _planet;
 
         public event Action<IPlanet> PopupOpened;
@@ -20,14 +19,12 @@ namespace Game.Presenters
         {
             _planet = planet;
             _planetView = planetView;
-
-            _button = _planetView.GetComponentInChildren<SmartButton>();
         }
 
         public void Initialize()
         {
-            _button.OnHold += OnHold;
-            _button.OnClick += OnClick;
+            _planetView.OnHold += OnHold;
+            _planetView.OnClicked += OnClick;
             _planet.OnIncomeTimeChanged += ChangeIncomeTime;
 
             _planetView.Initialize(_planet.IsUnlocked);
@@ -39,8 +36,8 @@ namespace Game.Presenters
 
         public void Dispose()
         {
-            _button.OnHold -= OnHold;
-            _button.OnClick -= OnClick;
+            _planetView.OnHold -= OnHold;
+            _planetView.OnClicked -= OnClick;
             _planet.OnIncomeTimeChanged -= ChangeIncomeTime;
         }
 
