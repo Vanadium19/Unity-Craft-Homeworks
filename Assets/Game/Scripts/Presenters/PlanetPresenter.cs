@@ -8,17 +8,19 @@ namespace Game.Presenters
 {
     public class PlanetPresenter : IPlanetPresenter
     {
-        private readonly PlanetView _planetView;
         private readonly IPlanet _planet;
+        private readonly PlanetView _planetView;
+        private readonly PopupShower _popupShower;
 
-        public event Action<IPlanet> PopupOpened;
         public event Action<Vector3> IncomeGathered;
 
         public PlanetPresenter(IPlanet planet,
-            PlanetView planetView)
+            PlanetView planetView,
+            PopupShower popupShower)
         {
             _planet = planet;
             _planetView = planetView;
+            _popupShower = popupShower;
         }
 
         public void Initialize()
@@ -49,7 +51,7 @@ namespace Game.Presenters
 
         private void OnHold()
         {
-            PopupOpened?.Invoke(_planet);
+            _popupShower.OpenPopup(_planet);
         }
 
         private void OnClick()

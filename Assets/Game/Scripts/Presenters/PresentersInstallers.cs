@@ -18,6 +18,14 @@ namespace Game.Presenters
             Container.BindInterfacesTo<MoneyPresenter>()
                 .AsSingle()
                 .NonLazy();
+            
+            Container.BindInterfacesTo<PlanetPopupPresenter>()
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<PopupShower>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

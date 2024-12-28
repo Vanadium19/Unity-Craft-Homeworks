@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Game.Views
 {
@@ -21,57 +22,49 @@ namespace Game.Views
         [SerializeField] private TMP_Text _income;
         [SerializeField] private TMP_Text _upgradePrice;
 
-        public event Action UpdateButtonClicked;
-        public event Action PopupClosed;
-
+        [Inject]
+        private IPlanetPopupPresenter _presenter;
+        
         private void OnEnable()
         {
             _upgradeButton.onClick.AddListener(UpgradePlanet);
             _closeButton.onClick.AddListener(ClosePopup);
+
+            if (!_presenter.IsPlanetUnlocked)
+                _presenter.OnUnlocked += OnUnlocked;
+            
+            _presenter.OnUpgrated += OnUpdated;
+            _presenter.OnPopulationChanged += OnPopulationChanged;
         }
 
         private void OnDisable()
         {
             _upgradeButton.onClick.RemoveListener(UpgradePlanet);
             _closeButton.onClick.RemoveListener(ClosePopup);
+            
+            _presenter.OnUpgrated -= OnUpdated;
+            _presenter.OnPopulationChanged -= OnPopulationChanged;
         }
 
         public void Open()
         {
             gameObject.SetActive(true);
+            
+            _name.text = _presenter.Name;
+            _icon.sprite = _presenter.Icon;
+            SetPlanetInfo();
         }
 
-        public void SetName(string name)
+        private void SetPlanetInfo()
         {
-            _name.text = name;
+            _level.text = _presenter.Level;
+            _income.text = _presenter.Income;
+            _upgradePrice.text = _presenter.Price;
+            _population.text = _presenter.Population;
+            EnableUpgradeButton(_presenter.IsButtonActive);
         }
 
-        public void SetIncome(int income)
-        {
-            _income.text = $"Income: {income} / sec";
-        }
-
-        public void SetLevel(int level, int maxLevel)
-        {
-            _level.text = $"Level: {level}/{maxLevel}";
-        }
-
-        public void SetPopulation(int population)
-        {
-            _population.text = $"Population: {population}";
-        }
-
-        public void SetPrice(int price)
-        {
-            _upgradePrice.text = price.ToString();
-        }
-
-        public void SetIcon(Sprite icon)
-        {
-            _icon.sprite = icon;
-        }
-
-        public void EnableUpgradeButton(bool value)
+        private void EnableUpgradeButton(bool value)
         {
             _upgradeButton.interactable = value;
             _pricePanel.SetActive(value);
@@ -79,13 +72,31 @@ namespace Game.Views
 
         private void UpgradePlanet()
         {
-            UpdateButtonClicked?.Invoke();
+            _presenter.UpgradePlanet();
         }
 
         private void ClosePopup()
         {
-            PopupClosed?.Invoke();
             gameObject.SetActive(false);
+            _presenter.OnPopupClosed();
+        }
+        
+        private void OnPopulationChanged()
+        {
+            _population.text = _presenter.Population;
+        }
+
+        private void OnUpdated()
+        {
+            SetPlanetInfo();
+        }
+
+        private void OnUnlocked()
+        {
+            SetPlanetInfo();
+            _icon.sprite = _presenter.Icon;
+            
+            _presenter.OnUnlocked -= OnUnlocked;
         }
     }
 }
