@@ -57,10 +57,7 @@ namespace Game.Presenters
             var planetPresenters = new List<IPlanetPresenter>();
 
             for (int i = 0; i < _planetViews.Length; i++)
-            {
                 planetPresenters.Add(new PlanetPresenter(_planets[i], _planetViews[i]));
-                _presenters.Add(new PlanetIncomePresenter(_planets[i], _planetViews[i]));
-            }
 
             _presenters.AddRange(planetPresenters);
             _presenters.Add(new PlanetPopupPresenter(planetPresenters, _planetPopup));

@@ -28,6 +28,7 @@ namespace Game.Presenters
         {
             _button.OnHold += OnHold;
             _button.OnClick += OnClick;
+            _planet.OnIncomeTimeChanged += ChangeIncomeTime;
 
             _planetView.Initialize(_planet.IsUnlocked);
             _planetView.SetPrice(_planet.Price);
@@ -40,6 +41,7 @@ namespace Game.Presenters
         {
             _button.OnHold -= OnHold;
             _button.OnClick -= OnClick;
+            _planet.OnIncomeTimeChanged -= ChangeIncomeTime;
         }
 
         private void GatherIncome()
@@ -67,6 +69,11 @@ namespace Game.Presenters
             _planetView.Initialize(_planet.IsUnlocked);
 
             _planet.OnUnlocked -= UnlockPlanet;
+        }
+        
+        private void ChangeIncomeTime(float time)
+        {
+            _planetView.SetProgress(_planet.IncomeProgress, time);
         }
     }
 }
