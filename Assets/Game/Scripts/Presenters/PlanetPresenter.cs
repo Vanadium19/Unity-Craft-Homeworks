@@ -1,8 +1,5 @@
-using System;
 using Game.Views;
 using Modules.Planets;
-using Modules.UI;
-using UnityEngine;
 
 namespace Game.Presenters
 {
@@ -76,10 +73,12 @@ namespace Game.Presenters
 
             _planet.OnUnlocked -= UnlockPlanet;
         }
-        
+
         private void ChangeIncomeTime(float time)
         {
-            _planetView.SetProgress(_planet.IncomeProgress, time);
+            string timeText = $"{(int)(time / 60f)}m:{(int)(time % 60f)}s";
+
+            _planetView.SetProgress(_planet.IncomeProgress, timeText);
         }
     }
 }

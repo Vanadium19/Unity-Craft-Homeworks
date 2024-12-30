@@ -66,10 +66,10 @@ namespace Game.Views
             _price.text = price.ToString();
         }
 
-        public void SetProgress(float progress, float time)
+        public void SetProgress(float progress, string time)
         {
             _progressBar.fillAmount = progress;
-            _time.text = $"{(int)(time / 60f)}m:{(int)(time % 60f)}s";
+            _time.text = time;
 
             FinishProgress(progress >= MaxProgress);
         }
