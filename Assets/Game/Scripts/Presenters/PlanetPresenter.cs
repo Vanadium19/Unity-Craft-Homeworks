@@ -6,26 +6,28 @@ using UnityEngine;
 
 namespace Game.Presenters
 {
-    public class PlanetPresenter : IPlanetPresenter
+    public class PlanetPresenter
     {
         private readonly IPlanet _planet;
         private readonly PlanetView _planetView;
         private readonly PopupShower _popupShower;
-
-        public event Action<Vector3> IncomeGathered;
+        private readonly PlanetPresentersMediator _mediator;
 
         public PlanetPresenter(IPlanet planet,
             PlanetView planetView,
-            PopupShower popupShower)
+            PopupShower popupShower,
+            PlanetPresentersMediator mediator)
         {
             _planet = planet;
             _planetView = planetView;
             _popupShower = popupShower;
+            _mediator = mediator;
         }
 
         public void Initialize()
         {
             _planetView.OnHold += OnHold;
+            _planet.OnGathered += OnGathered;
             _planetView.OnClicked += OnClick;
             _planet.OnIncomeTimeChanged += ChangeIncomeTime;
 
@@ -39,6 +41,7 @@ namespace Game.Presenters
         public void Dispose()
         {
             _planetView.OnHold -= OnHold;
+            _planet.OnGathered -= OnGathered;
             _planetView.OnClicked -= OnClick;
             _planet.OnIncomeTimeChanged -= ChangeIncomeTime;
         }
@@ -46,12 +49,16 @@ namespace Game.Presenters
         private void GatherIncome()
         {
             _planet.GatherIncome();
-            IncomeGathered?.Invoke(_planetView.CoinPosition);
         }
 
         private void OnHold()
         {
             _popupShower.OpenPopup(_planet);
+        }
+
+        private void OnGathered(int range)
+        {
+            _mediator.GatherIncome(_planetView.CoinPosition, range);
         }
 
         private void OnClick()

@@ -8,7 +8,6 @@ namespace Game.Views
     public class MoneyView : MonoBehaviour
     {
         private const string Id = "CoinAnimation";
-        private const float FlyingCoinDelay = 0.8f;
 
         [SerializeField] private TMP_Text _money;
         [SerializeField] private Transform _coin;
@@ -28,14 +27,11 @@ namespace Game.Views
 
             _money.text = value.ToString();
         }
-
-        public void ChangeMoney(int prevValue, int newValue)
+        
+        public void AddMoney(int prevValue, int newValue)
         {
             if (prevValue >= newValue)
-            {
-                SetMoney(newValue);
                 return;
-            }
 
             _animationQueue.Enqueue((prevValue, newValue));
 
@@ -51,7 +47,6 @@ namespace Game.Views
                 return;
             }
 
-            var delay = _isAnimating ? 0 : FlyingCoinDelay;
             var values = _animationQueue.Dequeue();
 
             _isAnimating = true;
@@ -60,7 +55,6 @@ namespace Game.Views
                     value => { _money.text = value.ToString(); },
                     values.newValue,
                     _animationDelay)
-                .SetDelay(delay)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(StartNextAnimation)
                 .SetId(Id);

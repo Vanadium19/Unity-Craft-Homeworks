@@ -11,31 +11,24 @@ namespace Game.Presenters
     public class PlanetPresentersManager : IInitializable, IDisposable
     {
         private readonly IPlanet[] _planets;
-
         private readonly PlanetView[] _planetViews;
-
-        private readonly ParticleAnimator _particleAnimator;
-        private readonly Vector3 _moneyViewPosition;
         private readonly PopupShower _popupShower;
+        private readonly PlanetPresentersMediator _mediator;
 
-        private readonly List<IPresenter> _presenters = new();
+        private readonly List<PlanetPresenter> _presenters = new();
 
         public PlanetPresentersManager(IPlanet[] planets,
             PlanetView[] planetViews,
-            ParticleAnimator particleAnimator,
-            MoneyView moneyView,
-            PopupShower popupShower)
+            PopupShower popupShower,
+            PlanetPresentersMediator mediator)
         {
             if (planetViews.Length != planets.Length)
                 throw new ArgumentException();
 
             _planets = planets;
-
             _planetViews = planetViews;
-
-            _particleAnimator = particleAnimator;
-            _moneyViewPosition = moneyView.CoinPosition;
             _popupShower = popupShower;
+            _mediator = mediator;
         }
 
         public void Initialize()
@@ -54,13 +47,8 @@ namespace Game.Presenters
 
         private void CreatePresenters()
         {
-            var planetPresenters = new List<IPlanetPresenter>();
-
             for (int i = 0; i < _planetViews.Length; i++)
-                planetPresenters.Add(new PlanetPresenter(_planets[i], _planetViews[i], _popupShower));
-
-            _presenters.AddRange(planetPresenters);
-            _presenters.Add(new ParticleAnimatorPresenter(planetPresenters, _particleAnimator, _moneyViewPosition));
+                _presenters.Add(new PlanetPresenter(_planets[i], _planetViews[i], _popupShower, _mediator));
         }
     }
 }
