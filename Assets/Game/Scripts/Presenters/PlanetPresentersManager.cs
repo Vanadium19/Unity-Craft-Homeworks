@@ -12,23 +12,20 @@ namespace Game.Presenters
     {
         private readonly IPlanet[] _planets;
         private readonly PlanetView[] _planetViews;
-        private readonly PopupShower _popupShower;
-        private readonly PlanetPresentersMediator _mediator;
+        private readonly PlanetPresenterFactory _factory;
 
         private readonly List<PlanetPresenter> _presenters = new();
 
         public PlanetPresentersManager(IPlanet[] planets,
             PlanetView[] planetViews,
-            PopupShower popupShower,
-            PlanetPresentersMediator mediator)
+            PlanetPresenterFactory factory)
         {
             if (planetViews.Length != planets.Length)
                 throw new ArgumentException();
 
             _planets = planets;
             _planetViews = planetViews;
-            _popupShower = popupShower;
-            _mediator = mediator;
+            _factory = factory;
         }
 
         public void Initialize()
@@ -48,7 +45,7 @@ namespace Game.Presenters
         private void CreatePresenters()
         {
             for (int i = 0; i < _planetViews.Length; i++)
-                _presenters.Add(new PlanetPresenter(_planets[i], _planetViews[i], _popupShower, _mediator));
+                _presenters.Add(_factory.Create(_planets[i], _planetViews[i]));
         }
     }
 }

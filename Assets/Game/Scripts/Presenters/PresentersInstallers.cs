@@ -1,3 +1,5 @@
+using Game.Views;
+using Modules.Planets;
 using UnityEngine;
 using Zenject;
 
@@ -26,6 +28,9 @@ namespace Game.Presenters
             Container.Bind<PlanetPresentersMediator>()
                 .AsSingle()
                 .NonLazy();
+
+            Container.BindFactory<IPlanet, PlanetView, PlanetPresenter, PlanetPresenterFactory>()
+                .AsSingle();
             
             Container.BindInterfacesTo<PlanetPresentersManager>()
                 .AsSingle()
