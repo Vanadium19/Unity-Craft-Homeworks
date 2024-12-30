@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,34 +21,39 @@ namespace Game.Views
         [SerializeField] private TMP_Text _income;
         [SerializeField] private TMP_Text _upgradePrice;
 
-        [Inject]
         private IPlanetPopupPresenter _presenter;
-        
+
         private void OnEnable()
         {
-            _upgradeButton.onClick.AddListener(UpgradePlanet);
+            _upgradeButton.onClick.AddListener(_presenter.UpgradePlanet);
             _closeButton.onClick.AddListener(ClosePopup);
 
             if (!_presenter.IsPlanetUnlocked)
                 _presenter.OnUnlocked += OnUnlocked;
-            
-            _presenter.OnUpgrated += OnUpdated;
+
+            _presenter.OnUpgrated += SetPlanetInfo;
             _presenter.OnPopulationChanged += OnPopulationChanged;
         }
 
         private void OnDisable()
         {
-            _upgradeButton.onClick.RemoveListener(UpgradePlanet);
+            _upgradeButton.onClick.RemoveListener(_presenter.UpgradePlanet);
             _closeButton.onClick.RemoveListener(ClosePopup);
-            
-            _presenter.OnUpgrated -= OnUpdated;
+
+            _presenter.OnUpgrated -= SetPlanetInfo;
             _presenter.OnPopulationChanged -= OnPopulationChanged;
+        }
+
+        [Inject]
+        public void Construct(IPlanetPopupPresenter presenter)
+        {
+            _presenter = presenter;
         }
 
         public void Open()
         {
             gameObject.SetActive(true);
-            
+
             _name.text = _presenter.Name;
             _icon.sprite = _presenter.Icon;
             SetPlanetInfo();
@@ -70,33 +74,23 @@ namespace Game.Views
             _pricePanel.SetActive(value);
         }
 
-        private void UpgradePlanet()
-        {
-            _presenter.UpgradePlanet();
-        }
-
         private void ClosePopup()
         {
             gameObject.SetActive(false);
             _presenter.OnPopupClosed();
-        }
-        
-        private void OnPopulationChanged()
-        {
-            _population.text = _presenter.Population;
-        }
-
-        private void OnUpdated()
-        {
-            SetPlanetInfo();
         }
 
         private void OnUnlocked()
         {
             SetPlanetInfo();
             _icon.sprite = _presenter.Icon;
-            
+
             _presenter.OnUnlocked -= OnUnlocked;
+        }
+
+        private void OnPopulationChanged(string population)
+        {
+            _population.text = population;
         }
     }
 }

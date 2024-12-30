@@ -29,7 +29,7 @@ namespace Game.Views
 
         public event Action OnClicked;
         public event Action OnHold;
-        
+
         public Vector3 CoinPosition => _coinIcon.transform.position;
 
         private void Awake()

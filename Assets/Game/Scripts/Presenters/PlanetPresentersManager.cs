@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using Game.Views;
 using Modules.Planets;
-using Modules.UI;
-using UnityEngine;
 using Zenject;
 
 namespace Game.Presenters
@@ -14,38 +11,35 @@ namespace Game.Presenters
         private readonly PlanetView[] _planetViews;
         private readonly PlanetPresenterFactory _factory;
 
-        private readonly List<PlanetPresenter> _presenters = new();
+        private readonly PlanetPresenter[] _presenters;
 
-        public PlanetPresentersManager(IPlanet[] planets,
+        public PlanetPresentersManager(PlanetPresenterFactory factory,
             PlanetView[] planetViews,
-            PlanetPresenterFactory factory)
+            IPlanet[] planets)
         {
             if (planetViews.Length != planets.Length)
                 throw new ArgumentException();
 
-            _planets = planets;
-            _planetViews = planetViews;
             _factory = factory;
+            _planetViews = planetViews;
+            _planets = planets;
+
+            _presenters = new PlanetPresenter[planets.Length];
         }
 
         public void Initialize()
         {
-            CreatePresenters();
-
-            foreach (var presenter in _presenters)
-                presenter.Initialize();
+            for (int i = 0; i < _planetViews.Length; i++)
+            {
+                _presenters[i] = _factory.Create(_planets[i], _planetViews[i]);
+                _presenters[i].Initialize();
+            }
         }
 
         public void Dispose()
         {
             foreach (var presenter in _presenters)
                 presenter.Dispose();
-        }
-
-        private void CreatePresenters()
-        {
-            for (int i = 0; i < _planetViews.Length; i++)
-                _presenters.Add(_factory.Create(_planets[i], _planetViews[i]));
         }
     }
 }

@@ -8,17 +8,17 @@ namespace Game.Presenters
         private readonly IPlanet _planet;
         private readonly PlanetView _planetView;
         private readonly PopupShower _popupShower;
-        private readonly PlanetPresentersMediator _mediator;
+        private readonly IPlanetPresentersMediator _mediator;
 
-        public PlanetPresenter(IPlanet planet,
-            PlanetView planetView,
+        public PlanetPresenter(IPlanetPresentersMediator mediator,
             PopupShower popupShower,
-            PlanetPresentersMediator mediator)
+            PlanetView planetView,
+            IPlanet planet)
         {
-            _planet = planet;
-            _planetView = planetView;
-            _popupShower = popupShower;
             _mediator = mediator;
+            _popupShower = popupShower;
+            _planetView = planetView;
+            _planet = planet;
         }
 
         public void Initialize()

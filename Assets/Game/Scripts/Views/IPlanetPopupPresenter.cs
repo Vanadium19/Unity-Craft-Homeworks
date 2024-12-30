@@ -17,7 +17,7 @@ namespace Game.Views
         
         public event Action OnUnlocked;
         public event Action OnUpgrated;
-        public event Action OnPopulationChanged;
+        public event Action<string> OnPopulationChanged;
 
         public void SetCurrentPlanet(IPlanet planet);
 

@@ -2,7 +2,7 @@
 
 namespace Game.Presenters
 {
-    public class PlanetPresentersMediator
+    public class PlanetPresentersMediator : IPlanetPresentersMediator
     {
         private readonly MoneyPresenter _moneyPresenter;
 
