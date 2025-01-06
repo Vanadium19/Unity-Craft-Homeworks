@@ -10,23 +10,12 @@ namespace Game.Scripts.App.SaveLoad
     public class GameSaveLoader : IGameSaveLoader
     {
         private readonly IGameRepository _repository;
-        private readonly EntityWorld _entityWorld;
+        private readonly IGameSerializer[] _serializers;
 
-        public GameSaveLoader(IGameRepository repository, EntityWorld entityWorld)
+        public GameSaveLoader(IGameRepository repository, IGameSerializer[] serializers)
         {
             _repository = repository;
-            _entityWorld = entityWorld;
-        }
-
-        private IEnumerable<IGameSerializer> GetSerializers()
-        {
-            var entities = _entityWorld.GetAll();
-            var serializers = new List<IGameSerializer>(entities.Count);
-
-            foreach (var entity in entities)
-                serializers.Add(new EntitySerializer(entity));
-
-            return serializers;
+            _serializers = serializers;
         }
 
         public void Save()
@@ -35,7 +24,7 @@ namespace Game.Scripts.App.SaveLoad
 
             var state = new Dictionary<string, string>();
 
-            foreach (var serializer in GetSerializers())
+            foreach (var serializer in _serializers)
                 serializer.Serialize(state);
 
             _repository.SetState(state);
@@ -43,7 +32,12 @@ namespace Game.Scripts.App.SaveLoad
 
         public void Load()
         {
-            throw new NotImplementedException();
+            Debug.Log("Load!");
+            
+            var state = _repository.GetState();
+
+            foreach (var serializer in _serializers)
+                serializer.Deserialize(state);
         }
     }
 }

@@ -6,6 +6,5 @@ namespace Game.Scripts.App.Data
     public struct CountdownData
     {
         public float CurrentTime;
-        public float Duration;
     }
 }

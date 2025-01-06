@@ -24,7 +24,12 @@ namespace Game.Scripts.App.SaveLoad.Serializers
 
         public void Deserialize(IDictionary<string, string> state)
         {
-            throw new System.NotImplementedException();
+            if (!state.TryGetValue(_key, out string json))
+                return;
+
+            TData data = JsonConvert.DeserializeObject<TData>(json);
+
+            Deserialize(_service, data);
         }
 
         protected abstract TData Serialize(TService service);

@@ -24,6 +24,9 @@ namespace Game.Gameplay
         public void Load(string versionText, Action<bool, int> callback)
         {
             //TODO:
+            
+            _gameSaveLoader.Load();
+            
             callback.Invoke(false, -1);
         }
     }

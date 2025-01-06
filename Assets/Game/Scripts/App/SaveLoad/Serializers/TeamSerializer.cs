@@ -1,4 +1,5 @@
 using Game.Scripts.App.Data;
+using SampleGame.Common;
 using SampleGame.Gameplay;
 
 namespace Game.Scripts.App.SaveLoad.Serializers
@@ -14,7 +15,7 @@ namespace Game.Scripts.App.SaveLoad.Serializers
 
         protected override void Deserialize(Team service, TeamData data)
         {
-            throw new System.NotImplementedException();
+            service.Type = (TeamType)data.TeamType;
         }
     }
 }

@@ -6,6 +6,5 @@ namespace Game.Scripts.App.Data
     public struct HealthData
     {
         public int CurrentHealth;
-        public int MaxHealth;
     }
 }

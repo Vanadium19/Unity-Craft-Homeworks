@@ -22,7 +22,12 @@ namespace Game.Scripts.App.Repository
 
         public Dictionary<string, string> GetState()
         {
-            return new();
+            if (!File.Exists(_filePath))
+                return new Dictionary<string, string>();
+
+            var json = File.ReadAllText(_filePath);
+            
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
         }
     }
 }

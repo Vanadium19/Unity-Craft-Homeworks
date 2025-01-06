@@ -9,12 +9,12 @@ namespace Game.Scripts.App.SaveLoad.Serializers
 
         protected override HealthData Serialize(Health service)
         {
-            return new HealthData { CurrentHealth = service.Current, MaxHealth = service.Max };
+            return new HealthData { CurrentHealth = service.Current };
         }
 
         protected override void Deserialize(Health service, HealthData data)
         {
-            throw new System.NotImplementedException();
+            service.Current = data.CurrentHealth;
         }
     }
 }

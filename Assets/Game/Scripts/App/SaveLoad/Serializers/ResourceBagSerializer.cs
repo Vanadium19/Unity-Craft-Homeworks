@@ -1,4 +1,5 @@
 using Game.Scripts.App.Data;
+using SampleGame.Common;
 using SampleGame.Gameplay;
 
 namespace Game.Scripts.App.SaveLoad.Serializers
@@ -21,7 +22,9 @@ namespace Game.Scripts.App.SaveLoad.Serializers
 
         protected override void Deserialize(ResourceBag service, ResourceBagData data)
         {
-            throw new System.NotImplementedException();
+            service.Type = (ResourceType)data.Type;
+            service.Current = data.Current;
+            service.Capacity = data.Capacity;
         }
     }
 }

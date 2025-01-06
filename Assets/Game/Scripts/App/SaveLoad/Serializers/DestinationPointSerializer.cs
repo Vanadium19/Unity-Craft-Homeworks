@@ -16,7 +16,7 @@ namespace Game.Scripts.App.SaveLoad.Serializers
 
         protected override void Deserialize(DestinationPoint service, DestinationPointData data)
         {
-            throw new System.NotImplementedException();
+            service.Value = data.Value;
         }
     }
 }
