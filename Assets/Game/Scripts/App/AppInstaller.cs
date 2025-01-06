@@ -27,7 +27,7 @@ namespace Game.Scripts.App
                 .AsSingle()
                 .NonLazy();
             
-            Container.BindInterfacesTo<EntitiesSerializer>()
+            Container.BindInterfacesTo<EntityWorldSerializer>()
                 .AsSingle()
                 .NonLazy();
         }
