@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523cf7610035498195aa2ddf70ad084d, type: 3}
+  m_Name: Ship
+  m_EditorClassIdentifier: 
+  <Prefab>k__BackingField: {fileID: -4906184570170703649, guid: f68d88c83116a48edbbe56293b6e6967, type: 3}
+  <Name>k__BackingField: Ship
+  <Size>k__BackingField: 2
+  <Type>k__BackingField: 1
