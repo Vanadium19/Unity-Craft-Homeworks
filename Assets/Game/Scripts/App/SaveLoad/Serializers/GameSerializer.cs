@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Zenject;
 
 namespace Game.Scripts.App.SaveLoad.Serializers
 {
     public abstract class GameSerializer<TService, TData> : IGameSerializer
     {
+        [Inject]
         private readonly TService _service;
-        private readonly string _key;
-
-        protected GameSerializer(TService service, string key)
-        {
-            _service = service;
-            _key = key;
-        }
+        
+        private string _key => typeof(TData).Name;
 
         public void Serialize(IDictionary<string, string> state)
         {

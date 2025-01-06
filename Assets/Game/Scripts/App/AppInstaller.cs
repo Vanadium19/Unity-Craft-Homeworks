@@ -1,6 +1,7 @@
 using Game.Scripts.App.Repository;
 using Game.Scripts.App.SaveLoad;
 using Game.Scripts.App.SaveLoad.Serializers;
+using Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers;
 using Modules.Entities;
 using UnityEngine;
 using Zenject;
@@ -22,9 +23,25 @@ namespace Game.Scripts.App
             Container.BindInterfacesTo<GameSaveLoader>()
                 .AsSingle()
                 .NonLazy();
+
+            Container.BindInterfacesTo<CountdownSerializer>()
+                .AsCached()
+                .NonLazy();
             
-            Container.Bind<EntitySerializer>()
-                .AsSingle()
+            Container.BindInterfacesTo<DestinationPointSerializer>()
+                .AsCached()
+                .NonLazy();
+            
+            Container.BindInterfacesTo<HealthSerializer>()
+                .AsCached()
+                .NonLazy();
+            
+            Container.BindInterfacesTo<ResourceBagSerializer>()
+                .AsCached()
+                .NonLazy();
+            
+            Container.BindInterfacesTo<TeamSerializer>()
+                .AsCached()
                 .NonLazy();
             
             Container.BindInterfacesTo<EntityWorldSerializer>()

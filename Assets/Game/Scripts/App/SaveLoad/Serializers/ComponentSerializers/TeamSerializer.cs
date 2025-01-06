@@ -2,12 +2,10 @@ using Game.Scripts.App.Data;
 using SampleGame.Common;
 using SampleGame.Gameplay;
 
-namespace Game.Scripts.App.SaveLoad.Serializers
+namespace Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers
 {
-    public class TeamSerializer : GameSerializer<Team, TeamData>
+    public class TeamSerializer : ComponentSerializer<Team, TeamData>
     {
-        public TeamSerializer(Team service) : base(service, nameof(TeamData)) { }
-
         protected override TeamData Serialize(Team service)
         {
             return new TeamData { TeamType = (int)service.Type };

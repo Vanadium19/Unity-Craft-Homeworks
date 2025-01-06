@@ -2,14 +2,10 @@ using Game.Scripts.App.Data;
 using SampleGame.Common;
 using SampleGame.Gameplay;
 
-namespace Game.Scripts.App.SaveLoad.Serializers
+namespace Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers
 {
-    public class ResourceBagSerializer : GameSerializer<ResourceBag, ResourceBagData>
+    public class ResourceBagSerializer : ComponentSerializer<ResourceBag, ResourceBagData>
     {
-        public ResourceBagSerializer(ResourceBag service) : base(service, nameof(ResourceBag))
-        {
-        }
-
         protected override ResourceBagData Serialize(ResourceBag service)
         {
             return new ResourceBagData

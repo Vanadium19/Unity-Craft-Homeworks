@@ -1,25 +1,31 @@
 using System.Collections.Generic;
 using Game.Scripts.App.Data;
+using Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers;
 using Modules.Entities;
+using Zenject;
 
 namespace Game.Scripts.App.SaveLoad.Serializers
 {
     public class EntityWorldSerializer : GameSerializer<EntityWorld, EntityData[]>
     {
-        private readonly EntitySerializer _serializer;
-
-        public EntityWorldSerializer(EntityWorld service, EntitySerializer serializer) : base(service, nameof(EntityData))
-        {
-            _serializer = serializer;
-        }
-
+        [Inject]
+        private IComponentSerializer[] _componentSerializers;
+        
         protected override EntityData[] Serialize(EntityWorld service)
         {
             var entities = service.GetAll();
             var data = new List<EntityData>(entities.Count);
 
             foreach (var entity in entities)
-                data.Add(_serializer.Serialize(entity));
+            {
+                var components = new Dictionary<string, string>();
+                var entityData = entity.Serialize(components);
+
+                foreach (var serializer in _componentSerializers)
+                    serializer.Serialize(entity.gameObject, components);
+                
+                data.Add(entityData);
+            }
 
             return data.ToArray();
         }
@@ -30,12 +36,18 @@ namespace Game.Scripts.App.SaveLoad.Serializers
 
             foreach (var entityData in data)
             {
-                var entity = service.Spawn(entityData.Name,
+                service.Spawn(entityData.Name,
                     entityData.Position,
                     entityData.Rotation,
                     entityData.Id);
-                
-                _serializer.Deserialize(entity, entityData);
+            }
+            
+            foreach (var entityData in data)
+            {
+                foreach (var serializer in _componentSerializers)
+                {
+                    serializer.Deserialize(service.Get(entityData.Id).gameObject, entityData.Components);
+                }
             }
         }
     }
