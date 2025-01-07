@@ -7,13 +7,13 @@ namespace Game.Scripts.App.Repository
 {
     public class GameClient
     {
-        private const string Url = "http://127.0.0.1:8888";
+        private const string Uri = "http://127.0.0.1:8888";
         private const string SaveMethod = "save?version=";
         private const string LoadMethod = "load?version=";
 
         public async UniTask<bool> Save(int version, string json)
         {
-            UnityWebRequest request = UnityWebRequest.Put($"{Url}/{SaveMethod}{version}", json);
+            UnityWebRequest request = UnityWebRequest.Put($"{Uri}/{SaveMethod}{version}", json);
 
             try
             {
@@ -29,7 +29,7 @@ namespace Game.Scripts.App.Repository
 
         public async UniTask<(bool, string)> Load(int version)
         {
-            UnityWebRequest request = UnityWebRequest.Get($"{Url}/{LoadMethod}{version}");
+            UnityWebRequest request = UnityWebRequest.Get($"{Uri}/{LoadMethod}{version}");
 
             try
             {
@@ -50,7 +50,7 @@ namespace Game.Scripts.App.Repository
 
         public async UniTask<bool> HasVersion(int version)
         {
-            UnityWebRequest request = UnityWebRequest.Get($"{Url}/{LoadMethod}{version}");
+            UnityWebRequest request = UnityWebRequest.Get($"{Uri}/{LoadMethod}{version}");
 
             try
             {

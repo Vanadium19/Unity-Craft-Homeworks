@@ -27,6 +27,11 @@ namespace Game.Scripts.App.Installers
                 .AsSingle()
                 .NonLazy();
 
+            Container.Bind<Encryptor>()
+                .AsSingle()
+                .WithArguments("key", "iv")
+                .NonLazy();
+
             ComponentSerializersInstaller.Install(Container);
             GameSerializersInstaller.Install(Container);
         }

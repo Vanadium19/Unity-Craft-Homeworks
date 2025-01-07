@@ -14,10 +14,12 @@ namespace Game.Scripts.App.Repository
 
         private readonly string _filePath = $"{Application.streamingAssetsPath}/GameState.txt";
         private readonly GameClient _client;
+        private readonly Encryptor _encryptor;
 
-        public GameRepository(GameClient client)
+        public GameRepository(GameClient client, Encryptor encryptor)
         {
             _client = client;
+            _encryptor = encryptor;
         }
 
         public async UniTask<(bool, int)> SetState(Dictionary<string, string> state)
@@ -25,16 +27,13 @@ namespace Game.Scripts.App.Repository
             var json = JsonConvert.SerializeObject(state);
             var version = Mathf.Max(PlayerPrefs.GetInt(LocalVersion), PlayerPrefs.GetInt(RemoteVersion));
 
+            json = _encryptor.Encrypt(json);
             version++;
 
             var remoteSaveStatus = await SaveRemoteVersion(json, version);
             var localSaveStatus = await SaveLocalVersion(json, version);
 
             return (remoteSaveStatus || localSaveStatus, version);
-
-            // byte[] bytes = Encoding.UTF8.GetBytes(json);
-            // byte[] encryptedBytes = AesEncryptor.Encrypt(bytes, _aesPassword, _aesSalt);
-            // File.WriteAllBytes(_filePath, encryptedBytes);
         }
 
         public async UniTask<(bool, Dictionary<string, string>)> GetState(int version)
@@ -50,18 +49,11 @@ namespace Game.Scripts.App.Repository
             var json = await loadTask;
 
             if (loadTask.IsCompletedSuccessfully)
-            {
-                var hasRemoteVersion = await _client.HasVersion(version);
-
-                if (!hasRemoteVersion)
-                    SaveRemoteVersion(json, version).Forget();
-            }
+                ResaveRemoteVersion(version, json).Forget();
             else
-            {
                 return await GetRemoteVersion(version);
-            }
 
-            return (true, JsonConvert.DeserializeObject<Dictionary<string, string>>(json));
+            return (true, JsonConvert.DeserializeObject<Dictionary<string, string>>(_encryptor.Decrypt(json)));
         }
 
         private async UniTask<(bool, Dictionary<string, string>)> GetRemoteVersion(int version)
@@ -75,7 +67,7 @@ namespace Game.Scripts.App.Repository
                 if (PlayerPrefs.GetInt(LocalVersion) < version)
                     SaveLocalVersion(result.state, version).Forget();
 
-                state = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.state);
+                state = JsonConvert.DeserializeObject<Dictionary<string, string>>(_encryptor.Decrypt(result.state));
             }
 
             return (result.status, state);
@@ -92,6 +84,14 @@ namespace Game.Scripts.App.Repository
             }
 
             return status;
+        }
+
+        private async UniTaskVoid ResaveRemoteVersion(int version, string json)
+        {
+            var hasRemoteVersion = await _client.HasVersion(version);
+
+            if (!hasRemoteVersion)
+                SaveRemoteVersion(json, version).Forget();
         }
 
         private async UniTask<bool> SaveLocalVersion(string json, int version)

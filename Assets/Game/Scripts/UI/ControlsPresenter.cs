@@ -21,9 +21,10 @@ namespace Game.Gameplay
 
         public async void Load(string versionText, Action<bool, int> callback)
         {
-            int version = int.Parse(versionText);
+            var result = false;
 
-            var result = await _gameSaveLoader.Load(version);
+            if (int.TryParse(versionText, out int version))
+                result = await _gameSaveLoader.Load(version);
 
             callback.Invoke(result, version);
         }
