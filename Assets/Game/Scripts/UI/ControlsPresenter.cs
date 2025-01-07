@@ -12,22 +12,20 @@ namespace Game.Gameplay
             _gameSaveLoader = gameSaveLoader;
         }
 
-        public void Save(Action<bool, int> callback)
+        public async void Save(Action<bool, int> callback)
         {
-            //TODO:
-            
-            _gameSaveLoader.Save();
-            
-            callback.Invoke(false, -1);
+            (bool status, int version) result = await _gameSaveLoader.Save();
+
+            callback.Invoke(result.status, result.version);
         }
 
-        public void Load(string versionText, Action<bool, int> callback)
+        public async void Load(string versionText, Action<bool, int> callback)
         {
-            //TODO:
-            
-            _gameSaveLoader.Load();
-            
-            callback.Invoke(false, -1);
+            int version = int.Parse(versionText);
+
+            var result = await _gameSaveLoader.Load(version);
+
+            callback.Invoke(result, version);
         }
     }
 }

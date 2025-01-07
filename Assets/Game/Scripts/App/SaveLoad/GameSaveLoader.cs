@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Game.Scripts.App.Repository;
 using Game.Scripts.App.SaveLoad.Serializers;
 using Modules.Entities;
@@ -18,26 +19,32 @@ namespace Game.Scripts.App.SaveLoad
             _serializers = serializers;
         }
 
-        public void Save()
+        public async UniTask<(bool, int)> Save()
         {
-            Debug.Log("Save!");
-
             var state = new Dictionary<string, string>();
 
             foreach (var serializer in _serializers)
                 serializer.Serialize(state);
 
-            _repository.SetState(state);
+            return await _repository.SetState(state);
         }
 
-        public void Load()
+        public async UniTask<bool> Load(int version)
         {
-            Debug.Log("Load!");
-            
-            var state = _repository.GetState();
+            if (version <= 0)
+                return false;
 
-            foreach (var serializer in _serializers)
-                serializer.Deserialize(state);
+            (bool status, Dictionary<string, string> state) result = await _repository.GetState(version);
+
+            if (result.status)
+            {
+                foreach (var serializer in _serializers)
+                {
+                    serializer.Deserialize(result.state);
+                }
+            }
+
+            return result.status;
         }
     }
 }

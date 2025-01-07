@@ -15,10 +15,14 @@ namespace Game.Scripts.App.Installers
     {
         public override void InstallBindings()
         {
+            Container.Bind<GameClient>()
+                .AsSingle()
+                .NonLazy();
+
             Container.BindInterfacesTo<GameRepository>()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.BindInterfacesTo<GameSaveLoader>()
                 .AsSingle()
                 .NonLazy();

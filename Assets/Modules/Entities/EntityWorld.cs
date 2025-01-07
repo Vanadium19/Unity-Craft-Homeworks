@@ -155,6 +155,13 @@ namespace Modules.Entities
                 this.Destroy(entityId);
         }
 
+        [Button]
+        public void ClearLocalVersion()
+        {
+            PlayerPrefs.DeleteKey("LocalVersion");
+            PlayerPrefs.Save();
+        }
+
         private int NextId()
         {
             if (_recycledIds.TryDequeue(out int id))
