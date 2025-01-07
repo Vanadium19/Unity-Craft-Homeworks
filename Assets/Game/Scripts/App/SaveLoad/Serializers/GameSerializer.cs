@@ -8,7 +8,7 @@ namespace Game.Scripts.App.SaveLoad.Serializers
     {
         [Inject]
         private readonly TService _service;
-        
+
         private string _key => typeof(TData).Name;
 
         public void Serialize(IDictionary<string, string> state)

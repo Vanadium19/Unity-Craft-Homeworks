@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -12,14 +11,15 @@ namespace Game.Scripts.App.Repository
         private const string LocalVersion = "LocalVersion";
         private const string RemoteVersion = "RemoteVersion";
 
-        private readonly string _filePath = $"{Application.streamingAssetsPath}/GameState.txt";
+        private readonly string _filePath;
         private readonly GameClient _client;
         private readonly Encryptor _encryptor;
 
-        public GameRepository(GameClient client, Encryptor encryptor)
+        public GameRepository(GameClient client, Encryptor encryptor, string filePath)
         {
             _client = client;
             _encryptor = encryptor;
+            _filePath = filePath;
         }
 
         public async UniTask<(bool, int)> SetState(Dictionary<string, string> state)

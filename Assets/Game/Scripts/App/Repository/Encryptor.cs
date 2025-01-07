@@ -19,7 +19,7 @@ namespace Game.Scripts.App.Repository
         public string Encrypt(string text)
         {
             using Aes aes = Aes.Create();
-            
+
             aes.Key = _key;
             aes.IV = _iv;
 
@@ -27,7 +27,7 @@ namespace Game.Scripts.App.Repository
 
             using MemoryStream memoryStream = new MemoryStream();
             using CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
-            
+
             using (StreamWriter streamWriter = new StreamWriter(cryptoStream))
             {
                 streamWriter.Write(text);
@@ -39,7 +39,7 @@ namespace Game.Scripts.App.Repository
         public string Decrypt(string text)
         {
             using Aes aes = Aes.Create();
-            
+
             aes.Key = _key;
             aes.IV = _iv;
 
@@ -49,7 +49,7 @@ namespace Game.Scripts.App.Repository
             using CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
             using StreamReader streamReader = new StreamReader(cryptoStream);
 
-            return  streamReader.ReadToEnd();
+            return streamReader.ReadToEnd();
         }
 
         private byte[] GetKey(string key)

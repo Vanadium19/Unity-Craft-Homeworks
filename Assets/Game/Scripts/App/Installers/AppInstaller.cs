@@ -1,7 +1,4 @@
-using Game.Scripts.App.Repository;
 using Game.Scripts.App.SaveLoad;
-using Game.Scripts.App.SaveLoad.Serializers;
-using Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers;
 using UnityEngine;
 using Zenject;
 
@@ -15,23 +12,11 @@ namespace Game.Scripts.App.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<GameClient>()
-                .AsSingle()
-                .NonLazy();
-
-            Container.BindInterfacesTo<GameRepository>()
-                .AsSingle()
-                .NonLazy();
-
             Container.BindInterfacesTo<GameSaveLoader>()
                 .AsSingle()
                 .NonLazy();
 
-            Container.Bind<Encryptor>()
-                .AsSingle()
-                .WithArguments("key", "iv")
-                .NonLazy();
-
+            RepositoryInstaller.Install(Container);
             ComponentSerializersInstaller.Install(Container);
             GameSerializersInstaller.Install(Container);
         }

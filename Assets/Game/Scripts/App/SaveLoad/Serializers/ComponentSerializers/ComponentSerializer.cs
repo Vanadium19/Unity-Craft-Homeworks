@@ -18,12 +18,12 @@ namespace Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers
 
             state[_key] = json;
         }
-        
+
         public void Deserialize(GameObject gameObject, IDictionary<string, string> state)
         {
             if (!gameObject.TryGetComponent(out TService service))
                 return;
-                
+
             if (!state.TryGetValue(_key, out string json))
                 return;
 

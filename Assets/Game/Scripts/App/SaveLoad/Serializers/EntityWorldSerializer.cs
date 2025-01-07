@@ -10,7 +10,7 @@ namespace Game.Scripts.App.SaveLoad.Serializers
     {
         [Inject]
         private IComponentSerializer[] _componentSerializers;
-        
+
         protected override EntityData[] Serialize(EntityWorld service)
         {
             var entities = service.GetAll();
@@ -23,7 +23,7 @@ namespace Game.Scripts.App.SaveLoad.Serializers
 
                 foreach (var serializer in _componentSerializers)
                     serializer.Serialize(entity.gameObject, components);
-                
+
                 data.Add(entityData);
             }
 
@@ -41,7 +41,7 @@ namespace Game.Scripts.App.SaveLoad.Serializers
                     entityData.Rotation,
                     entityData.Id);
             }
-            
+
             foreach (var entityData in data)
             {
                 foreach (var serializer in _componentSerializers)

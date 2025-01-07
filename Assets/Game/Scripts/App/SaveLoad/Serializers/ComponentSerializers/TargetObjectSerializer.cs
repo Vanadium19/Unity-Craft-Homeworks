@@ -1,7 +1,6 @@
 using Game.Scripts.App.Data;
 using Modules.Entities;
 using SampleGame.Gameplay;
-using UnityEngine;
 using Zenject;
 
 namespace Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers

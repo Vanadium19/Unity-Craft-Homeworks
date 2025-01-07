@@ -1,19 +1,24 @@
-using System;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Game.Scripts.App.Repository
 {
     public class GameClient
     {
-        private const string Uri = "http://127.0.0.1:8888";
         private const string SaveMethod = "save?version=";
         private const string LoadMethod = "load?version=";
+        private const int SuccessStatus = 200;
+
+        private readonly string _uri;
+
+        public GameClient(string uri)
+        {
+            _uri = uri;
+        }
 
         public async UniTask<bool> Save(int version, string json)
         {
-            UnityWebRequest request = UnityWebRequest.Put($"{Uri}/{SaveMethod}{version}", json);
+            UnityWebRequest request = UnityWebRequest.Put($"{_uri}/{SaveMethod}{version}", json);
 
             try
             {
@@ -29,7 +34,7 @@ namespace Game.Scripts.App.Repository
 
         public async UniTask<(bool, string)> Load(int version)
         {
-            UnityWebRequest request = UnityWebRequest.Get($"{Uri}/{LoadMethod}{version}");
+            UnityWebRequest request = UnityWebRequest.Get($"{_uri}/{LoadMethod}{version}");
 
             try
             {
@@ -40,7 +45,7 @@ namespace Game.Scripts.App.Repository
                 return (false, null);
             }
 
-            if (request.responseCode != 200)
+            if (request.responseCode != SuccessStatus)
                 return (false, null);
 
             var json = request.downloadHandler.text;
@@ -50,7 +55,7 @@ namespace Game.Scripts.App.Repository
 
         public async UniTask<bool> HasVersion(int version)
         {
-            UnityWebRequest request = UnityWebRequest.Get($"{Uri}/{LoadMethod}{version}");
+            UnityWebRequest request = UnityWebRequest.Get($"{_uri}/{LoadMethod}{version}");
 
             try
             {
@@ -61,7 +66,7 @@ namespace Game.Scripts.App.Repository
                 return false;
             }
 
-            return request.responseCode == 200;
+            return request.responseCode == SuccessStatus;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Game.Scripts.App.Installers
             Container.BindInterfacesTo<TeamSerializer>()
                 .AsCached()
                 .NonLazy();
-            
+
             Container.BindInterfacesTo<TargetObjectSerializer>()
                 .AsCached()
                 .NonLazy();
