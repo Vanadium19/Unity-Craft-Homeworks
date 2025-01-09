@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
+using Game.Scripts.App.SaveLoad;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -8,9 +9,6 @@ namespace Game.Scripts.App.Repository
 {
     public class GameRepository : IGameRepository
     {
-        private const string LocalVersion = "LocalVersion";
-        private const string RemoteVersion = "RemoteVersion";
-
         private readonly string _filePath;
         private readonly GameClient _client;
         private readonly Encryptor _encryptor;
@@ -25,7 +23,7 @@ namespace Game.Scripts.App.Repository
         public async UniTask<(bool, int)> SetState(Dictionary<string, string> state)
         {
             var json = JsonConvert.SerializeObject(state);
-            var version = Mathf.Max(PlayerPrefs.GetInt(LocalVersion), PlayerPrefs.GetInt(RemoteVersion));
+            var version = PlayerPrefsManager.GetCurrentVersion();
 
             json = _encryptor.Encrypt(json);
             version++;
@@ -38,7 +36,7 @@ namespace Game.Scripts.App.Repository
 
         public async UniTask<(bool, Dictionary<string, string>)> GetState(int version)
         {
-            return PlayerPrefs.GetInt(LocalVersion) == version
+            return PlayerPrefsManager.GetLocalVersion() == version
                 ? await GetLocalVersion(version)
                 : await GetRemoteVersion(version);
         }
@@ -53,7 +51,9 @@ namespace Game.Scripts.App.Repository
             else
                 return await GetRemoteVersion(version);
 
-            return (true, JsonConvert.DeserializeObject<Dictionary<string, string>>(_encryptor.Decrypt(json)));
+            var state = JsonConvert.DeserializeObject<Dictionary<string, string>>(_encryptor.Decrypt(json));
+
+            return (state != null, state);
         }
 
         private async UniTask<(bool, Dictionary<string, string>)> GetRemoteVersion(int version)
@@ -64,34 +64,13 @@ namespace Game.Scripts.App.Repository
 
             if (result.status)
             {
-                if (PlayerPrefs.GetInt(LocalVersion) < version)
+                if (PlayerPrefsManager.GetLocalVersion() < version)
                     SaveLocalVersion(result.state, version).Forget();
 
                 state = JsonConvert.DeserializeObject<Dictionary<string, string>>(_encryptor.Decrypt(result.state));
             }
 
-            return (result.status, state);
-        }
-
-        private async UniTask<bool> SaveRemoteVersion(string json, int version)
-        {
-            var status = await _client.Save(version, json);
-
-            if (status)
-            {
-                PlayerPrefs.SetInt(RemoteVersion, version);
-                PlayerPrefs.Save();
-            }
-
-            return status;
-        }
-
-        private async UniTaskVoid ResaveRemoteVersion(int version, string json)
-        {
-            var hasRemoteVersion = await _client.HasVersion(version);
-
-            if (!hasRemoteVersion)
-                SaveRemoteVersion(json, version).Forget();
+            return (state != null, state);
         }
 
         private async UniTask<bool> SaveLocalVersion(string json, int version)
@@ -103,12 +82,27 @@ namespace Game.Scripts.App.Repository
             var status = saveTask.IsCompletedSuccessfully;
 
             if (status)
-            {
-                PlayerPrefs.SetInt(LocalVersion, version);
-                PlayerPrefs.Save();
-            }
+                PlayerPrefsManager.SetLocalVersion(version);
 
             return status;
+        }
+
+        private async UniTask<bool> SaveRemoteVersion(string json, int version)
+        {
+            var status = await _client.Save(version, json);
+
+            if (status)
+                PlayerPrefsManager.SetRemoteVersion(version);
+
+            return status;
+        }
+
+        private async UniTaskVoid ResaveRemoteVersion(int version, string json)
+        {
+            var hasRemoteVersion = await _client.HasVersion(version);
+
+            if (!hasRemoteVersion)
+                SaveRemoteVersion(json, version).Forget();
         }
     }
 }

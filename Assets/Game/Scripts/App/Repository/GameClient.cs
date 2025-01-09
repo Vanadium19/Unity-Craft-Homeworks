@@ -50,7 +50,7 @@ namespace Game.Scripts.App.Repository
 
             var json = request.downloadHandler.text;
 
-            return json == null ? (false, null) : (true, json);
+            return (json != null, json);
         }
 
         public async UniTask<bool> HasVersion(int version)
