@@ -30,6 +30,10 @@ namespace Game.Scripts.App.Installers
             Container.BindInterfacesTo<TargetObjectSerializer>()
                 .AsCached()
                 .NonLazy();
+            
+            Container.BindInterfacesTo<ProductionOrderSerializer>()
+                .AsCached()
+                .NonLazy();
         }
     }
 }
