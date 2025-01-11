@@ -19,7 +19,7 @@ namespace Game.Scripts.App.SaveLoad.Serializers
             foreach (var entity in entities)
             {
                 var components = new Dictionary<string, string>();
-                var entityData = entity.Serialize(components);
+                var entityData = Serialize(entity, components);
 
                 foreach (var serializer in _componentSerializers)
                     serializer.Serialize(entity.gameObject, components);
@@ -49,6 +49,18 @@ namespace Game.Scripts.App.SaveLoad.Serializers
                     serializer.Deserialize(service.Get(entityData.Id).gameObject, entityData.Components);
                 }
             }
+        }
+
+        private EntityData Serialize(Entity entity, Dictionary<string, string> components)
+        {
+            return new EntityData
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Position = entity.transform.position,
+                Rotation = entity.transform.rotation,
+                Components = components,
+            };
         }
     }
 }
