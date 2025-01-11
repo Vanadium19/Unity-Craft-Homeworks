@@ -15,8 +15,6 @@ namespace SampleGame.App.SaveLoad
         {
             _repository = repository;
             _serializers = serializers;
-
-            Debug.Log($"Length {_serializers.Length}");
         }
 
         public async UniTask<(bool, int)> Save()

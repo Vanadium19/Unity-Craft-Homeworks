@@ -18,7 +18,7 @@ namespace SampleGame.App.SaveLoad.Serializers
             foreach (var entity in entities)
             {
                 var components = new Dictionary<string, string>();
-                var entityData = Serialize(entity, components);
+                var entityData = SerializeEntity(entity, components);
 
                 foreach (var serializer in _componentSerializers)
                     serializer.Serialize(entity.gameObject, components);
@@ -50,7 +50,7 @@ namespace SampleGame.App.SaveLoad.Serializers
             }
         }
 
-        private EntityData Serialize(Entity entity, Dictionary<string, string> components)
+        private EntityData SerializeEntity(Entity entity, Dictionary<string, string> components)
         {
             return new EntityData
             {

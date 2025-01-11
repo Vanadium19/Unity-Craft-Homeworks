@@ -52,21 +52,5 @@ namespace SampleGame.App.Repository
 
             return (json != null, json);
         }
-
-        public async UniTask<bool> HasVersion(int version)
-        {
-            UnityWebRequest request = UnityWebRequest.Get($"{_uri}/{LoadMethod}{version}");
-
-            try
-            {
-                await request.SendWebRequest();
-            }
-            catch
-            {
-                return false;
-            }
-
-            return request.responseCode == SuccessStatus;
-        }
     }
 }
