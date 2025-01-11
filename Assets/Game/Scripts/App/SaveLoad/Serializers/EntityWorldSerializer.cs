@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Game.Scripts.App.Data;
-using Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers;
 using Modules.Entities;
+using SampleGame.App.Data;
 using Zenject;
 
-namespace Game.Scripts.App.SaveLoad.Serializers
+namespace SampleGame.App.SaveLoad.Serializers
 {
     public class EntityWorldSerializer : GameSerializer<EntityWorld, EntityData[]>
     {

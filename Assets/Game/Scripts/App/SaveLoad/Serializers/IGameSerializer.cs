@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Game.Scripts.App.SaveLoad.Serializers
+namespace SampleGame.App.SaveLoad.Serializers
 {
     public interface IGameSerializer
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using SampleGame.Common;
 
-namespace Game.Scripts.App.Data
+namespace SampleGame.App.Data
 {
     [Serializable]
     public struct EntityData

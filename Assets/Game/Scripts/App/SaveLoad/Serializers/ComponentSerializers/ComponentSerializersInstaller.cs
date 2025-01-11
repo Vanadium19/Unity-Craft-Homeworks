@@ -1,7 +1,6 @@
-using Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers;
 using Zenject;
 
-namespace Game.Scripts.App.Installers
+namespace SampleGame.App.SaveLoad.Serializers
 {
     public class ComponentSerializersInstaller : Installer<ComponentSerializersInstaller>
     {

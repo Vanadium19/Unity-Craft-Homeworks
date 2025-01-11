@@ -1,8 +1,7 @@
-using Game.Scripts.App.Repository;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Scripts.App.Installers
+namespace SampleGame.App.Repository
 {
     public class RepositoryInstaller : Installer<RepositoryInstaller>
     {

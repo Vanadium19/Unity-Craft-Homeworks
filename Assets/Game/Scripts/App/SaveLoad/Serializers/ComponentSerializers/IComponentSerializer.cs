@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers
+namespace SampleGame.App.SaveLoad.Serializers
 {
     public interface IComponentSerializer
     {

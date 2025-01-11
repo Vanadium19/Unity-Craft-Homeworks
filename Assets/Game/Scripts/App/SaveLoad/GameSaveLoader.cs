@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Game.Scripts.App.Repository;
-using Game.Scripts.App.SaveLoad.Serializers;
+using SampleGame.App.Repository;
+using SampleGame.App.SaveLoad.Serializers;
 
-namespace Game.Scripts.App.SaveLoad
+namespace SampleGame.App.SaveLoad
 {
     public class GameSaveLoader : IGameSaveLoader
     {

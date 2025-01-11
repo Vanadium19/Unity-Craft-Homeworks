@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Scripts.App.SaveLoad
+namespace SampleGame.App.SaveLoad
 {
     public static class PlayerPrefsManager
     {

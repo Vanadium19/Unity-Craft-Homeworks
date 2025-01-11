@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
-namespace Game.Scripts.App.Repository
+namespace SampleGame.App.Repository
 {
     public interface IGameRepository
     {

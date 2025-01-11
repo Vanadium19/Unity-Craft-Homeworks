@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Zenject;
 
-namespace Game.Scripts.App.SaveLoad.Serializers
+namespace SampleGame.App.SaveLoad.Serializers
 {
     public abstract class GameSerializer<TService, TData> : IGameSerializer
     {

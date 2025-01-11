@@ -1,7 +1,7 @@
 using System;
 using SampleGame.Common;
 
-namespace Game.Scripts.App.Data
+namespace SampleGame.App.Data
 {
     [Serializable]
     public struct DestinationPointData

@@ -1,9 +1,9 @@
-using Game.Scripts.App.Data;
 using Modules.Entities;
+using SampleGame.App.Data;
 using SampleGame.Gameplay;
 using Zenject;
 
-namespace Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers
+namespace SampleGame.App.SaveLoad.Serializers
 {
     public class TargetObjectSerializer : ComponentSerializer<TargetObject, TargetObjectData>
     {

@@ -1,7 +1,7 @@
-using Game.Scripts.App.Data;
+using SampleGame.App.Data;
 using SampleGame.Gameplay;
 
-namespace Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers
+namespace SampleGame.App.SaveLoad.Serializers
 {
     public class CountdownSerializer : ComponentSerializer<Countdown, CountdownData>
     {

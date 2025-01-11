@@ -1,5 +1,5 @@
 using System;
-using Game.Scripts.App.SaveLoad;
+using SampleGame.App.SaveLoad;
 
 namespace Game.Gameplay
 {

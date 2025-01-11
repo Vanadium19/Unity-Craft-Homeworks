@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine.Networking;
 
-namespace Game.Scripts.App.Repository
+namespace SampleGame.App.Repository
 {
     public class GameClient
     {

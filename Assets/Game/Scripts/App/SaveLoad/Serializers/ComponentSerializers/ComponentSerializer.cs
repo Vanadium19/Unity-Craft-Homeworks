@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Game.Scripts.App.SaveLoad.Serializers.ComponentSerializers
+namespace SampleGame.App.SaveLoad.Serializers
 {
     public abstract class ComponentSerializer<TService, TData> : IComponentSerializer
     {

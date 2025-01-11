@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using Cysharp.Threading.Tasks;
-using Game.Scripts.App.SaveLoad;
 using Newtonsoft.Json;
-using UnityEngine;
+using SampleGame.App.SaveLoad;
 
-namespace Game.Scripts.App.Repository
+namespace SampleGame.App.Repository
 {
     public class GameRepository : IGameRepository
     {

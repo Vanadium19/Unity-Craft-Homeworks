@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Game.Scripts.App.Repository
+namespace SampleGame.App.Repository
 {
     public class Encryptor
     {

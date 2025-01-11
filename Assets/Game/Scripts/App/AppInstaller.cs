@@ -1,8 +1,10 @@
-using Game.Scripts.App.SaveLoad;
+using SampleGame.App.Repository;
+using SampleGame.App.SaveLoad;
+using SampleGame.App.SaveLoad.Serializers;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Scripts.App.Installers
+namespace SampleGame.App
 {
     [CreateAssetMenu(
         fileName = "AppInstaller",
