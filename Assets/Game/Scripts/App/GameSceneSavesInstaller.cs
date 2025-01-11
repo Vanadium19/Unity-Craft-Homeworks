@@ -6,10 +6,10 @@ using Zenject;
 namespace SampleGame.App
 {
     [CreateAssetMenu(
-        fileName = "GameSceneSerializersInstaller",
-        menuName = "Zenject/New GameScene Serializers Installer"
+        fileName = "GameSceneSavesInstaller",
+        menuName = "Zenject/New GameScene Saves Installer"
     )]
-    public class GameSceneSerializersInstaller : ScriptableObjectInstaller
+    public class GameSceneSavesInstaller : ScriptableObjectInstaller
     {
         public override void InstallBindings()
         {
