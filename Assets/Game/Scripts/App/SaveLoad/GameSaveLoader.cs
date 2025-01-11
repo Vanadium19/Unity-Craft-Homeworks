@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using SampleGame.App.Repository;
 using SampleGame.App.SaveLoad.Serializers;
+using UnityEngine;
 
 namespace SampleGame.App.SaveLoad
 {
@@ -14,6 +15,8 @@ namespace SampleGame.App.SaveLoad
         {
             _repository = repository;
             _serializers = serializers;
+
+            Debug.Log($"Length {_serializers.Length}");
         }
 
         public async UniTask<(bool, int)> Save()
