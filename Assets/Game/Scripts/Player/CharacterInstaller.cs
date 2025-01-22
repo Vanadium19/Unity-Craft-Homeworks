@@ -10,8 +10,9 @@ namespace Game.Player
         [SerializeField] private Rigidbody2D _rigidbody;
 
         [Header("Player Settings")]
+        [SerializeField] private int _health = 5;
         [SerializeField] private float _speed = 3f;
-        [SerializeField] private float _force = 5f;
+        [SerializeField] private float _jumpForce = 5f;
 
 
         public override void InstallBindings()
@@ -24,7 +25,7 @@ namespace Game.Player
             ControllersInstaller.Install(Container);
 
             //Components
-            ComponentsInstaller.Install(Container, _rigidbody, _speed, _force);
+            ComponentsInstaller.Install(Container, _rigidbody, _speed, _jumpForce, _health);
         }
     }
 }
