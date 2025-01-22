@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -17,7 +16,7 @@ namespace Game.Player
 
         public void Tick()
         {
-            var direction = Input.GetAxis(HorizontalAxis) * Vector2.right;
+            Vector2 direction = Input.GetAxis(HorizontalAxis) * Vector2.right;
 
             _character.Move(direction);
         }
