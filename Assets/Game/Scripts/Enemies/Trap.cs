@@ -21,16 +21,18 @@ namespace Game.Enemies
         private void OnEnable()
         {
             _unityEvents.OnCollisionEntered += OnCollisionEntered;
+            _health.Died += OnDied;
         }
 
         private void OnDisable()
         {
             _unityEvents.OnCollisionEntered -= OnCollisionEntered;
+            _health.Died -= OnDied;
         }
 
         public void TakeDamage(int damage)
         {
-            Debug.Log($"Character take damage " + damage);
+            Debug.Log($"Trap take damage " + damage);
 
             _health.TakeDamage(damage);
         }
@@ -38,6 +40,11 @@ namespace Game.Enemies
         private void OnCollisionEntered(Collider2D other)
         {
             _attacker.Attack(other);
+        }
+
+        private void OnDied()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
