@@ -3,18 +3,16 @@ using Zenject;
 
 namespace Game.Components
 {
-    public class MoveComponentsInstaller : Installer<Transform, float, float, float, MoveComponentsInstaller>
+    public class MoveComponentsInstaller : Installer<JumpParams, Transform, float, MoveComponentsInstaller>
     {
+        private readonly JumpParams _jumpParams;
         private readonly Transform _transform;
-        private readonly float _jumpForce;
-        private readonly float _jumpDelay;
         private readonly float _speed;
 
-        public MoveComponentsInstaller(Transform transform, float jumpForce, float jumpDelay, float speed)
+        public MoveComponentsInstaller(JumpParams jumpParams, Transform transform, float speed)
         {
+            _jumpParams = jumpParams;
             _transform = transform;
-            _jumpForce = jumpForce;
-            _jumpDelay = jumpDelay;
             _speed = speed;
         }
 
@@ -26,7 +24,7 @@ namespace Game.Components
 
             Container.BindInterfacesAndSelfTo<Jumper>()
                 .AsSingle()
-                .WithArguments(_jumpForce, _jumpDelay);
+                .WithArguments(_jumpParams);
         }
     }
 }

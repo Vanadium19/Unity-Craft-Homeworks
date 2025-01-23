@@ -451,7 +451,14 @@ MonoBehaviour:
   _transform: {fileID: 4102650447071868940}
   _health: 5
   _speed: 3
-  _jumpForce: 5
+  _jumpParams:
+    _force: 5
+    _delay: 0.5
+    _point: {fileID: 1768056685699584485}
+    _groundLayer:
+      serializedVersion: 2
+      m_Bits: 8
+    _overlapSize: {x: 0.5, y: 0.1}
 --- !u!1 &7801279227858408424
 GameObject:
   m_ObjectHideFlags: 0
