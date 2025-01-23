@@ -11,12 +11,15 @@ namespace Game.Player
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Transform _transform;
 
-        [Header("Main Settings")] [SerializeField] private int _health = 5;
+        [Header("Main Settings")]
+        [SerializeField] private int _health = 5;
         [SerializeField] private float _speed = 3f;
 
-        [Header("Jump Settings")] [SerializeField] private JumpParams _jumpParams;
+        [Header("Jump Settings")]
+        [SerializeField] private JumpParams _jumpParams;
 
-        [Header("Push Settings")] [SerializeField] private PushParams _pushParams;
+        [Header("Push Settings")]
+        [SerializeField] private PushParams _pushParams;
 
 
         public override void InstallBindings()

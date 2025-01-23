@@ -64,6 +64,8 @@ namespace Game.Player
 
         public void TakeDamage(int damage)
         {
+            Debug.Log($"Character take damage " + damage);
+
             _health.TakeDamage(damage);
         }
 
