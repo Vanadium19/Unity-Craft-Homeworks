@@ -8,6 +8,7 @@ namespace Game.Player
     {
         [SerializeField] private Character _character;
         [SerializeField] private Rigidbody2D _rigidbody;
+        [SerializeField] private Transform _transform;
 
         [Header("Player Settings")]
         [SerializeField] private int _health = 5;
@@ -25,7 +26,7 @@ namespace Game.Player
             ControllersInstaller.Install(Container);
 
             //Components
-            ComponentsInstaller.Install(Container, _rigidbody, _speed, _jumpForce, _health);
+            ComponentsInstaller.Install(Container, _rigidbody, _transform, _speed, _jumpForce, _health);
         }
     }
 }

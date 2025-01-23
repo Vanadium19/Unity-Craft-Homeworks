@@ -448,7 +448,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _character: {fileID: 8683523602262078946}
   _rigidbody: {fileID: 8342082945872629457}
+  _transform: {fileID: 4102650447071868940}
+  _health: 5
   _speed: 3
+  _jumpForce: 5
 --- !u!1 &7801279227858408424
 GameObject:
   m_ObjectHideFlags: 0
