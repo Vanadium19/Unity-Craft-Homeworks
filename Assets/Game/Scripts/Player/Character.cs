@@ -8,18 +8,28 @@ namespace Game.Player
 {
     public class Character : MonoBehaviour, ICharacter, IDamagable
     {
+        private Transform _transform;
+
         private Mover _mover;
         private Jumper _jumper;
+        private Pusher _pusher;
         private Health _health;
 
         [Inject]
         public void Construct(Mover mover,
             Jumper jumper,
+            Pusher pusher,
             Health health)
         {
             _mover = mover;
             _jumper = jumper;
+            _pusher = pusher;
             _health = health;
+        }
+
+        private void Awake()
+        {
+            _transform = transform;
         }
 
         private void OnEnable()
@@ -40,6 +50,16 @@ namespace Game.Player
         public void Jump()
         {
             _jumper.Jump();
+        }
+
+        public void Push(PushDirection direction)
+        {
+            if (direction == PushDirection.Forward)
+                _pusher.Push(_transform.right);
+            else if (direction == PushDirection.Up)
+                _pusher.Push(Vector2.up);
+            else
+                throw new Exception("Invalid push direction");
         }
 
         public void TakeDamage(int damage)

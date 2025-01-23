@@ -16,6 +16,8 @@ namespace Game.Player
 
         [Header("Jump Settings")] [SerializeField] private JumpParams _jumpParams;
 
+        [Header("Push Settings")] [SerializeField] private PushParams _pushParams;
+
 
         public override void InstallBindings()
         {
@@ -33,17 +35,26 @@ namespace Game.Player
 
             StateComponentsInstaller.Install(Container, _health);
             MoveComponentsInstaller.Install(Container, _jumpParams, _transform, _speed);
+            AttackComponentsInstaller.Install(Container, _pushParams);
         }
 
         #region Debug
 
         private void OnDrawGizmos()
         {
+            Gizmos.color = Color.yellow;
+
+            //Jump
             if (_jumpParams.Point == null)
                 return;
 
-            Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(_jumpParams.Point.position, _jumpParams.OverlapSize);
+
+            //Push
+            if (_pushParams.Point == null)
+                return;
+
+            Gizmos.DrawWireSphere(_pushParams.Point.position, _pushParams.Radius);
         }
 
         #endregion

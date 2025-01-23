@@ -13,6 +13,10 @@ namespace Game.Player
             Container.BindInterfacesTo<JumpController>()
                 .AsSingle()
                 .NonLazy();
+            
+            Container.BindInterfacesTo<PushController>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

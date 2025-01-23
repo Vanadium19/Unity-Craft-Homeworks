@@ -1,3 +1,4 @@
+using Game.Components;
 using UnityEngine;
 
 namespace Game.Player
@@ -7,5 +8,7 @@ namespace Game.Player
         public void Move(Vector2 direction);
 
         public void Jump();
+
+        public void Push(PushDirection direction);
     }
 }

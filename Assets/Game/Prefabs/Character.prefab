@@ -459,6 +459,14 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 8
     _overlapSize: {x: 0.5, y: 0.1}
+  _pushParams:
+    _force: 2
+    _delay: 1
+    _radius: 0.5
+    _point: {fileID: 7060901894015801087}
+    _layerMask:
+      serializedVersion: 2
+      m_Bits: 256
 --- !u!1 &7801279227858408424
 GameObject:
   m_ObjectHideFlags: 0
