@@ -20,7 +20,12 @@ namespace Game.Components
 
         public void Move(Vector2 direction)
         {
-            _rigidbody.velocity = direction * _speed + Vector2.up * _rigidbody.velocity.y;
+            Vector2 velocity = direction * _speed;
+
+            if (Mathf.Approximately(Vector2.Dot(direction, Vector2.up), 0))
+                velocity += Vector2.up * _rigidbody.velocity.y;
+
+            _rigidbody.velocity = velocity;
 
             if (direction != Vector2.zero)
                 Rotate(direction);
