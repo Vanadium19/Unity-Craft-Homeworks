@@ -12,11 +12,15 @@ namespace Game.Components
 
         private void OnCollisionEnter2D(Collision2D other)
         {
+            // Debug.Log("OnCollisionEnter2D");
+            
             OnCollisionEntered?.Invoke(other.collider);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            // Debug.Log("OnTriggerEnter2D");
+            
             OnTriggerEntered?.Invoke(other);
         }
 

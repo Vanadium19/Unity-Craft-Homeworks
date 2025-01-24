@@ -447,6 +447,10 @@ GameObject:
   - component: {fileID: 4015829716640782646}
   - component: {fileID: 7422560000825944449}
   - component: {fileID: 7073503754261842485}
+  - component: {fileID: 4108108564956569967}
+  - component: {fileID: 273272467818314608}
+  - component: {fileID: 7115200197596253895}
+  - component: {fileID: 767189223425208928}
   m_Layer: 8
   m_Name: <Spider>
   m_TagString: Untagged
@@ -587,3 +591,67 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.75}
   m_EdgeRadius: 0
+--- !u!114 &4108108564956569967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665529919726988981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36097dd5bee349eda2bce122a653a6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &273272467818314608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665529919726988981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30800cebaa494d6b847f0e867368b484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unityEvents: {fileID: 4108108564956569967}
+--- !u!114 &7115200197596253895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665529919726988981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 767189223425208928}
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &767189223425208928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665529919726988981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24c5c05251243b2bcb053b82db8f1e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spider: {fileID: 273272467818314608}
+  _transform: {fileID: 3105770917179402914}
+  _rigidbody: {fileID: 4015829716640782646}
+  _startPoint: {fileID: 3929516699554365295}
+  _endPoint: {fileID: 4629981065635871775}
+  _damage: 1
+  _health: 3
+  _speed: 2
+  _pushForce: 25

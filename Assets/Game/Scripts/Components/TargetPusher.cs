@@ -14,7 +14,10 @@ namespace Game.Components
         public void Push(Collider2D collider, Vector2 direction)
         {
             if (collider.TryGetComponent(out Rigidbody2D target))
+            {
+                // Debug.Log($"Pushing {direction * _force}");
                 target.AddForce(direction * _force, ForceMode2D.Impulse);
+            }
         }
     }
 }
