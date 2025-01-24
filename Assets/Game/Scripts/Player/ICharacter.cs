@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace Game.Player
 {
-    public interface ICharacter
+    public interface ICharacter : IMovable
     {
-        public void Move(Vector2 direction);
-
         public void Jump();
 
         public void Push(PushDirection direction);

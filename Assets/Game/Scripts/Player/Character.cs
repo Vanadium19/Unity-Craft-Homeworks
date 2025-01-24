@@ -15,6 +15,8 @@ namespace Game.Player
         private Pusher _pusher;
         private Health _health;
 
+        public Vector2 Position => _transform.position;
+
         [Inject]
         public void Construct(Mover mover,
             Jumper jumper,
