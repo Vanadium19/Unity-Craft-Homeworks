@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game.Components
@@ -5,6 +6,8 @@ namespace Game.Components
     public class Attacker
     {
         private readonly int _damage;
+
+        public event Action GaveDamage;
 
         public Attacker(int damage)
         {
@@ -14,7 +17,10 @@ namespace Game.Components
         public void Attack(Collider2D collider)
         {
             if (collider.TryGetComponent(out IDamagable target))
+            {
                 target.TakeDamage(_damage);
+                GaveDamage?.Invoke();
+            }
         }
     }
 }

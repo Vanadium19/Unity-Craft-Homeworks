@@ -21,12 +21,14 @@ namespace Game.Enemies
         private void OnEnable()
         {
             _unityEvents.OnCollisionEntered += OnCollisionEntered;
+            _attacker.GaveDamage += Die;
             _health.Died += OnDied;
         }
 
         private void OnDisable()
         {
             _unityEvents.OnCollisionEntered -= OnCollisionEntered;
+            _attacker.GaveDamage -= Die;
             _health.Died -= OnDied;
         }
 
@@ -40,6 +42,11 @@ namespace Game.Enemies
         private void OnCollisionEntered(Collider2D other)
         {
             _attacker.Attack(other);
+        }
+
+        private void Die()
+        {
+            TakeDamage(int.MaxValue);
         }
 
         private void OnDied()
