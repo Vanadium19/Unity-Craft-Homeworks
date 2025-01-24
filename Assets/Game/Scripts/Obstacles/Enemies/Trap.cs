@@ -2,7 +2,7 @@ using Game.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Enemies
+namespace Game.Obstacles.Enemies
 {
     public class Trap : MonoBehaviour, IDamagable
     {

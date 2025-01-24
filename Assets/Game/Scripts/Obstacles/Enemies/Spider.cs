@@ -2,9 +2,9 @@ using Game.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Enemies
+namespace Game.Obstacles.Enemies
 {
-    public class Snake : MonoBehaviour, IDamagable, IMovable
+    public class Spider : MonoBehaviour, IDamagable, IMovable
     {
         [SerializeField] private UnityEventReceiver _unityEvents;
 
@@ -46,7 +46,7 @@ namespace Game.Enemies
 
         public void TakeDamage(int damage)
         {
-            Debug.Log($"Snake take damage " + damage);
+            Debug.Log($"Spider take damage " + damage);
 
             _health.TakeDamage(damage);
         }
@@ -58,7 +58,9 @@ namespace Game.Enemies
 
         private void OnTriggerEntered(Collider2D other)
         {
-            _pusher.Push(other, Vector2.up);
+            Vector2 direction = (other.transform.position - _transform.position).normalized;
+
+            _pusher.Push(other, direction);
             _attacker.Attack(other);
         }
     }

@@ -1,13 +1,13 @@
 using Game.Components;
+using Game.Obstacles.Enemies;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace Game.Enemies
+namespace Game.Obstacles.Installers
 {
-    public class SnakeInstaller : MonoInstaller
+    public class SpiderInstaller : MonoInstaller
     {
-        [SerializeField] private Snake _snake;
+        [SerializeField] private Spider _spider;
         [SerializeField] private Transform _transform;
         [SerializeField] private Rigidbody2D _rigidbody;
 
@@ -17,14 +17,14 @@ namespace Game.Enemies
 
         [Header("Main Settings")]
         [SerializeField] private int _damage = 2;
-        [SerializeField] private int _health = 5;
-        [SerializeField] private float _speed = 3;
+        [SerializeField] private int _health = 3;
+        [SerializeField] private float _speed = 5;
         [SerializeField] private float _pushForce = 25;
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<Snake>()
-                .FromInstance(_snake)
+            Container.BindInterfacesAndSelfTo<Spider>()
+                .FromInstance(_spider)
                 .AsSingle();
 
             Container.BindInterfacesTo<PointsMoveController>()

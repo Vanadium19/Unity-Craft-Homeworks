@@ -2,7 +2,7 @@ using Game.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Enemies
+namespace Game.Obstacles
 {
     public class PointsMoveController : IInitializable, ITickable
     {

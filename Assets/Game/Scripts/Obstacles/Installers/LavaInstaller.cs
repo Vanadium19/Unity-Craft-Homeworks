@@ -1,8 +1,9 @@
 using Game.Components;
+using Game.Obstacles.Environment;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Environment
+namespace Game.Obstacles.Installers
 {
     public class LavaInstaller : MonoInstaller
     {

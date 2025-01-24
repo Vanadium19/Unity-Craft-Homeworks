@@ -2,7 +2,7 @@ using Game.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Environment
+namespace Game.Obstacles.Environment
 {
     public class Lava : MonoBehaviour
     {

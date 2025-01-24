@@ -1,8 +1,9 @@
 using Game.Components;
+using Game.Obstacles.Enemies;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Enemies
+namespace Game.Obstacles.Installers
 {
     public class TrapInstaller : MonoInstaller
     {
