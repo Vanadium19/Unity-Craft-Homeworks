@@ -4,11 +4,12 @@ using Zenject;
 
 namespace Game.Obstacles.Enemies
 {
-    public class Spider : MonoBehaviour, IDamagable, IMovable
+    public class Spider : MonoBehaviour, IDamagable, IMovable, IPushable
     {
         private UnityEventReceiver _unityEvents;
         private Transform _transform;
 
+        private PushableComponent _pushableComponent;
         private TransformMover _mover;
         private TargetPusher _pusher;
         private Attacker _attacker;
@@ -18,11 +19,13 @@ namespace Game.Obstacles.Enemies
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents,
+            PushableComponent pushableComponent,
             TargetPusher pusher,
             TransformMover mover,
             Attacker attacker,
             Health health)
         {
+            _pushableComponent = pushableComponent;
             _unityEvents = unityEvents;
             _attacker = attacker;
             _health = health;
@@ -59,6 +62,11 @@ namespace Game.Obstacles.Enemies
             _mover.Move(direction);
         }
 
+        public void AddForce(Vector2 force)
+        {
+            _pushableComponent.AddForce(force);
+        }
+
         private void OnTriggerEntered(Collider2D other)
         {
             Vector2 direction = (other.transform.position - _transform.position).normalized;
@@ -66,7 +74,7 @@ namespace Game.Obstacles.Enemies
             _pusher.Push(other, direction);
             _attacker.Attack(other);
         }
-        
+
         private void OnDied()
         {
             gameObject.SetActive(false);

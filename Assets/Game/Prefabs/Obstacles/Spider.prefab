@@ -647,6 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spider: {fileID: 273272467818314608}
   _transform: {fileID: 3105770917179402914}
+  _rigidbody: {fileID: 4015829716640782646}
   _unityEvents: {fileID: 4108108564956569967}
   _startPoint: {fileID: 3929516699554365295}
   _endPoint: {fileID: 4629981065635871775}
@@ -654,3 +655,4 @@ MonoBehaviour:
   _health: 3
   _speed: 2
   _pushForce: 20
+  _stunDelay: 0

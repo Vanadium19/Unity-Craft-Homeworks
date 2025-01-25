@@ -37,8 +37,6 @@ namespace Game.Components
 
         public void Push(Vector2 direction)
         {
-            Debug.Log("Try push!");
-            
             if (_currentTime > 0)
                 return;
 
@@ -49,10 +47,9 @@ namespace Game.Components
 
             for (int i = 0; i < size; i++)
             {
-                if (colliders[i].TryGetComponent(out Rigidbody2D rigidbody))
+                if (colliders[i].TryGetComponent(out IPushable pushable))
                 {
-                    rigidbody.velocity = Vector2.zero;
-                    rigidbody.AddForce(direction * _force, ForceMode2D.Impulse);
+                    pushable.AddForce(direction * _force);
                 }
             }
 

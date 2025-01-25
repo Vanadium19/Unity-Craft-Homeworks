@@ -9,6 +9,7 @@ namespace Game.Obstacles.Installers
     {
         [SerializeField] private Snake _snake;
         [SerializeField] private Transform _transform;
+        [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private UnityEventReceiver _unityEvents;
 
         [Header("Move Controller")]
@@ -19,7 +20,8 @@ namespace Game.Obstacles.Installers
         [SerializeField] private int _damage = 2;
         [SerializeField] private int _health = 5;
         [SerializeField] private float _speed = 3;
-        [SerializeField] private float _pushForce = 25;
+        [SerializeField] private float _pushForce = 15;
+        [SerializeField] private float _stunDelay = 0f;
 
         public override void InstallBindings()
         {
@@ -40,6 +42,10 @@ namespace Game.Obstacles.Installers
                 .FromInstance(_unityEvents)
                 .AsSingle();
             
+            Container.Bind<Rigidbody2D>()
+                .FromInstance(_rigidbody)
+                .AsSingle();
+            
             Container.Bind<Rotater>()
                 .AsSingle()
                 .WithArguments(_transform);
@@ -55,6 +61,10 @@ namespace Game.Obstacles.Installers
             Container.Bind<TargetPusher>()
                 .AsSingle()
                 .WithArguments(_pushForce);
+            
+            Container.BindInterfacesAndSelfTo<PushableComponent>()
+                .AsSingle()
+                .WithArguments(_stunDelay);
         }
     }
 }

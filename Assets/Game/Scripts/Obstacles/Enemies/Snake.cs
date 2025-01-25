@@ -4,11 +4,12 @@ using Zenject;
 
 namespace Game.Obstacles.Enemies
 {
-    public class Snake : MonoBehaviour, IDamagable, IMovable
+    public class Snake : MonoBehaviour, IDamagable, IMovable, IPushable
     {
         private UnityEventReceiver _unityEvents;
         private Transform _transform;
 
+        private PushableComponent _pushableComponent;
         private TransformMover _mover;
         private TargetPusher _pusher;
         private Attacker _attacker;
@@ -19,12 +20,14 @@ namespace Game.Obstacles.Enemies
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents,
+            PushableComponent pushableComponent,
             TargetPusher pusher,
             TransformMover mover,
             Attacker attacker,
             Rotater rotater,
             Health health)
         {
+            _pushableComponent = pushableComponent;
             _unityEvents = unityEvents;
             _attacker = attacker;
             _rotater = rotater;
@@ -61,6 +64,11 @@ namespace Game.Obstacles.Enemies
         {
             _mover.Move(direction);
             _rotater.Rotate(direction);
+        }
+
+        public void AddForce(Vector2 force)
+        {
+            _pushableComponent.AddForce(force);
         }
 
         private void OnTriggerEntered(Collider2D other)
