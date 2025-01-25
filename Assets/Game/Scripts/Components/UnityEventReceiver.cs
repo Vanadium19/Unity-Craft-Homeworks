@@ -5,16 +5,16 @@ namespace Game.Components
 {
     public class UnityEventReceiver : MonoBehaviour
     {
-        public event Action<Collider2D> OnCollisionEntered;
+        public event Action<Collision2D> OnCollisionEntered;
         public event Action<Collider2D> OnTriggerEntered;
-        public event Action<Collider2D> OnCollisionExited;
+        public event Action<Collision2D> OnCollisionExited;
         public event Action<Collider2D> OnTriggerExited;
 
         private void OnCollisionEnter2D(Collision2D other)
         {
             // Debug.Log("OnCollisionEnter2D");
             
-            OnCollisionEntered?.Invoke(other.collider);
+            OnCollisionEntered?.Invoke(other);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -26,7 +26,7 @@ namespace Game.Components
 
         private void OnCollisionExit2D(Collision2D other)
         {
-            OnCollisionExited?.Invoke(other.collider);
+            OnCollisionExited?.Invoke(other);
         }
 
         private void OnTriggerExit2D(Collider2D other)

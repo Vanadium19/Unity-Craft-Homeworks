@@ -11,6 +11,7 @@ namespace Game.Player
         [SerializeField] private Character _character;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Transform _transform;
+        [SerializeField] private UnityEventReceiver _unityEvents;
 
         [Header("Main Settings")]
         [SerializeField] private int _health = 5;
@@ -38,6 +39,10 @@ namespace Game.Player
             //Components
             Container.Bind<Rigidbody2D>()
                 .FromInstance(_rigidbody)
+                .AsSingle();
+            
+            Container.Bind<UnityEventReceiver>()
+                .FromInstance(_unityEvents)
                 .AsSingle();
 
             StateComponentsInstaller.Install(Container, _groundCheckParams, _health);

@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 8342082945872629457}
   - component: {fileID: 4859882623022117604}
   - component: {fileID: 7533625333521889301}
+  - component: {fileID: 5879488516642114829}
   - component: {fileID: 8683523602262078946}
   - component: {fileID: 6164362649341215176}
   - component: {fileID: 1045654407407049160}
@@ -404,6 +405,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.2542764}
   serializedVersion: 2
   m_Radius: 0.2457236
+--- !u!114 &5879488516642114829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7490323295220271620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36097dd5bee349eda2bce122a653a6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8683523602262078946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +462,8 @@ MonoBehaviour:
   _character: {fileID: 8683523602262078946}
   _rigidbody: {fileID: 8342082945872629457}
   _transform: {fileID: 4102650447071868940}
-  _health: 5
+  _unityEvents: {fileID: 5879488516642114829}
+  _health: 2500
   _speed: 4
   _jumpForce: 12
   _jumpDelay: 0.5

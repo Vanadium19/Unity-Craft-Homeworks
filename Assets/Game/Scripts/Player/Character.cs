@@ -17,6 +17,8 @@ namespace Game.Player
         private Pusher _pusher;
         private Health _health;
 
+        private Transform _currentParent;
+
         public Vector2 Position => _transform.position;
 
         [Inject]
@@ -43,17 +45,23 @@ namespace Game.Player
         private void OnEnable()
         {
             _health.Died += OnCharacterDied;
+            _groundChecker.ParentChanged += SetParent;
         }
 
         private void OnDisable()
         {
             _health.Died -= OnCharacterDied;
+            _groundChecker.ParentChanged -= SetParent;
         }
 
         public void Move(Vector2 direction)
         {
+            _transform.SetParent(null);
+
             _mover.Move(direction);
             _rotater.Rotate(direction);
+            
+            _transform.SetParent(_currentParent);
         }
 
         public void Jump()
@@ -87,14 +95,10 @@ namespace Game.Player
             gameObject.SetActive(false);
         }
 
-        #region Debug
-
-        [Button]
-        public void KillPlayer()
+        private void SetParent(Transform parent)
         {
-            TakeDamage(5);
+            _transform.SetParent(parent);
+            _currentParent = parent;
         }
-
-        #endregion
     }
 }

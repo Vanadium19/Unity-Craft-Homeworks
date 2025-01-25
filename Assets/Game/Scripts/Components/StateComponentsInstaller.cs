@@ -20,7 +20,7 @@ namespace Game.Components
                 .AsSingle()
                 .WithArguments(_health);
             
-            Container.Bind<GroundChecker>()
+            Container.BindInterfacesAndSelfTo<GroundChecker>()
                 .AsSingle()
                 .WithArguments((_groundCheckParams));
         }

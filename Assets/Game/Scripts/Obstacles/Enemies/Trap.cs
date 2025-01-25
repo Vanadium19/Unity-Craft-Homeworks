@@ -39,9 +39,9 @@ namespace Game.Obstacles.Enemies
             _health.TakeDamage(damage);
         }
 
-        private void OnCollisionEntered(Collider2D other)
+        private void OnCollisionEntered(Collision2D other)
         {
-            _attacker.Attack(other);
+            _attacker.Attack(other.collider);
         }
 
         private void Die()
