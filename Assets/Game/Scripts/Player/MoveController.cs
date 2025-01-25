@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Game.Player
 {
-    public class MoveController : ITickable
+    public class MoveController : IFixedTickable
     {
         private const string HorizontalAxis = "Horizontal";
 
@@ -14,7 +14,7 @@ namespace Game.Player
             _character = character;
         }
 
-        public void Tick()
+        public void FixedTick()
         {
             Vector2 direction = Input.GetAxis(HorizontalAxis) * Vector2.right;
 

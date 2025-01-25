@@ -22,11 +22,15 @@ namespace Game.Components
         {
             Container.Bind<Mover>()
                 .AsSingle()
-                .WithArguments(_speed, _transform);
+                .WithArguments(_speed);
 
             Container.BindInterfacesAndSelfTo<Jumper>()
                 .AsSingle()
                 .WithArguments(_jumpForce, _jumpDelay);
+            
+            Container.Bind<Rotater>()
+                .AsSingle()
+                .WithArguments(_transform);
         }
     }
 }

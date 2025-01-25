@@ -9,7 +9,6 @@ namespace Game.Obstacles.Installers
     {
         [SerializeField] private Snake _snake;
         [SerializeField] private Transform _transform;
-        [SerializeField] private Rigidbody2D _rigidbody;
 
         [Header("Move Controller")]
         [SerializeField] private Transform _startPoint;
@@ -32,13 +31,13 @@ namespace Game.Obstacles.Installers
                 .WithArguments(_startPoint.position, _endPoint.position)
                 .NonLazy();
 
-            Container.Bind<Rigidbody2D>()
-                .FromInstance(_rigidbody)
-                .AsSingle();
-
-            Container.Bind<Mover>()
+            Container.Bind<TransformMover>()
                 .AsSingle()
-                .WithArguments(_speed, _transform);
+                .WithArguments(_transform, _speed);
+            
+            Container.Bind<Rotater>()
+                .AsSingle()
+                .WithArguments(_transform);
 
             Container.Bind<Attacker>()
                 .AsSingle()

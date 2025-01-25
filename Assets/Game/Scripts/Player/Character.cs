@@ -11,6 +11,7 @@ namespace Game.Player
         private Transform _transform;
 
         private GroundChecker _groundChecker;
+        private Rotater _rotater;
         private Mover _mover;
         private Jumper _jumper;
         private Pusher _pusher;
@@ -20,12 +21,14 @@ namespace Game.Player
 
         [Inject]
         public void Construct(GroundChecker groundChecker,
+            Rotater rotater,
             Mover mover,
             Jumper jumper,
             Pusher pusher,
             Health health)
         {
             _groundChecker = groundChecker;
+            _rotater = rotater;
             _mover = mover;
             _jumper = jumper;
             _pusher = pusher;
@@ -50,6 +53,7 @@ namespace Game.Player
         public void Move(Vector2 direction)
         {
             _mover.Move(direction);
+            _rotater.Rotate(direction);
         }
 
         public void Jump()

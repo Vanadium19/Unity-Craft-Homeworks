@@ -10,18 +10,18 @@ namespace Game.Obstacles.Enemies
 
         private Transform _transform;
 
+        private TransformMover _mover;
         private TargetPusher _pusher;
         private Attacker _attacker;
         private Health _health;
-        private Mover _mover;
 
         public Vector2 Position => _transform.position;
 
         [Inject]
         public void Construct(TargetPusher pusher,
+            TransformMover mover,
             Attacker attacker,
-            Health health,
-            Mover mover)
+            Health health)
         {
             _attacker = attacker;
             _health = health;
