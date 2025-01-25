@@ -616,7 +616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8067c244754f15875261b512f8c4d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unityEvents: {fileID: 6871778313891900211}
 --- !u!114 &2762338412533226565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,7 +648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _snake: {fileID: 8604232892506596816}
   _transform: {fileID: 1819249752555060710}
-  _rigidbody: {fileID: 1745589832700849}
+  _unityEvents: {fileID: 6871778313891900211}
   _startPoint: {fileID: 7836685165928915669}
   _endPoint: {fileID: 3188779134163127405}
   _damage: 2

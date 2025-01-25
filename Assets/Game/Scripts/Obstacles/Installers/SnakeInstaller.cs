@@ -9,6 +9,7 @@ namespace Game.Obstacles.Installers
     {
         [SerializeField] private Snake _snake;
         [SerializeField] private Transform _transform;
+        [SerializeField] private UnityEventReceiver _unityEvents;
 
         [Header("Move Controller")]
         [SerializeField] private Transform _startPoint;
@@ -34,6 +35,10 @@ namespace Game.Obstacles.Installers
             Container.Bind<TransformMover>()
                 .AsSingle()
                 .WithArguments(_transform, _speed);
+            
+            Container.Bind<UnityEventReceiver>()
+                .FromInstance(_unityEvents)
+                .AsSingle();
             
             Container.Bind<Rotater>()
                 .AsSingle()

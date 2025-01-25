@@ -9,6 +9,7 @@ namespace Game.Obstacles.Installers
     {
         [SerializeField] private Spider _spider;
         [SerializeField] private Transform _transform;
+        [SerializeField] private UnityEventReceiver _unityEvents;
 
         [Header("Move Controller")]
         [SerializeField] private Transform _startPoint;
@@ -30,6 +31,10 @@ namespace Game.Obstacles.Installers
                 .AsCached()
                 .WithArguments(_startPoint.position, _endPoint.position)
                 .NonLazy();
+            
+            Container.Bind<UnityEventReceiver>()
+                .FromInstance(_unityEvents)
+                .AsSingle();
 
             Container.Bind<TransformMover>()
                 .AsSingle()

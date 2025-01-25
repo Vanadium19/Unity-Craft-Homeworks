@@ -3,14 +3,18 @@ using Zenject;
 
 namespace Game.Components
 {
-    public class StateComponentsInstaller : Installer<GroundCheckParams, int, StateComponentsInstaller>
+    public class StateComponentsInstaller : Installer<GroundCheckParams, float, int, StateComponentsInstaller>
     {
         private readonly GroundCheckParams _groundCheckParams;
+        private readonly float _stunDelay;
         private readonly int _health;
 
-        public StateComponentsInstaller(GroundCheckParams groundCheckParams, int health)
+        public StateComponentsInstaller(GroundCheckParams groundCheckParams,
+            float stunDelay,
+            int health)
         {
             _groundCheckParams = groundCheckParams;
+            _stunDelay = stunDelay;
             _health = health;
         }
 
@@ -19,10 +23,14 @@ namespace Game.Components
             Container.Bind<Health>()
                 .AsSingle()
                 .WithArguments(_health);
-            
+
             Container.BindInterfacesAndSelfTo<GroundChecker>()
                 .AsSingle()
-                .WithArguments((_groundCheckParams));
+                .WithArguments(_groundCheckParams);
+
+            Container.BindInterfacesAndSelfTo<PushableComponent>()
+                .AsSingle()
+                .WithArguments(_stunDelay);
         }
     }
 }

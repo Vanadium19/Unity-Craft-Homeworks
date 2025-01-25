@@ -337,7 +337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2471d1fb16dd406e97abf975bd22deba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unityEvents: {fileID: 8920618750551504201}
 --- !u!114 &1523188864623839291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,5 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98295eb56f2b4d68a003680c4201f11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unityEvents: {fileID: 8920618750551504201}
   _trampoline: {fileID: 5273089141667323143}
   _pushForce: 20

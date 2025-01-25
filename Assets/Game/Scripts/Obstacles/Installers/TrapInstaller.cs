@@ -8,6 +8,8 @@ namespace Game.Obstacles.Installers
     public class TrapInstaller : MonoInstaller
     {
         [SerializeField] private Trap _trap;
+        [SerializeField] private UnityEventReceiver _unityEvents;
+        
         [SerializeField] private int _damage = 1;
         [SerializeField] private int _health = 1;
 
@@ -15,6 +17,10 @@ namespace Game.Obstacles.Installers
         {
             Container.Bind<Trap>()
                 .FromInstance(_trap)
+                .AsSingle();
+            
+            Container.Bind<UnityEventReceiver>()
+                .FromInstance(_unityEvents)
                 .AsSingle();
 
             Container.Bind<Attacker>()

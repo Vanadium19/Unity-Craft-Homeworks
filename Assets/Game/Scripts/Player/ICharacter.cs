@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Player
 {
-    public interface ICharacter : IMovable
+    public interface ICharacter : IMovable, IPushable
     {
         public void Jump();
 

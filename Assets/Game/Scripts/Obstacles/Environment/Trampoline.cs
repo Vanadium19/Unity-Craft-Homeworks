@@ -6,13 +6,13 @@ namespace Game.Obstacles.Environment
 {
     public class Trampoline : MonoBehaviour
     {
-        [SerializeField] private UnityEventReceiver _unityEvents;
-
+        private UnityEventReceiver _unityEvents;
         private TargetPusher _pusher;
 
         [Inject]
-        public void Construct(TargetPusher pusher)
+        public void Construct(UnityEventReceiver unityEvents, TargetPusher pusher)
         {
+            _unityEvents = unityEvents;
             _pusher = pusher;
         }
 

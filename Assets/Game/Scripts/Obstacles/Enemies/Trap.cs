@@ -6,14 +6,16 @@ namespace Game.Obstacles.Enemies
 {
     public class Trap : MonoBehaviour, IDamagable
     {
-        [SerializeField] private UnityEventReceiver _unityEvents;
-
+        private UnityEventReceiver _unityEvents;
         private Attacker _attacker;
         private Health _health;
 
         [Inject]
-        public void Construct(Attacker attacker, Health health)
+        public void Construct(UnityEventReceiver unityEvents,
+            Attacker attacker,
+            Health health)
         {
+            _unityEvents = unityEvents;
             _attacker = attacker;
             _health = health;
         }

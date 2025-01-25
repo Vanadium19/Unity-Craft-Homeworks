@@ -6,8 +6,7 @@ namespace Game.Obstacles.Enemies
 {
     public class Spider : MonoBehaviour, IDamagable, IMovable
     {
-        [SerializeField] private UnityEventReceiver _unityEvents;
-
+        private UnityEventReceiver _unityEvents;
         private Transform _transform;
 
         private TransformMover _mover;
@@ -18,11 +17,13 @@ namespace Game.Obstacles.Enemies
         public Vector2 Position => _transform.position;
 
         [Inject]
-        public void Construct(TargetPusher pusher,
+        public void Construct(UnityEventReceiver unityEvents,
+            TargetPusher pusher,
             TransformMover mover,
             Attacker attacker,
             Health health)
         {
+            _unityEvents = unityEvents;
             _attacker = attacker;
             _health = health;
             _pusher = pusher;

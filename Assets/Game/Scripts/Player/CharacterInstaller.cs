@@ -1,7 +1,5 @@
-using System;
 using Game.Components;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Game.Player
@@ -15,14 +13,15 @@ namespace Game.Player
 
         [Header("Main Settings")]
         [SerializeField] private int _health = 5;
-        [SerializeField] private float _speed = 3f;
+        [SerializeField] private float _speed = 5f;
 
         [Header("Jump Settings")]
-        [SerializeField] private float _jumpForce = 2;
-        [SerializeField] private float _jumpDelay = 1;
+        [SerializeField] private float _jumpForce = 12;
+        [SerializeField] private float _jumpDelay = 0.5f;
 
         [Header("Push Settings")]
         [SerializeField] private PushParams _pushParams;
+        [SerializeField] private float _stunDelay = 0.12f;
 
         [Header("Ground Check Settings")]
         [SerializeField] private GroundCheckParams _groundCheckParams;
@@ -45,7 +44,7 @@ namespace Game.Player
                 .FromInstance(_unityEvents)
                 .AsSingle();
 
-            StateComponentsInstaller.Install(Container, _groundCheckParams, _health);
+            StateComponentsInstaller.Install(Container, _groundCheckParams, _stunDelay, _health);
             MoveComponentsInstaller.Install(Container, _transform, _jumpForce, _jumpDelay, _speed);
             AttackComponentsInstaller.Install(Container, _pushParams);
         }

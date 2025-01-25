@@ -6,13 +6,13 @@ namespace Game.Obstacles.Environment
 {
     public class Lava : MonoBehaviour
     {
-        [SerializeField] private UnityEventReceiver _unityEvents;
-
+        private UnityEventReceiver _unityEvents;
         private Attacker _attacker;
 
         [Inject]
-        public void Construct(Attacker attacker)
+        public void Construct(UnityEventReceiver unityEvents, Attacker attacker)
         {
+            _unityEvents = unityEvents;
             _attacker = attacker;
         }
 

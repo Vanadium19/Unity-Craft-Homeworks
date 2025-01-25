@@ -475,6 +475,7 @@ MonoBehaviour:
     _layerMask:
       serializedVersion: 2
       m_Bits: 256
+  _stunDelay: 0.2
   _groundCheckParams:
     _point: {fileID: 1768056685699584485}
     _groundLayer:

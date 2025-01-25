@@ -9,6 +9,7 @@ namespace Game.Obstacles.Installers
     {
         private const int Damage = int.MaxValue;
 
+        [SerializeField] private UnityEventReceiver _unityEvents;
         [SerializeField] private Lava _lava;
 
         public override void InstallBindings()
@@ -20,6 +21,10 @@ namespace Game.Obstacles.Installers
             Container.Bind<Attacker>()
                 .AsSingle()
                 .WithArguments(Damage);
+
+            Container.Bind<UnityEventReceiver>()
+                .FromInstance(_unityEvents)
+                .AsSingle();
         }
     }
 }

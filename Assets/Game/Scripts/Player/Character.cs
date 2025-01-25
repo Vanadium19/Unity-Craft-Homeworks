@@ -10,6 +10,7 @@ namespace Game.Player
     {
         private Transform _transform;
 
+        private PushableComponent _pushableComponent;
         private GroundChecker _groundChecker;
         private Rotater _rotater;
         private Mover _mover;
@@ -23,12 +24,14 @@ namespace Game.Player
 
         [Inject]
         public void Construct(GroundChecker groundChecker,
+            PushableComponent pushableComponent,
             Rotater rotater,
             Mover mover,
             Jumper jumper,
             Pusher pusher,
             Health health)
         {
+            _pushableComponent = pushableComponent;
             _groundChecker = groundChecker;
             _rotater = rotater;
             _mover = mover;
@@ -56,6 +59,9 @@ namespace Game.Player
 
         public void Move(Vector2 direction)
         {
+            if (_pushableComponent.IsPushing)
+                return;
+            
             _transform.SetParent(null);
 
             _mover.Move(direction);
@@ -81,6 +87,11 @@ namespace Game.Player
                 _pusher.Push(Vector2.up);
             else
                 throw new Exception("Invalid push direction");
+        }
+
+        public void AddForce(Vector2 force)
+        {
+            _pushableComponent.AddForce(force);
         }
 
         public void TakeDamage(int damage)

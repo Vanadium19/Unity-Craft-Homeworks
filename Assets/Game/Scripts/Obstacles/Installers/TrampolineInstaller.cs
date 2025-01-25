@@ -8,6 +8,7 @@ namespace Game.Obstacles.Installers
 {
     public class TrampolineInstaller : MonoInstaller
     {
+        [SerializeField] private UnityEventReceiver _unityEvents;
         [SerializeField] private Trampoline _trampoline;
         [SerializeField] private float _pushForce = 50f;
 
@@ -20,6 +21,10 @@ namespace Game.Obstacles.Installers
             Container.Bind<TargetPusher>()
                 .AsSingle()
                 .WithArguments(_pushForce);
+
+            Container.Bind<UnityEventReceiver>()
+                .FromInstance(_unityEvents)
+                .AsSingle();
         }
     }
 }

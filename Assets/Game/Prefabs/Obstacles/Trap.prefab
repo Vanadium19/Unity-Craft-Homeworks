@@ -209,7 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 275040b29ba145bdba9ceced6cc00690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unityEvents: {fileID: 8145453525776660518}
 --- !u!114 &8145453525776660518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,5 +252,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trap: {fileID: 8468558895773669478}
+  _unityEvents: {fileID: 8145453525776660518}
   _damage: 1
   _health: 1
