@@ -10,6 +10,7 @@ namespace Game.Player
     {
         private Transform _transform;
 
+        private GroundChecker _groundChecker;
         private Mover _mover;
         private Jumper _jumper;
         private Pusher _pusher;
@@ -18,11 +19,13 @@ namespace Game.Player
         public Vector2 Position => _transform.position;
 
         [Inject]
-        public void Construct(Mover mover,
+        public void Construct(GroundChecker groundChecker,
+            Mover mover,
             Jumper jumper,
             Pusher pusher,
             Health health)
         {
+            _groundChecker = groundChecker;
             _mover = mover;
             _jumper = jumper;
             _pusher = pusher;
@@ -51,11 +54,15 @@ namespace Game.Player
 
         public void Jump()
         {
-            _jumper.Jump();
+            if (_groundChecker.IsGrounded)
+                _jumper.Jump();
         }
 
         public void Push(PushDirection direction)
         {
+            if (!_groundChecker.IsGrounded)
+                return;
+
             if (direction == PushDirection.Forward)
                 _pusher.Push(_transform.right);
             else if (direction == PushDirection.Up)

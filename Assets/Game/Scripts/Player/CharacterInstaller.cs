@@ -1,6 +1,7 @@
 using System;
 using Game.Components;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Game.Player
@@ -16,11 +17,14 @@ namespace Game.Player
         [SerializeField] private float _speed = 3f;
 
         [Header("Jump Settings")]
-        [SerializeField] private JumpParams _jumpParams;
+        [SerializeField] private float _jumpForce = 2;
+        [SerializeField] private float _jumpDelay = 1;
 
         [Header("Push Settings")]
         [SerializeField] private PushParams _pushParams;
 
+        [Header("Ground Check Settings")]
+        [SerializeField] private GroundCheckParams _groundCheckParams;
 
         public override void InstallBindings()
         {
@@ -36,8 +40,8 @@ namespace Game.Player
                 .FromInstance(_rigidbody)
                 .AsSingle();
 
-            StateComponentsInstaller.Install(Container, _health);
-            MoveComponentsInstaller.Install(Container, _jumpParams, _transform, _speed);
+            StateComponentsInstaller.Install(Container, _groundCheckParams, _health);
+            MoveComponentsInstaller.Install(Container, _transform, _jumpForce, _jumpDelay, _speed);
             AttackComponentsInstaller.Install(Container, _pushParams);
         }
 
@@ -48,10 +52,10 @@ namespace Game.Player
             Gizmos.color = Color.yellow;
 
             //Jump
-            if (_jumpParams.Point == null)
+            if (_groundCheckParams.Point == null)
                 return;
 
-            Gizmos.DrawWireCube(_jumpParams.Point.position, _jumpParams.OverlapSize);
+            Gizmos.DrawWireCube(_groundCheckParams.Point.position, _groundCheckParams.OverlapSize);
 
             //Push
             if (_pushParams.Point == null)

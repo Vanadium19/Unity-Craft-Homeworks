@@ -37,6 +37,8 @@ namespace Game.Components
 
         public void Push(Vector2 direction)
         {
+            Debug.Log("Try push!");
+            
             if (_currentTime > 0)
                 return;
 

@@ -450,15 +450,9 @@ MonoBehaviour:
   _rigidbody: {fileID: 8342082945872629457}
   _transform: {fileID: 4102650447071868940}
   _health: 5
-  _speed: 3
-  _jumpParams:
-    _force: 5
-    _delay: 0.5
-    _point: {fileID: 1768056685699584485}
-    _groundLayer:
-      serializedVersion: 2
-      m_Bits: 8
-    _overlapSize: {x: 0.5, y: 0.1}
+  _speed: 4
+  _jumpForce: 12
+  _jumpDelay: 0.5
   _pushParams:
     _force: 2
     _delay: 1
@@ -467,6 +461,12 @@ MonoBehaviour:
     _layerMask:
       serializedVersion: 2
       m_Bits: 256
+  _groundCheckParams:
+    _point: {fileID: 1768056685699584485}
+    _groundLayer:
+      serializedVersion: 2
+      m_Bits: 1032
+    _overlapSize: {x: 0.5, y: 0.1}
 --- !u!1 &7801279227858408424
 GameObject:
   m_ObjectHideFlags: 0
