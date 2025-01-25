@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4726333553518123287}
   - component: {fileID: 7565121345933036021}
   - component: {fileID: 2328215020831400752}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: <Platform>
   m_TagString: Platform
   m_Icon: {fileID: 0}
@@ -134,7 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e39b8b13c7054a1a80a4e5c623ef1782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unityEvents: {fileID: 5467747087626462466}
 --- !u!114 &7565121345933036021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,7 +179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7441270365842623162}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Waypoint2
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -211,7 +210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5434138037557620653}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Waypoint1
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -243,7 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4197703630263784642}
   - component: {fileID: 4653792492173037913}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: <Sprite>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1736318179580503177}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

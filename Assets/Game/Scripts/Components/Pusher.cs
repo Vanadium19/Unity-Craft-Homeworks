@@ -48,7 +48,10 @@ namespace Game.Components
             for (int i = 0; i < size; i++)
             {
                 if (colliders[i].TryGetComponent(out Rigidbody2D rigidbody))
+                {
+                    rigidbody.velocity = Vector2.zero;
                     rigidbody.AddForce(direction * _force, ForceMode2D.Impulse);
+                }
             }
 
             if (size > 0)

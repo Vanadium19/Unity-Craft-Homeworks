@@ -37,11 +37,13 @@ namespace Game.Obstacles.Enemies
         private void OnEnable()
         {
             _unityEvents.OnTriggerEntered += OnTriggerEntered;
+            _health.Died += OnDied;
         }
 
         private void OnDisable()
         {
             _unityEvents.OnTriggerEntered -= OnTriggerEntered;
+            _health.Died -= OnDied;
         }
 
         public void TakeDamage(int damage)
@@ -62,6 +64,11 @@ namespace Game.Obstacles.Enemies
 
             _pusher.Push(other, direction);
             _attacker.Attack(other);
+        }
+        
+        private void OnDied()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

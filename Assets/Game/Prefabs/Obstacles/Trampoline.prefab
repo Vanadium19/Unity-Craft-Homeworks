@@ -240,6 +240,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4979841302588641904}
   - component: {fileID: 2682617834291874480}
+  - component: {fileID: 8920618750551504201}
+  - component: {fileID: 5273089141667323143}
+  - component: {fileID: 1523188864623839291}
+  - component: {fileID: 3870006002787727366}
   m_Layer: 6
   m_Name: Trampoline
   m_TagString: Untagged
@@ -309,3 +313,60 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &8920618750551504201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36097dd5bee349eda2bce122a653a6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5273089141667323143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2471d1fb16dd406e97abf975bd22deba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unityEvents: {fileID: 8920618750551504201}
+--- !u!114 &1523188864623839291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 3870006002787727366}
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &3870006002787727366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98295eb56f2b4d68a003680c4201f11b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _trampoline: {fileID: 5273089141667323143}
+  _pushForce: 20
