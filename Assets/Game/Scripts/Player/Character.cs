@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Game.Player
 {
-    public class Character : MonoBehaviour, IDamagable, IPusher, IJumper, IMovable
+    public class Character : MonoBehaviour, IDamagable, IPusher, IJumper, IMovable, IPushable
     {
         private Transform _transform;
 

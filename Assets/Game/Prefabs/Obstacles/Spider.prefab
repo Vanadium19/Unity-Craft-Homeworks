@@ -451,6 +451,8 @@ GameObject:
   - component: {fileID: 273272467818314608}
   - component: {fileID: 7115200197596253895}
   - component: {fileID: 767189223425208928}
+  - component: {fileID: 3834491470995604625}
+  - component: {fileID: 6619382854899023257}
   m_Layer: 8
   m_Name: <Spider>
   m_TagString: Untagged
@@ -630,6 +632,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 767189223425208928}
+  - {fileID: 3834491470995604625}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
@@ -656,3 +659,34 @@ MonoBehaviour:
   _speed: 2
   _pushForce: 20
   _stunDelay: 0
+--- !u!114 &3834491470995604625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665529919726988981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afe3b63103c4245bc2dae8bc3ec15fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageView: {fileID: 6619382854899023257}
+--- !u!114 &6619382854899023257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8665529919726988981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64927697799d4d5abd3dd57a505721c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 2
+  _interval: 0.25
+  _spriteRenderer: {fileID: 3123733364965956949}
+  _color: {r: 1, g: 0.86752415, b: 0, a: 1}
+  _audioSource: {fileID: 0}
+  _damageSound: {fileID: 0}

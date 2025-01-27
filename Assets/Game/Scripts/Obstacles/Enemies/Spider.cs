@@ -1,5 +1,6 @@
 using System;
 using Game.Components;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -81,6 +82,12 @@ namespace Game.Obstacles.Enemies
         private void OnDied()
         {
             gameObject.SetActive(false);
+        }
+
+        [Button]
+        public void TakeDamage()
+        {
+            TakeDamage(1);
         }
     }
 }
