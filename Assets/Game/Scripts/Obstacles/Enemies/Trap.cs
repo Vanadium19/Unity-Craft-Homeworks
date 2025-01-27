@@ -1,3 +1,4 @@
+using System;
 using Game.Components;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,8 @@ namespace Game.Obstacles.Enemies
         private PushableComponent _pushableComponent;
         private Attacker _attacker;
         private Health _health;
+        
+        public event Action HealthChanged;
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents,
@@ -41,7 +44,7 @@ namespace Game.Obstacles.Enemies
 
         public void TakeDamage(int damage)
         {
-            Debug.Log($"Trap take damage " + damage);
+            HealthChanged?.Invoke();
 
             _health.TakeDamage(damage);
         }

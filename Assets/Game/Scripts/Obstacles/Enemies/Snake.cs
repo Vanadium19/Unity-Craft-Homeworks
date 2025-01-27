@@ -1,3 +1,4 @@
+using System;
 using Game.Components;
 using UnityEngine;
 using Zenject;
@@ -15,6 +16,8 @@ namespace Game.Obstacles.Enemies
         private Attacker _attacker;
         private Rotater _rotater;
         private Health _health;
+
+        public event Action HealthChanged;
 
         public Vector2 Position => _transform.position;
 
@@ -55,7 +58,7 @@ namespace Game.Obstacles.Enemies
 
         public void TakeDamage(int damage)
         {
-            Debug.Log($"Snake take damage " + damage);
+            HealthChanged?.Invoke();
 
             _health.TakeDamage(damage);
         }

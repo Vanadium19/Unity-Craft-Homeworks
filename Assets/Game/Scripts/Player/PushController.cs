@@ -6,9 +6,9 @@ namespace Game.Player
 {
     public class PushController : ITickable
     {
-        private readonly ICharacter _character;
+        private readonly IPusher _character;
 
-        public PushController(ICharacter character)
+        public PushController(IPusher character)
         {
             _character = character;
         }
@@ -16,9 +16,9 @@ namespace Game.Player
         public void Tick()
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
-                _character.Push(PushDirection.Forward);
+                _character.Push();
             else if (Input.GetKeyDown(KeyCode.Mouse1))
-                _character.Push(PushDirection.Up);
+                _character.Toss();
         }
     }
 }

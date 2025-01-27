@@ -1,3 +1,4 @@
+using Game.Components;
 using UnityEngine;
 using Zenject;
 
@@ -5,9 +6,9 @@ namespace Game.Player
 {
     public class JumpController : ITickable
     {
-        private readonly ICharacter _character;
+        private readonly IJumper _character;
 
-        public JumpController(ICharacter character)
+        public JumpController(IJumper character)
         {
             _character = character;
         }

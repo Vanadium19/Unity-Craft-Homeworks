@@ -35,10 +35,10 @@ namespace Game.Components
             _currentTime -= Time.deltaTime;
         }
 
-        public void Push(Vector2 direction)
+        public bool Push(Vector2 direction)
         {
             if (_currentTime > 0)
-                return;
+                return false;
 
             System.Buffers.ArrayPool<Collider2D> arrayPool = System.Buffers.ArrayPool<Collider2D>.Shared;
             Collider2D[] colliders = arrayPool.Rent(ColliderBufferSize);
@@ -57,6 +57,7 @@ namespace Game.Components
                 _currentTime = _delay;
 
             arrayPool.Return(colliders);
+            return true;
         }
     }
 }

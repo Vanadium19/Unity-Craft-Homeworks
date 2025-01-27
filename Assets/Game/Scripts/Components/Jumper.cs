@@ -26,15 +26,16 @@ namespace Game.Components
             _currentTime -= Time.deltaTime;
         }
 
-        public void Jump()
+        public bool Jump()
         {
             if (_currentTime > 0)
-                return;
+                return false;
 
             Vector2 force = Vector2.up * _force;
 
             _rigidbody.AddForce(force, ForceMode2D.Impulse);
             _currentTime = _delay;
+            return true;
         }
     }
 }

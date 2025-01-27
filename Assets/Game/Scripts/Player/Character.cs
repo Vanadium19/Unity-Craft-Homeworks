@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Game.Player
 {
-    public class Character : MonoBehaviour, ICharacter, IDamagable
+    public class Character : MonoBehaviour, IDamagable, IPusher, IJumper, IMovable
     {
         private Transform _transform;
 
@@ -19,6 +19,11 @@ namespace Game.Player
         private Health _health;
 
         private Transform _currentParent;
+
+        public event Action Jumped;
+        public event Action Pushed;
+        public event Action Tossed;
+        public event Action HealthChanged;
 
         public Vector2 Position => _transform.position;
 
@@ -61,32 +66,37 @@ namespace Game.Player
         {
             if (_pushableComponent.IsPushing)
                 return;
-            
+
             _transform.SetParent(null);
 
             _mover.Move(direction);
             _rotater.Rotate(direction);
-            
+
             _transform.SetParent(_currentParent);
         }
 
         public void Jump()
         {
-            if (_groundChecker.IsGrounded)
-                _jumper.Jump();
+            if (!_groundChecker.IsGrounded)
+                return;
+
+            if (_jumper.Jump())
+                Jumped?.Invoke();
         }
 
-        public void Push(PushDirection direction)
+        public void Push()
+        {
+            if (_pusher.Push(_transform.right))
+                Pushed?.Invoke();
+        }
+
+        public void Toss()
         {
             if (!_groundChecker.IsGrounded)
                 return;
 
-            if (direction == PushDirection.Forward)
-                _pusher.Push(_transform.right);
-            else if (direction == PushDirection.Up)
-                _pusher.Push(Vector2.up);
-            else
-                throw new Exception("Invalid push direction");
+            if (_pusher.Push(Vector2.up))
+                Tossed?.Invoke();
         }
 
         public void AddForce(Vector2 force)
@@ -96,9 +106,9 @@ namespace Game.Player
 
         public void TakeDamage(int damage)
         {
-            Debug.Log($"Character take damage " + damage);
-
             _health.TakeDamage(damage);
+
+            HealthChanged?.Invoke();
         }
 
         private void OnCharacterDied()
@@ -110,6 +120,12 @@ namespace Game.Player
         {
             _transform.SetParent(parent);
             _currentParent = parent;
+        }
+
+        [Button]
+        public void TakeDamage()
+        {
+            TakeDamage(1);
         }
     }
 }
