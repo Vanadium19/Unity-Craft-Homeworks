@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7195593461678769857}
-  - component: {fileID: 1617741907949594362}
+  - component: {fileID: 6171932455674884143}
   m_Layer: 6
   m_Name: <Audio>
   m_TagString: Untagged
@@ -116,7 +116,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4979841302588641904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1617741907949594362
+--- !u!82 &6171932455674884143
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,9 +137,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 5
+  MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -147,41 +147,23 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.2
+      time: 0
       value: 1
-      inSlope: -5.0019917
-      outSlope: -5.0019917
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.38129273
-      value: 0.44496155
-      inSlope: -1.2504979
-      outSlope: -1.2504979
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.70023805
-      value: 0.15216064
-      inSlope: -0.31262448
-      outSlope: -0.31262448
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.9963989
+      time: 1
       value: 0
-      inSlope: -0.20007975
-      outSlope: -0.20007975
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
-      outWeight: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -190,7 +172,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -220,7 +202,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.34583282
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -244,6 +226,8 @@ GameObject:
   - component: {fileID: 5273089141667323143}
   - component: {fileID: 1523188864623839291}
   - component: {fileID: 3870006002787727366}
+  - component: {fileID: 8893165943623416718}
+  - component: {fileID: 2733102663546074194}
   m_Layer: 6
   m_Name: Trampoline
   m_TagString: Untagged
@@ -352,6 +336,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 3870006002787727366}
+  - {fileID: 2733102663546074194}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
@@ -370,3 +355,29 @@ MonoBehaviour:
   _unityEvents: {fileID: 8920618750551504201}
   _trampoline: {fileID: 5273089141667323143}
   _pushForce: 20
+--- !u!114 &8893165943623416718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecd7e556037e40f995e75ef75a09f17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 6171932455674884143}
+--- !u!114 &2733102663546074194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a64c660a544257b60e2dab3020512b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackView: {fileID: 8893165943623416718}

@@ -11,10 +11,13 @@ namespace Game.Components
             _force = force;
         }
 
-        public void Push(Collider2D collider, Vector2 direction)
+        public bool Push(Collider2D collider, Vector2 direction)
         {
-            if (collider.TryGetComponent(out IPushable pushable))
-                pushable.AddForce(direction * _force);
+            if (!collider.TryGetComponent(out IPushable pushable))
+                return false;
+
+            pushable.AddForce(direction * _force);
+            return true;
         }
     }
 }

@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 9091583437395542506}
   - component: {fileID: 3034888880281719743}
   - component: {fileID: 5267539290346560316}
+  - component: {fileID: 6372706368593527389}
+  - component: {fileID: 4590334713136830934}
   m_Layer: 6
   m_Name: Lava
   m_TagString: Untagged
@@ -270,6 +272,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 5267539290346560316}
+  - {fileID: 4590334713136830934}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
@@ -287,3 +290,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unityEvents: {fileID: 9091583437395542506}
   _lava: {fileID: 3911460497707208325}
+--- !u!114 &6372706368593527389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941354820746825385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecd7e556037e40f995e75ef75a09f17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 8807684224348490779}
+  _attackSound: {fileID: 8300000, guid: cd6cde2e439ce0b4984c66ae86955c23, type: 3}
+--- !u!114 &4590334713136830934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941354820746825385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a64c660a544257b60e2dab3020512b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackView: {fileID: 6372706368593527389}

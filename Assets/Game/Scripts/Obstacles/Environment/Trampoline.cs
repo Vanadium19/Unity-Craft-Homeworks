@@ -1,13 +1,16 @@
+using System;
 using Game.Components;
 using UnityEngine;
 using Zenject;
 
 namespace Game.Obstacles.Environment
 {
-    public class Trampoline : MonoBehaviour
+    public class Trampoline : MonoBehaviour, IAttacker
     {
         private UnityEventReceiver _unityEvents;
         private TargetPusher _pusher;
+
+        public event Action Attacked;
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents, TargetPusher pusher)
@@ -28,7 +31,8 @@ namespace Game.Obstacles.Environment
 
         private void OnTriggerEntered(Collider2D target)
         {
-            _pusher.Push(target, Vector2.up);
+            if (_pusher.Push(target, Vector2.up))
+                Attacked?.Invoke();
         }
     }
 }

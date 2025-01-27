@@ -14,7 +14,7 @@ namespace Game.Obstacles.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<Lava>()
+            Container.BindInterfacesAndSelfTo<Lava>()
                 .FromInstance(_lava)
                 .AsSingle();
 
