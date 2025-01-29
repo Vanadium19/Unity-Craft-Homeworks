@@ -24,6 +24,7 @@ namespace Game.View
         public void Jump()
         {
             _transform.DOScale(_targetScale, _duration).SetEase(Ease.OutBounce).SetLoops(_loopCount, LoopType.Yoyo);
+            _audioSource.PlayOneShot(_jumpSound);
         }
     }
 }
