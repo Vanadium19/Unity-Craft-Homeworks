@@ -1,7 +1,6 @@
 using System;
-using Game.Components;
-using Game.Scripts.View;
-using UnityEngine;
+using Game.Components.Interfaces;
+using Game.View;
 using Zenject;
 
 namespace Game.Presenters

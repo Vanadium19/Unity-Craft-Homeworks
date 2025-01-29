@@ -1,9 +1,9 @@
 {
-    "name": "Game.Installers",
+    "name": "Game.View",
     "rootNamespace": "",
     "references": [
         "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
-        "GUID:04f19b1e51b86fa4eabf74ba987b9215"
+        "GUID:d75f2d58703cb4dfdaf9412d773db7e5"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

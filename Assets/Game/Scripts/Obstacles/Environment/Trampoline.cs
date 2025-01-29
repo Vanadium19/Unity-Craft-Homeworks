@@ -1,5 +1,6 @@
 using System;
 using Game.Components;
+using Game.Components.Interfaces;
 using UnityEngine;
 using Zenject;
 

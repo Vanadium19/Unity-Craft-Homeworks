@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Scripts.View
+namespace Game.View
 {
     public class PushView : MonoBehaviour
     {

@@ -1,3 +1,4 @@
+using Game.Components.Interfaces;
 using UnityEngine;
 using Zenject;
 

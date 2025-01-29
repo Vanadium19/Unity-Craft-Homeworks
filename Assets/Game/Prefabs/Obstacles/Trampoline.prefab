@@ -172,7 +172,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -222,12 +222,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4979841302588641904}
   - component: {fileID: 2682617834291874480}
-  - component: {fileID: 8920618750551504201}
-  - component: {fileID: 5273089141667323143}
   - component: {fileID: 1523188864623839291}
   - component: {fileID: 3870006002787727366}
+  - component: {fileID: 336005089831263018}
+  - component: {fileID: 5273089141667323143}
+  - component: {fileID: 8920618750551504201}
   - component: {fileID: 8893165943623416718}
-  - component: {fileID: 2733102663546074194}
   m_Layer: 6
   m_Name: Trampoline
   m_TagString: Untagged
@@ -297,30 +297,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &8920618750551504201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595837930061912479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36097dd5bee349eda2bce122a653a6bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5273089141667323143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595837930061912479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2471d1fb16dd406e97abf975bd22deba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1523188864623839291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,10 +309,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: b9b537d5974969c4eb8f7950457f7885, type: 2}
   _monoInstallers:
   - {fileID: 3870006002787727366}
-  - {fileID: 2733102663546074194}
+  - {fileID: 336005089831263018}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
@@ -355,6 +332,43 @@ MonoBehaviour:
   _unityEvents: {fileID: 8920618750551504201}
   _trampoline: {fileID: 5273089141667323143}
   _pushForce: 20
+--- !u!114 &336005089831263018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd1cb0eeca3403aa99a06f921a2632a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackView: {fileID: 8893165943623416718}
+--- !u!114 &5273089141667323143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2471d1fb16dd406e97abf975bd22deba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8920618750551504201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595837930061912479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36097dd5bee349eda2bce122a653a6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8893165943623416718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,16 +382,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 6171932455674884143}
---- !u!114 &2733102663546074194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595837930061912479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25a64c660a544257b60e2dab3020512b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackView: {fileID: 8893165943623416718}

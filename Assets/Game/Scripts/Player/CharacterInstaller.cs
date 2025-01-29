@@ -32,9 +32,6 @@ namespace Game.Player
                 .FromInstance(_character)
                 .AsSingle();
 
-            //Controllers
-            ControllersInstaller.Install(Container);
-
             //Components
             Container.Bind<Rigidbody2D>()
                 .FromInstance(_rigidbody)

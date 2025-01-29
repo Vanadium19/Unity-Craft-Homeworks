@@ -1,4 +1,5 @@
 using System;
+using Game.Components.Interfaces;
 using UnityEngine;
 
 namespace Game.Components

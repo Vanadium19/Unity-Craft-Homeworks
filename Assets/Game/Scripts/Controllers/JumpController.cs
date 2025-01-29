@@ -1,8 +1,8 @@
-using Game.Components;
+using Game.Components.Interfaces;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Player
+namespace Game.Controllers
 {
     public class JumpController : ITickable
     {

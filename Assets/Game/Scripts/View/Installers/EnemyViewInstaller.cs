@@ -1,19 +1,14 @@
-using Game.Scripts.View;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Presenters
+namespace Game.View.Installers
 {
-    public class EnemyPresenterInstaller : MonoInstaller
+    public class EnemyViewInstaller : MonoInstaller
     {
         [SerializeField] private DamageView _damageView;
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<DamagePresenter>()
-                .AsSingle()
-                .NonLazy();
-
             Container.Bind<DamageView>()
                 .FromInstance(_damageView)
                 .AsSingle();

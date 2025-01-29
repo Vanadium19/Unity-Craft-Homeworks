@@ -1,20 +1,14 @@
-using Game.Scripts.View;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace Game.Presenters
+namespace Game.View.Installers
 {
-    public class EnvironmentPresenterInstaller : MonoInstaller
+    public class EnvironmentViewInstaller : MonoInstaller
     {
         [SerializeField] private AttackView _attackView;
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<AttackPresenter>()
-                .AsSingle()
-                .NonLazy();
-
             Container.Bind<AttackView>()
                 .FromInstance(_attackView)
                 .AsSingle();

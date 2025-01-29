@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 790263129781726672}
   - component: {fileID: 8255752769676833144}
   - component: {fileID: 8807684224348490779}
-  - component: {fileID: 3911460497707208325}
-  - component: {fileID: 9091583437395542506}
   - component: {fileID: 3034888880281719743}
   - component: {fileID: 5267539290346560316}
+  - component: {fileID: 2820121498598433186}
+  - component: {fileID: 3911460497707208325}
+  - component: {fileID: 9091583437395542506}
   - component: {fileID: 6372706368593527389}
-  - component: {fileID: 4590334713136830934}
   m_Layer: 6
   m_Name: Lava
   m_TagString: Untagged
@@ -233,6 +233,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3034888880281719743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941354820746825385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: b9b537d5974969c4eb8f7950457f7885, type: 2}
+  _monoInstallers:
+  - {fileID: 5267539290346560316}
+  - {fileID: 2820121498598433186}
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &5267539290346560316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941354820746825385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78988dde2b734ac9aa4aa85693c19fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unityEvents: {fileID: 9091583437395542506}
+  _lava: {fileID: 3911460497707208325}
+--- !u!114 &2820121498598433186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941354820746825385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd1cb0eeca3403aa99a06f921a2632a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackView: {fileID: 6372706368593527389}
 --- !u!114 &3911460497707208325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,39 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36097dd5bee349eda2bce122a653a6bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3034888880281719743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1941354820746825385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
-  _monoInstallers:
-  - {fileID: 5267539290346560316}
-  - {fileID: 4590334713136830934}
-  _installerPrefabs: []
-  _autoRun: 1
-  _kernel: {fileID: 0}
---- !u!114 &5267539290346560316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1941354820746825385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78988dde2b734ac9aa4aa85693c19fc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _unityEvents: {fileID: 9091583437395542506}
-  _lava: {fileID: 3911460497707208325}
 --- !u!114 &6372706368593527389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,17 +317,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 8807684224348490779}
-  _attackSound: {fileID: 8300000, guid: cd6cde2e439ce0b4984c66ae86955c23, type: 3}
---- !u!114 &4590334713136830934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1941354820746825385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25a64c660a544257b60e2dab3020512b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackView: {fileID: 6372706368593527389}

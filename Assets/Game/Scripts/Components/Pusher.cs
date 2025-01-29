@@ -1,4 +1,4 @@
-using System.Buffers;
+using Game.Components.Interfaces;
 using UnityEngine;
 using Zenject;
 
