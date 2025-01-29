@@ -1,7 +1,8 @@
+using Game.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Components
+namespace Game.Player
 {
     public class MoveComponentsInstaller : Installer<Transform, float, float, float, MoveComponentsInstaller>
     {

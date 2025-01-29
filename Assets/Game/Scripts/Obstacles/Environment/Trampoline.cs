@@ -10,6 +10,7 @@ namespace Game.Obstacles.Environment
     {
         private UnityEventReceiver _unityEvents;
         private TargetPusher _pusher;
+        private Transform _transform;
 
         public event Action Attacked;
 
@@ -18,6 +19,11 @@ namespace Game.Obstacles.Environment
         {
             _unityEvents = unityEvents;
             _pusher = pusher;
+        }
+
+        private void Awake()
+        {
+            _transform = transform;
         }
 
         private void OnEnable()
@@ -32,7 +38,7 @@ namespace Game.Obstacles.Environment
 
         private void OnTriggerEntered(Collider2D target)
         {
-            if (_pusher.Push(target, Vector2.up))
+            if (_pusher.Push(target, _transform.up))
                 Attacked?.Invoke();
         }
     }

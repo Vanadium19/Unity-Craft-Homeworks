@@ -17,8 +17,6 @@ namespace Game.Obstacles.Installers
                 .FromInstance(_platform)
                 .AsSingle();
 
-
-
             Container.Bind<TransformMover>()
                 .AsSingle()
                 .WithArguments(_transform, _speed);

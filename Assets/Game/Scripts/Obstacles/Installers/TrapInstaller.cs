@@ -10,7 +10,7 @@ namespace Game.Obstacles.Installers
         [SerializeField] private Trap _trap;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private UnityEventReceiver _unityEvents;
-        
+
         [SerializeField] private int _damage = 1;
         [SerializeField] private int _health = 1;
         [SerializeField] private float _stunDelay = 0f;
@@ -20,26 +20,13 @@ namespace Game.Obstacles.Installers
             Container.Bind<Trap>()
                 .FromInstance(_trap)
                 .AsSingle();
-            
-            Container.Bind<UnityEventReceiver>()
-                .FromInstance(_unityEvents)
-                .AsSingle();
-            
-            Container.Bind<Rigidbody2D>()
-                .FromInstance(_rigidbody)
-                .AsSingle();
 
-            Container.Bind<Attacker>()
-                .AsSingle()
-                .WithArguments(_damage);
-
-            Container.Bind<Health>()
-                .AsSingle()
-                .WithArguments(_health);
-            
             Container.BindInterfacesAndSelfTo<PushableComponent>()
                 .AsSingle()
                 .WithArguments(_stunDelay);
+
+            MonoBehaviorsInstaller.Install(Container, _rigidbody, _unityEvents);
+            EnemyComponentsInstaller.Install(Container, _damage, _health);
         }
     }
 }

@@ -25,25 +25,9 @@ namespace Game.Obstacles.Installers
                 .FromInstance(_spider)
                 .AsSingle();
 
-            Container.Bind<UnityEventReceiver>()
-                .FromInstance(_unityEvents)
-                .AsSingle();
-            
-            Container.Bind<Rigidbody2D>()
-                .FromInstance(_rigidbody)
-                .AsSingle();
-
             Container.Bind<TransformMover>()
                 .AsSingle()
                 .WithArguments(_transform, _speed);
-
-            Container.Bind<Attacker>()
-                .AsSingle()
-                .WithArguments(_damage);
-
-            Container.Bind<Health>()
-                .AsSingle()
-                .WithArguments(_health);
 
             Container.Bind<TargetPusher>()
                 .AsSingle()
@@ -52,6 +36,9 @@ namespace Game.Obstacles.Installers
             Container.BindInterfacesAndSelfTo<PushableComponent>()
                 .AsSingle()
                 .WithArguments(_stunDelay);
+            
+            MonoBehaviorsInstaller.Install(Container,_rigidbody,_unityEvents);
+            EnemyComponentsInstaller.Install(Container, _damage, _health);
         }
     }
 }

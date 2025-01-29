@@ -1,7 +1,7 @@
-using UnityEngine;
+using Game.Components;
 using Zenject;
 
-namespace Game.Components
+namespace Game.Player
 {
     public class StateComponentsInstaller : Installer<GroundCheckParams, float, int, StateComponentsInstaller>
     {
