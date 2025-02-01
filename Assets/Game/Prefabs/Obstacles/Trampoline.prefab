@@ -224,7 +224,6 @@ GameObject:
   - component: {fileID: 2682617834291874480}
   - component: {fileID: 1523188864623839291}
   - component: {fileID: 3870006002787727366}
-  - component: {fileID: 336005089831263018}
   - component: {fileID: 5273089141667323143}
   - component: {fileID: 8920618750551504201}
   - component: {fileID: 8893165943623416718}
@@ -309,11 +308,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers:
-  - {fileID: 11400000, guid: b9b537d5974969c4eb8f7950457f7885, type: 2}
+  _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 3870006002787727366}
-  - {fileID: 336005089831263018}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
@@ -329,22 +326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98295eb56f2b4d68a003680c4201f11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackView: {fileID: 8893165943623416718}
   _unityEvents: {fileID: 8920618750551504201}
   _trampoline: {fileID: 5273089141667323143}
   _pushForce: 20
---- !u!114 &336005089831263018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8595837930061912479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd1cb0eeca3403aa99a06f921a2632a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attackView: {fileID: 8893165943623416718}
 --- !u!114 &5273089141667323143
 MonoBehaviour:
   m_ObjectHideFlags: 0
