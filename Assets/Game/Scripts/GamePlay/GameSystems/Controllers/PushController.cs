@@ -1,8 +1,8 @@
-using Game.Components.Interfaces;
+using Game.Core.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Controllers
+namespace Game.GameSytems.Controllers
 {
     public class PushController : ITickable
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Game.Components.Interfaces
+namespace Game.Core.Components
 {
     public interface IAttacker
     {

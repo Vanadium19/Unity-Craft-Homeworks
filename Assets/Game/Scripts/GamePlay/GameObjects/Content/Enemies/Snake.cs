@@ -1,10 +1,9 @@
 using System;
-using Game.Components;
-using Game.Components.Interfaces;
+using Game.Core.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Obstacles.Enemies
+namespace Game.Content.Enemies
 {
     public class Snake : MonoBehaviour, IDamagable, IMovable, IPushable
     {

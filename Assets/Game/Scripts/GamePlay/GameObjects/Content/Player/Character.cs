@@ -1,11 +1,10 @@
 using System;
-using Game.Components;
-using Game.Components.Interfaces;
+using Game.Core.Components;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Player
+namespace Game.Content.Player
 {
     public class Character : MonoBehaviour, IDamagable, IPusher, IJumper, IMovable, IPushable
     {

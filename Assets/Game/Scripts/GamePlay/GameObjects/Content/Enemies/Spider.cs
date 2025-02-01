@@ -1,11 +1,10 @@
 using System;
-using Game.Components;
-using Game.Components.Interfaces;
+using Game.Core.Components;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Obstacles.Enemies
+namespace Game.Content.Enemies
 {
     public class Spider : MonoBehaviour, IDamagable, IMovable, IPushable
     {

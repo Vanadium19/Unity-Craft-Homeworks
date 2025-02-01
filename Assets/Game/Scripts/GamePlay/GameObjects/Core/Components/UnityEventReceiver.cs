@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Components
+namespace Game.Core.Components
 {
     public class UnityEventReceiver : MonoBehaviour
     {

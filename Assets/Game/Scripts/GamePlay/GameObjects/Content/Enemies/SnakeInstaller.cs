@@ -1,11 +1,9 @@
-using Game.Components;
-using Game.Obstacles.Enemies;
-using Game.Presenters;
+using Game.Core.Components;
 using Game.View;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Obstacles.Installers
+namespace Game.Content.Enemies
 {
     public class SnakeInstaller : MonoInstaller
     {

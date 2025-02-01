@@ -1,7 +1,6 @@
-using Game.Components.Interfaces;
 using UnityEngine;
 
-namespace Game.Components
+namespace Game.Core.Components
 {
     public class TargetPusher
     {

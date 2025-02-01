@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Components
+namespace Game.Core.Components
 {
     public class GroundChecker : IInitializable, IDisposable
     {

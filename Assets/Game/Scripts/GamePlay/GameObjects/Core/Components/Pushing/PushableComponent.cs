@@ -1,8 +1,7 @@
-using Game.Components.Interfaces;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Components
+namespace Game.Core.Components
 {
     public class PushableComponent : ITickable, IPushable
     {

@@ -1,10 +1,9 @@
 using System;
-using Game.Components;
-using Game.Components.Interfaces;
+using Game.Core.Components;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Obstacles.Environment
+namespace Game.Content.Environment
 {
     public class Lava : MonoBehaviour, IAttacker
     {

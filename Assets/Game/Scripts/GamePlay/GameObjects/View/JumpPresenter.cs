@@ -1,9 +1,8 @@
 using System;
-using Game.Components.Interfaces;
-using Game.View;
+using Game.Core.Components;
 using Zenject;
 
-namespace Game.Presenters
+namespace Game.View
 {
     public class JumpPresenter : IInitializable,IDisposable
     {

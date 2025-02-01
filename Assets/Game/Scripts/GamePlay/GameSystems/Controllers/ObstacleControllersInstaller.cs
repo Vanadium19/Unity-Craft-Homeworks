@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Game.Controllers.Installers
+namespace Game.GameSytems.Controllers
 {
     public class ObstacleControllersInstaller : MonoInstaller
     {

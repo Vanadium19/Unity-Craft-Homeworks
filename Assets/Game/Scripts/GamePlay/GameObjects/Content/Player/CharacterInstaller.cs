@@ -1,10 +1,9 @@
-using Game.Components;
-using Game.Presenters;
+using Game.Core.Components;
 using Game.View;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Player
+namespace Game.Content.Player
 {
     public class CharacterInstaller : MonoInstaller
     {
