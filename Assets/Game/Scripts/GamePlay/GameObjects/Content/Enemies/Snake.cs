@@ -1,51 +1,39 @@
+using System;
 using Game.Core.Components;
 using UnityEngine;
 using Zenject;
 
 namespace Game.Content.Enemies
 {
-    public class Snake : MonoBehaviour
+    public class Snake : IInitializable, IDisposable
     {
-        private UnityEventReceiver _unityEvents;
-        private Transform _transform;
+        private readonly UnityEventReceiver _unityEvents;
+        private readonly GameObject _gameObject;
 
-        private ForceComponent _pushableComponent;
-        private TransformMoveComponent _mover;
-        private TargetPushComponent _pusher;
-        private AttackComponent _attacker;
-        private RotateComponent _rotater;
-        private HealthComponent _health;
+        private readonly TargetPushComponent _pusher;
+        private readonly AttackComponent _attacker;
+        private readonly HealthComponent _health;
 
-        [Inject]
-        public void Construct(UnityEventReceiver unityEvents,
-            ForceComponent pushableComponent,
+        public Snake(UnityEventReceiver unityEvents,
+            GameObject gameObject,
             TargetPushComponent pusher,
-            TransformMoveComponent mover,
             AttackComponent attacker,
-            RotateComponent rotater,
             HealthComponent health)
         {
-            _pushableComponent = pushableComponent;
             _unityEvents = unityEvents;
+            _gameObject = gameObject;
             _attacker = attacker;
-            _rotater = rotater;
             _health = health;
             _pusher = pusher;
-            _mover = mover;
         }
 
-        private void Awake()
-        {
-            _transform = transform;
-        }
-
-        private void OnEnable()
+        public void Initialize()
         {
             _unityEvents.OnTriggerEntered += OnTriggerEntered;
             _health.Died += OnDied;
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
             _unityEvents.OnTriggerEntered -= OnTriggerEntered;
             _health.Died -= OnDied;
@@ -59,7 +47,7 @@ namespace Game.Content.Enemies
 
         private void OnDied()
         {
-            gameObject.SetActive(false);
+            _gameObject.SetActive(false);
         }
     }
 }
