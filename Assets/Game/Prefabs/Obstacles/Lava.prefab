@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3034888880281719743}
   - component: {fileID: 9091583437395542506}
   - component: {fileID: 5267539290346560316}
-  - component: {fileID: 3911460497707208325}
   - component: {fileID: 6372706368593527389}
   - component: {fileID: 1690164651757246151}
   m_Layer: 6
@@ -277,19 +276,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackView: {fileID: 6372706368593527389}
   _unityEvents: {fileID: 9091583437395542506}
-  _lava: {fileID: 3911460497707208325}
---- !u!114 &3911460497707208325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1941354820746825385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f96ffd5362142a4af13a74b3892e48c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6372706368593527389
 MonoBehaviour:
   m_ObjectHideFlags: 0

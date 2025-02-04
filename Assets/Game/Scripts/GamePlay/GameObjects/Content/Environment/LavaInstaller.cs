@@ -11,27 +11,26 @@ namespace Game.Content.Environment
 
         [SerializeField] private AttackView _attackView;
         [SerializeField] private UnityEventReceiver _unityEvents;
-        [SerializeField] private Lava _lava;
 
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<Lava>()
-                .FromInstance(_lava)
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
 
-            Container.Bind<AttackComponent>()
+            Container.BindInterfacesAndSelfTo<AttackComponent>()
                 .AsSingle()
                 .WithArguments(Damage);
 
             Container.Bind<UnityEventReceiver>()
                 .FromInstance(_unityEvents)
                 .AsSingle();
-            
+
             //Presenters
             Container.BindInterfacesTo<AttackPresenter>()
                 .AsSingle()
                 .NonLazy();
-            
+
             //View
             Container.Bind<AttackView>()
                 .FromInstance(_attackView)

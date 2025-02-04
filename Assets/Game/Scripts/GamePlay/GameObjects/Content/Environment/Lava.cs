@@ -5,40 +5,30 @@ using Zenject;
 
 namespace Game.Content.Environment
 {
-    public class Lava : MonoBehaviour, IAttacker
+    public class Lava : IInitializable, IDisposable
     {
-        private UnityEventReceiver _unityEvents;
-        private AttackComponent _attacker;
+        private readonly UnityEventReceiver _unityEvents;
+        private readonly AttackComponent _attacker;
 
-        public event Action Attacked;
-
-        [Inject]
-        public void Construct(UnityEventReceiver unityEvents, AttackComponent attacker)
+        public Lava(UnityEventReceiver unityEvents, AttackComponent attacker)
         {
             _unityEvents = unityEvents;
             _attacker = attacker;
         }
 
-        private void OnEnable()
+        public void Initialize()
         {
             _unityEvents.OnTriggerEntered += OnCollisionEntered;
-            _attacker.GaveDamage += OnGaveDamage;
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
             _unityEvents.OnTriggerEntered -= OnCollisionEntered;
-            _attacker.GaveDamage -= OnGaveDamage;
         }
 
         private void OnCollisionEntered(Collider2D other)
         {
             _attacker.Attack(other);
-        }
-
-        private void OnGaveDamage()
-        {
-            Attacked?.Invoke();
         }
     }
 }

@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Game.Core.Components
 {
-    public class AttackComponent : EntityComponent
+    public class AttackComponent : EntityComponent, IAttacker
     {
         private readonly int _damage;
 
-        public event Action GaveDamage;
+        public event Action Attacked;
 
         public AttackComponent(int damage)
         {
@@ -21,7 +21,7 @@ namespace Game.Core.Components
                 if (entity.TryGet(out IDamagable target))
                 {
                     target.TakeDamage(_damage);
-                    GaveDamage?.Invoke();
+                    Attacked?.Invoke();
                 }
             }
         }

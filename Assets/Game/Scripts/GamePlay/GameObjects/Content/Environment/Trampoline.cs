@@ -5,32 +5,29 @@ using Zenject;
 
 namespace Game.Content.Environment
 {
-    public class Trampoline : MonoBehaviour, IAttacker
+    public class Trampoline : IInitializable, IDisposable, IAttacker
     {
-        private UnityEventReceiver _unityEvents;
-        private TargetPushComponent _pusher;
-        private Transform _transform;
+        private readonly UnityEventReceiver _unityEvents;
+        private readonly TargetPushComponent _pusher;
+        private readonly Transform _transform;
 
         public event Action Attacked;
 
-        [Inject]
-        public void Construct(UnityEventReceiver unityEvents, TargetPushComponent pusher)
+        public Trampoline(Transform transform,
+            UnityEventReceiver unityEvents,
+            TargetPushComponent pusher)
         {
+            _transform = transform;
             _unityEvents = unityEvents;
             _pusher = pusher;
         }
 
-        private void Awake()
-        {
-            _transform = transform;
-        }
-
-        private void OnEnable()
+        public void Initialize()
         {
             _unityEvents.OnTriggerEntered += OnTriggerEntered;
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
             _unityEvents.OnTriggerEntered -= OnTriggerEntered;
         }

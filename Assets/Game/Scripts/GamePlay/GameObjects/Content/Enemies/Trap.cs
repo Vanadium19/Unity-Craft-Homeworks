@@ -28,14 +28,14 @@ namespace Game.Content.Enemies
         public void Initialize()
         {
             _unityEvents.OnCollisionEntered += OnCollisionEntered;
-            _attacker.GaveDamage += Die;
+            _attacker.Attacked += Die;
             _health.Died += OnDied;
         }
 
         public void Dispose()
         {
             _unityEvents.OnCollisionEntered -= OnCollisionEntered;
-            _attacker.GaveDamage -= Die;
+            _attacker.Attacked -= Die;
             _health.Died -= OnDied;
         }
 
