@@ -6,24 +6,28 @@ namespace Game.Content.Enemies
 {
     public class TrapInstaller : MonoInstaller
     {
-        [SerializeField] private Trap _trap;
+        [Header("Unity Components")] [SerializeField] private GameObject _trap;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private UnityEventReceiver _unityEvents;
 
-        [SerializeField] private int _damage = 1;
+        [Header("Main Settings")] [SerializeField] private int _damage = 1;
         [SerializeField] private int _health = 1;
         [SerializeField] private float _stunDelay = 0f;
 
         public override void InstallBindings()
         {
-            Container.Bind<Trap>()
-                .FromInstance(_trap)
-                .AsSingle();
+            Container.BindInterfacesAndSelfTo<Trap>()
+                .AsSingle()
+                .NonLazy();
 
             Container.BindInterfacesAndSelfTo<ForceComponent>()
                 .AsSingle()
                 .WithArguments(_stunDelay);
 
+            Container.Bind<GameObject>()
+                .FromInstance(_trap)
+                .AsSingle();
+            
             Container.Bind<UnityEventReceiver>()
                 .FromInstance(_unityEvents)
                 .AsSingle();
@@ -31,7 +35,7 @@ namespace Game.Content.Enemies
             Container.Bind<Rigidbody2D>()
                 .FromInstance(_rigidbody)
                 .AsSingle();
-            
+
             Container.Bind<AttackComponent>()
                 .AsSingle()
                 .WithArguments(_damage);

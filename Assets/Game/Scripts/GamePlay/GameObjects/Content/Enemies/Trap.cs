@@ -5,34 +5,34 @@ using Zenject;
 
 namespace Game.Content.Enemies
 {
-    public class Trap : MonoBehaviour
+    public class Trap : IInitializable, IDisposable
     {
-        private UnityEventReceiver _unityEvents;
+        private readonly UnityEventReceiver _unityEvents;
+        private readonly GameObject _gameObject;
 
-        private ForceComponent _pushableComponent;
-        private AttackComponent _attacker;
-        private HealthComponent _health;
+        private readonly AttackComponent _attacker;
+        private readonly HealthComponent _health;
 
-        [Inject]
-        public void Construct(UnityEventReceiver unityEvents,
-            ForceComponent pushableComponent,
+        public Trap(UnityEventReceiver unityEvents,
+            GameObject gameObject,
             AttackComponent attacker,
             HealthComponent health)
         {
-            _pushableComponent = pushableComponent;
             _unityEvents = unityEvents;
+            _gameObject = gameObject;
+
             _attacker = attacker;
             _health = health;
         }
 
-        private void OnEnable()
+        public void Initialize()
         {
             _unityEvents.OnCollisionEntered += OnCollisionEntered;
             _attacker.GaveDamage += Die;
             _health.Died += OnDied;
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
             _unityEvents.OnCollisionEntered -= OnCollisionEntered;
             _attacker.GaveDamage -= Die;
@@ -51,7 +51,7 @@ namespace Game.Content.Enemies
 
         private void OnDied()
         {
-            gameObject.SetActive(false);
+            _gameObject.SetActive(false);
         }
     }
 }
