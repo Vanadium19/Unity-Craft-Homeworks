@@ -1,4 +1,5 @@
 using System;
+using Game.Content.Environment;
 using UnityEngine;
 using Zenject;
 
@@ -6,7 +7,6 @@ namespace Game.Core.Components
 {
     public class GroundChecker : IInitializable, IDisposable
     {
-        private const string Platform = "Platform";
         private const float OverlapAngle = 0;
 
         private readonly UnityEventReceiver _unityEvents;
@@ -45,14 +45,24 @@ namespace Game.Core.Components
 
         private void OnCollisionEntered(Collision2D target)
         {
-            if (target.gameObject.CompareTag(Platform) && CheckNormal(target))
-                ParentChanged?.Invoke(target.collider.transform);
+            if (target.collider.TryGetComponent(out IEntity entity))
+            {
+                if (entity.TryGet(out Platform platform) && CheckNormal(target))
+                {
+                    ParentChanged?.Invoke(target.collider.transform);
+                }
+            }
         }
 
         private void OnCollisionExited(Collision2D target)
         {
-            if (target.gameObject.CompareTag(Platform))
-                ParentChanged?.Invoke(null);
+            if (target.collider.TryGetComponent(out IEntity entity))
+            {
+                if (entity.TryGet(out Platform platform))
+                {
+                    ParentChanged?.Invoke(null);
+                }
+            }
         }
 
         private bool CheckNormal(Collision2D target)
