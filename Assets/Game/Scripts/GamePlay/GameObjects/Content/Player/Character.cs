@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Game.Content.Player
 {
-    public class Character : MonoBehaviour, IPusher, IMovable
+    public class Character : MonoBehaviour, IPlayerPusher, IMovable
     {
         private Transform _transform;
 
@@ -15,7 +15,7 @@ namespace Game.Content.Player
         private RotateComponent _rotater;
         private RigidbodyMoveComponent _mover;
         private JumpComponent _jumper;
-        private PushComponent _pusher;
+        private PlayerPushComponent _pusher;
         private HealthComponent _health;
 
         private Transform _currentParent;
@@ -31,7 +31,7 @@ namespace Game.Content.Player
             RotateComponent rotater,
             RigidbodyMoveComponent mover,
             JumpComponent jumper,
-            PushComponent pusher,
+            PlayerPushComponent pusher,
             HealthComponent health)
         {
             _pushableComponent = pushableComponent;

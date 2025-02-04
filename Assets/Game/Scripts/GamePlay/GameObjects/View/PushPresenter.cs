@@ -6,10 +6,10 @@ namespace Game.View
 {
     public class PushPresenter : IInitializable, IDisposable
     {
-        private readonly IPusher _target;
+        private readonly IPlayerPusher _target;
         private readonly PushView _view;
 
-        public PushPresenter(IPusher target, PushView view)
+        public PushPresenter(IPlayerPusher target, PushView view)
         {
             _target = target;
             _view = view;

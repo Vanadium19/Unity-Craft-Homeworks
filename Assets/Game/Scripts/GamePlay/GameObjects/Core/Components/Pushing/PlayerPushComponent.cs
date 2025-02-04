@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Game.Core.Components
 {
-    public class PushComponent : EntityComponent, ITickable
+    public class PlayerPushComponent : EntityComponent, ITickable
     {
         private const int ColliderBufferSize = 5;
 
@@ -16,7 +16,7 @@ namespace Game.Core.Components
 
         private float _currentTime;
 
-        public PushComponent(PushParams pushParams)
+        public PlayerPushComponent(PushParams pushParams)
         {
             _delay = pushParams.Delay;
             _force = pushParams.Force;

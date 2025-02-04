@@ -71,7 +71,7 @@ namespace Game.Content.Player
                 .AsSingle()
                 .WithArguments(_transform);
             
-            Container.BindInterfacesAndSelfTo<PushComponent>()
+            Container.BindInterfacesAndSelfTo<PlayerPushComponent>()
                 .AsSingle()
                 .WithArguments(_pushParams);
             

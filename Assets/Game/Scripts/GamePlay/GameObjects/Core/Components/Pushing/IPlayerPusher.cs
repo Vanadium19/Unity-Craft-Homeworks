@@ -2,7 +2,7 @@ using System;
 
 namespace Game.Core.Components
 {
-    public interface IPusher
+    public interface IPlayerPusher
     {
         public event Action Pushed;
         public event Action Tossed;

@@ -6,9 +6,9 @@ namespace Game.GameSytems.Controllers
 {
     public class PushController : ITickable
     {
-        private readonly IPusher _character;
+        private readonly IPlayerPusher _character;
 
-        public PushController(IPusher character)
+        public PushController(IPlayerPusher character)
         {
             _character = character;
         }
