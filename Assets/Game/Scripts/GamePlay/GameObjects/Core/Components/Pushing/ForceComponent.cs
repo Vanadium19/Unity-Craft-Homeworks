@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Game.Core.Components
 {
-    public class PushableComponent : ITickable, IPushable
+    public class ForceComponent : EntityComponent, ITickable, IPushable
     {
         private readonly float _delay;
         private readonly Rigidbody2D _rigidbody;
@@ -11,7 +11,7 @@ namespace Game.Core.Components
         private bool _isPushing;
         private float _currentTime;
 
-        public PushableComponent(float delay, Rigidbody2D rigidbody)
+        public ForceComponent(float delay, Rigidbody2D rigidbody)
         {
             _delay = delay;
             _rigidbody = rigidbody;
@@ -23,7 +23,7 @@ namespace Game.Core.Components
         {
             if (!_isPushing)
                 return;
-            
+
             _currentTime -= Time.deltaTime;
 
             if (_currentTime <= 0)

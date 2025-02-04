@@ -8,12 +8,12 @@ namespace Game.Content.Environment
     public class Lava : MonoBehaviour, IAttacker
     {
         private UnityEventReceiver _unityEvents;
-        private Attacker _attacker;
+        private AttackComponent _attacker;
 
         public event Action Attacked;
 
         [Inject]
-        public void Construct(UnityEventReceiver unityEvents, Attacker attacker)
+        public void Construct(UnityEventReceiver unityEvents, AttackComponent attacker)
         {
             _unityEvents = unityEvents;
             _attacker = attacker;

@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Game.Core.Components
 {
-    public class Attacker
+    public class AttackComponent : EntityComponent
     {
         private readonly int _damage;
 
         public event Action GaveDamage;
 
-        public Attacker(int damage)
+        public AttackComponent(int damage)
         {
             _damage = damage;
         }

@@ -26,8 +26,6 @@ namespace Game.Core.Components
             _layerMask = checkParams.GroundLayer;
         }
 
-        public bool IsGrounded => Physics2D.OverlapBox(_jumpPoint.position, _overlapSize, OverlapAngle, _layerMask);
-
         public void Initialize()
         {
             _unityEvents.OnCollisionEntered += OnCollisionEntered;
@@ -38,6 +36,11 @@ namespace Game.Core.Components
         {
             _unityEvents.OnCollisionEntered -= OnCollisionEntered;
             _unityEvents.OnCollisionExited -= OnCollisionExited;
+        }
+
+        public bool IsGrounded()
+        {
+            return Physics2D.OverlapBox(_jumpPoint.position, _overlapSize, OverlapAngle, _layerMask);
         }
 
         private void OnCollisionEntered(Collision2D target)

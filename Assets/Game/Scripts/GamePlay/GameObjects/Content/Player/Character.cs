@@ -10,13 +10,13 @@ namespace Game.Content.Player
     {
         private Transform _transform;
 
-        private PushableComponent _pushableComponent;
+        private ForceComponent _pushableComponent;
         private GroundChecker _groundChecker;
-        private Rotater _rotater;
-        private Mover _mover;
-        private Jumper _jumper;
-        private Pusher _pusher;
-        private Health _health;
+        private RotateComponent _rotater;
+        private RigidbodyMoveComponent _mover;
+        private JumpComponent _jumper;
+        private PushComponent _pusher;
+        private HealthComponent _health;
 
         private Transform _currentParent;
 
@@ -29,12 +29,12 @@ namespace Game.Content.Player
 
         [Inject]
         public void Construct(GroundChecker groundChecker,
-            PushableComponent pushableComponent,
-            Rotater rotater,
-            Mover mover,
-            Jumper jumper,
-            Pusher pusher,
-            Health health)
+            ForceComponent pushableComponent,
+            RotateComponent rotater,
+            RigidbodyMoveComponent mover,
+            JumpComponent jumper,
+            PushComponent pusher,
+            HealthComponent health)
         {
             _pushableComponent = pushableComponent;
             _groundChecker = groundChecker;
@@ -77,7 +77,7 @@ namespace Game.Content.Player
 
         public void Jump()
         {
-            if (!_groundChecker.IsGrounded)
+            if (!_groundChecker.IsGrounded())
                 return;
 
             if (_jumper.Jump())
@@ -92,7 +92,7 @@ namespace Game.Content.Player
 
         public void Toss()
         {
-            if (!_groundChecker.IsGrounded)
+            if (!_groundChecker.IsGrounded())
                 return;
 
             if (_pusher.Push(Vector2.up))

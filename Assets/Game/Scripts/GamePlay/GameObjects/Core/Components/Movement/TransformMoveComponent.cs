@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Game.Core.Components
 {
-    public class TransformMover
+    public class TransformMoveComponent : EntityComponent
     {
         private readonly Transform _transform;
         private readonly float _speed;
 
-        public TransformMover(Transform transform, float speed)
+        public TransformMoveComponent(Transform transform, float speed)
         {
             _transform = transform;
             _speed = speed;

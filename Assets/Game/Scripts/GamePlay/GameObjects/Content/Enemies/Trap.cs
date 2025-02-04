@@ -9,17 +9,17 @@ namespace Game.Content.Enemies
     {
         private UnityEventReceiver _unityEvents;
 
-        private PushableComponent _pushableComponent;
-        private Attacker _attacker;
-        private Health _health;
+        private ForceComponent _pushableComponent;
+        private AttackComponent _attacker;
+        private HealthComponent _health;
         
         public event Action HealthChanged;
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents,
-            PushableComponent pushableComponent,
-            Attacker attacker,
-            Health health)
+            ForceComponent pushableComponent,
+            AttackComponent attacker,
+            HealthComponent health)
         {
             _pushableComponent = pushableComponent;
             _unityEvents = unityEvents;

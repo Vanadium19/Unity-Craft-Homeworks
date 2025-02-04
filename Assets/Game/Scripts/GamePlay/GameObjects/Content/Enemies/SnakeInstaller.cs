@@ -28,19 +28,19 @@ namespace Game.Content.Enemies
                 .FromInstance(_snake)
                 .AsSingle();
 
-            Container.Bind<TransformMover>()
+            Container.Bind<TransformMoveComponent>()
                 .AsSingle()
                 .WithArguments(_transform, _speed);
             
-            Container.Bind<Rotater>()
+            Container.Bind<RotateComponent>()
                 .AsSingle()
                 .WithArguments(_transform);
 
-            Container.Bind<TargetPusher>()
+            Container.Bind<TargetPushComponent>()
                 .AsSingle()
                 .WithArguments(_pushForce);
             
-            Container.BindInterfacesAndSelfTo<PushableComponent>()
+            Container.BindInterfacesAndSelfTo<ForceComponent>()
                 .AsSingle()
                 .WithArguments(_stunDelay);
             
@@ -52,11 +52,11 @@ namespace Game.Content.Enemies
                 .FromInstance(_rigidbody)
                 .AsSingle();
             
-            Container.Bind<Attacker>()
+            Container.Bind<AttackComponent>()
                 .AsSingle()
                 .WithArguments(_damage);
 
-            Container.Bind<Health>()
+            Container.Bind<HealthComponent>()
                 .AsSingle()
                 .WithArguments(_health);
             

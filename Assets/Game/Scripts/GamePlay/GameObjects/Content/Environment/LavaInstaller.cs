@@ -19,7 +19,7 @@ namespace Game.Content.Environment
                 .FromInstance(_lava)
                 .AsSingle();
 
-            Container.Bind<Attacker>()
+            Container.Bind<AttackComponent>()
                 .AsSingle()
                 .WithArguments(Damage);
 

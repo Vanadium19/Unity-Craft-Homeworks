@@ -20,7 +20,7 @@ namespace Game.Content.Enemies
                 .FromInstance(_trap)
                 .AsSingle();
 
-            Container.BindInterfacesAndSelfTo<PushableComponent>()
+            Container.BindInterfacesAndSelfTo<ForceComponent>()
                 .AsSingle()
                 .WithArguments(_stunDelay);
 
@@ -32,11 +32,11 @@ namespace Game.Content.Enemies
                 .FromInstance(_rigidbody)
                 .AsSingle();
             
-            Container.Bind<Attacker>()
+            Container.Bind<AttackComponent>()
                 .AsSingle()
                 .WithArguments(_damage);
 
-            Container.Bind<Health>()
+            Container.Bind<HealthComponent>()
                 .AsSingle()
                 .WithArguments(_health);
         }

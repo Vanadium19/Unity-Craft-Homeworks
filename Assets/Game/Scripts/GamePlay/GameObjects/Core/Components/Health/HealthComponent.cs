@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Core.Components
 {
-    public class Health
+    public class HealthComponent : EntityComponent
     {
         private readonly int _health;
 
@@ -12,7 +12,7 @@ namespace Game.Core.Components
         public event Action<int> HealthChanged;
         public event Action Died;
 
-        public Health(int health)
+        public HealthComponent(int health)
         {
             _health = health;
             _currentHealth = health;

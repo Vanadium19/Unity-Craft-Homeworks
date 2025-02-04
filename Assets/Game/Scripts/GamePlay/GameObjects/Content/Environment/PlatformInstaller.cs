@@ -16,7 +16,7 @@ namespace Game.Content.Environment
                 .FromInstance(_platform)
                 .AsSingle();
 
-            Container.Bind<TransformMover>()
+            Container.Bind<TransformMoveComponent>()
                 .AsSingle()
                 .WithArguments(_transform, _speed);
         }

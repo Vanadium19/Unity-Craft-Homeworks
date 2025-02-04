@@ -47,7 +47,7 @@ namespace Game.Content.Player
                 .FromInstance(_unityEvents)
                 .AsSingle();
 
-            Container.Bind<Health>()
+            Container.Bind<HealthComponent>()
                 .AsSingle()
                 .WithArguments(_health);
 
@@ -55,23 +55,23 @@ namespace Game.Content.Player
                 .AsSingle()
                 .WithArguments(_groundCheckParams);
 
-            Container.BindInterfacesAndSelfTo<PushableComponent>()
+            Container.BindInterfacesAndSelfTo<ForceComponent>()
                 .AsSingle()
                 .WithArguments(_stunDelay);
             
-            Container.Bind<Mover>()
+            Container.Bind<RigidbodyMoveComponent>()
                 .AsSingle()
                 .WithArguments(_speed);
 
-            Container.BindInterfacesAndSelfTo<Jumper>()
+            Container.BindInterfacesAndSelfTo<JumpComponent>()
                 .AsSingle()
                 .WithArguments(_jumpForce, _jumpDelay);
             
-            Container.Bind<Rotater>()
+            Container.Bind<RotateComponent>()
                 .AsSingle()
                 .WithArguments(_transform);
             
-            Container.BindInterfacesAndSelfTo<Pusher>()
+            Container.BindInterfacesAndSelfTo<PushComponent>()
                 .AsSingle()
                 .WithArguments(_pushParams);
             

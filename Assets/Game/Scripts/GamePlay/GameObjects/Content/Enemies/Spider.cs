@@ -11,11 +11,11 @@ namespace Game.Content.Enemies
         private UnityEventReceiver _unityEvents;
         private Transform _transform;
 
-        private PushableComponent _pushableComponent;
-        private TransformMover _mover;
-        private TargetPusher _pusher;
-        private Attacker _attacker;
-        private Health _health;
+        private ForceComponent _pushableComponent;
+        private TransformMoveComponent _mover;
+        private TargetPushComponent _pusher;
+        private AttackComponent _attacker;
+        private HealthComponent _health;
 
         public event Action HealthChanged;
 
@@ -23,11 +23,11 @@ namespace Game.Content.Enemies
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents,
-            PushableComponent pushableComponent,
-            TargetPusher pusher,
-            TransformMover mover,
-            Attacker attacker,
-            Health health)
+            ForceComponent pushableComponent,
+            TargetPushComponent pusher,
+            TransformMoveComponent mover,
+            AttackComponent attacker,
+            HealthComponent health)
         {
             _pushableComponent = pushableComponent;
             _unityEvents = unityEvents;

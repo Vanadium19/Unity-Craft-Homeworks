@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Game.Core.Components
 {
-    public class Jumper : ITickable
+    public class JumpComponent : EntityComponent, ITickable
     {
         private readonly Rigidbody2D _rigidbody;
         private readonly float _force;
@@ -11,7 +11,7 @@ namespace Game.Core.Components
 
         private float _currentTime;
 
-        public Jumper(Rigidbody2D rigidbody, float force, float delay)
+        public JumpComponent(Rigidbody2D rigidbody, float force, float delay)
         {
             _rigidbody = rigidbody;
             _force = force;

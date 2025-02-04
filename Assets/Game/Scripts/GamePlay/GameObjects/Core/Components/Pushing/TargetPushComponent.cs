@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace Game.Core.Components
 {
-    public class TargetPusher
+    public class TargetPushComponent : EntityComponent
     {
         private readonly float _force;
 
-        public TargetPusher(float force)
+        public TargetPushComponent(float force)
         {
             _force = force;
         }

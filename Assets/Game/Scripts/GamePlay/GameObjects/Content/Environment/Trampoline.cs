@@ -8,13 +8,13 @@ namespace Game.Content.Environment
     public class Trampoline : MonoBehaviour, IAttacker
     {
         private UnityEventReceiver _unityEvents;
-        private TargetPusher _pusher;
+        private TargetPushComponent _pusher;
         private Transform _transform;
 
         public event Action Attacked;
 
         [Inject]
-        public void Construct(UnityEventReceiver unityEvents, TargetPusher pusher)
+        public void Construct(UnityEventReceiver unityEvents, TargetPushComponent pusher)
         {
             _unityEvents = unityEvents;
             _pusher = pusher;

@@ -18,7 +18,7 @@ namespace Game.Content.Environment
                 .FromInstance(_trampoline)
                 .AsSingle();
 
-            Container.Bind<TargetPusher>()
+            Container.Bind<TargetPushComponent>()
                 .AsSingle()
                 .WithArguments(_pushForce);
 

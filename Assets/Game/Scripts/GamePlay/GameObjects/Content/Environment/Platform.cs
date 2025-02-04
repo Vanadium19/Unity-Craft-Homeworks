@@ -6,13 +6,13 @@ namespace Game.Content.Environment
 {
     public class Platform : MonoBehaviour, IMovable
     {
-        private TransformMover _mover;
+        private TransformMoveComponent _mover;
         private Transform _transform;
 
         public Vector2 Position => _transform.position;
 
         [Inject]
-        public void Construct(TransformMover mover)
+        public void Construct(TransformMoveComponent mover)
         {
             _mover = mover;
         }
