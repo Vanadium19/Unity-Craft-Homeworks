@@ -16,18 +16,16 @@ namespace Game.Content.Enemies
 
         public override void InstallBindings()
         {
+            //Main
             Container.BindInterfacesAndSelfTo<Trap>()
                 .AsSingle()
                 .NonLazy();
 
-            Container.BindInterfacesAndSelfTo<ForceComponent>()
-                .AsSingle()
-                .WithArguments(_stunDelay);
-
+            //MonoBehaviors
             Container.Bind<GameObject>()
                 .FromInstance(_trap)
                 .AsSingle();
-            
+
             Container.Bind<UnityEventReceiver>()
                 .FromInstance(_unityEvents)
                 .AsSingle();
@@ -35,6 +33,11 @@ namespace Game.Content.Enemies
             Container.Bind<Rigidbody2D>()
                 .FromInstance(_rigidbody)
                 .AsSingle();
+
+            //Components
+            Container.BindInterfacesAndSelfTo<ForceComponent>()
+                .AsSingle()
+                .WithArguments(_stunDelay);
 
             Container.Bind<AttackComponent>()
                 .AsSingle()

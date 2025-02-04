@@ -2439,10 +2439,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1941354820746825385, guid: 1ff28e98c3c0f41e3ba43630d5d0ba0a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1856897328}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ff28e98c3c0f41e3ba43630d5d0ba0a, type: 3}
 --- !u!1001 &1181413201
 PrefabInstance:
@@ -3145,7 +3142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5434138037557620653, guid: 72f49d2e77eaa4d26818f3f35aef8a5f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.75
+      value: -5.35
       objectReference: {fileID: 0}
     - target: {fileID: 7441270365842623162, guid: 72f49d2e77eaa4d26818f3f35aef8a5f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3761,11 +3758,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6318981597555825327, guid: 1ff28e98c3c0f41e3ba43630d5d0ba0a, type: 3}
   m_PrefabInstance: {fileID: 1634243304}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1677297128 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1941354820746825385, guid: 1ff28e98c3c0f41e3ba43630d5d0ba0a, type: 3}
-  m_PrefabInstance: {fileID: 1173615657}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1685061594
 GameObject:
   m_ObjectHideFlags: 0
@@ -4195,18 +4187,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6318981597555825327, guid: 1ff28e98c3c0f41e3ba43630d5d0ba0a, type: 3}
   m_PrefabInstance: {fileID: 1173615657}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1856897328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677297128}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e39b8b13c7054a1a80a4e5c623ef1782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1871245871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5317,7 +5297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ef8490a142490ab5800befec480fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _platform: {fileID: 1856897328}
   _transform: {fileID: 1856897318}
   _speed: 2
 --- !u!114 &8547868132614509891

@@ -17,6 +17,9 @@ namespace Game.Core.Components
 
         public void Move(Vector2 direction)
         {
+            if (!CheckConditions())
+                return;
+            
             Vector3 offset = direction * (_speed * Time.deltaTime);
 
             _transform.position += offset;

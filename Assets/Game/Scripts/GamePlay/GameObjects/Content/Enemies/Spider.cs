@@ -21,7 +21,8 @@ namespace Game.Content.Enemies
             TransformMoveComponent mover,
             TargetPushComponent pusher,
             AttackComponent attacker,
-            HealthComponent health)
+            HealthComponent health,
+            ForceComponent force)
         {
             _unityEvents = unityEvents;
             _gameObject = gameObject;
@@ -30,6 +31,8 @@ namespace Game.Content.Enemies
             _health = health;
             _pusher = pusher;
             _mover = mover;
+            
+            _mover.AddCondition(() => !force.IsPushing);
         }
 
         public void Initialize()

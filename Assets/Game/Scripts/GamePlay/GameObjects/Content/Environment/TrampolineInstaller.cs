@@ -14,14 +14,12 @@ namespace Game.Content.Environment
 
         public override void InstallBindings()
         {
+            //Main
             Container.BindInterfacesAndSelfTo<Trampoline>()
                 .AsSingle()
                 .NonLazy();
 
-            Container.Bind<TargetPushComponent>()
-                .AsSingle()
-                .WithArguments(_pushForce);
-
+            //MonoBehaviors
             Container.Bind<UnityEventReceiver>()
                 .FromInstance(_unityEvents)
                 .AsSingle();
@@ -29,6 +27,11 @@ namespace Game.Content.Environment
             Container.Bind<Transform>()
                 .FromInstance(_trampoline)
                 .AsSingle();
+
+            //Components
+            Container.Bind<TargetPushComponent>()
+                .AsSingle()
+                .WithArguments(_pushForce);
 
             //Presenters
             Container.BindInterfacesTo<AttackPresenter>()

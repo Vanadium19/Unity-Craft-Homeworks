@@ -22,10 +22,12 @@ namespace Game.Content.Enemies
 
         public override void InstallBindings()
         {
+            //Main
             Container.BindInterfacesAndSelfTo<Spider>()
                 .AsSingle()
                 .NonLazy();
 
+            //MonoBehaviors
             Container.Bind<Transform>()
                 .FromInstance(_transform)
                 .AsSingle();
@@ -34,6 +36,15 @@ namespace Game.Content.Enemies
                 .FromInstance(_spider)
                 .AsSingle();
 
+            Container.Bind<UnityEventReceiver>()
+                .FromInstance(_unityEvents)
+                .AsSingle();
+
+            Container.Bind<Rigidbody2D>()
+                .FromInstance(_rigidbody)
+                .AsSingle();
+
+            //Components
             Container.BindInterfacesAndSelfTo<TransformMoveComponent>()
                 .AsSingle()
                 .WithArguments(_speed);
@@ -45,14 +56,6 @@ namespace Game.Content.Enemies
             Container.BindInterfacesAndSelfTo<ForceComponent>()
                 .AsSingle()
                 .WithArguments(_stunDelay);
-
-            Container.Bind<UnityEventReceiver>()
-                .FromInstance(_unityEvents)
-                .AsSingle();
-
-            Container.Bind<Rigidbody2D>()
-                .FromInstance(_rigidbody)
-                .AsSingle();
 
             Container.Bind<AttackComponent>()
                 .AsSingle()

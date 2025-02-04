@@ -14,17 +14,20 @@ namespace Game.Content.Environment
 
         public override void InstallBindings()
         {
+            //Main
             Container.BindInterfacesAndSelfTo<Lava>()
                 .AsSingle()
                 .NonLazy();
 
-            Container.BindInterfacesAndSelfTo<AttackComponent>()
-                .AsSingle()
-                .WithArguments(Damage);
-
+            //MonoBehaviors
             Container.Bind<UnityEventReceiver>()
                 .FromInstance(_unityEvents)
                 .AsSingle();
+
+            //Components
+            Container.BindInterfacesAndSelfTo<AttackComponent>()
+                .AsSingle()
+                .WithArguments(Damage);
 
             //Presenters
             Container.BindInterfacesTo<AttackPresenter>()

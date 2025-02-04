@@ -22,10 +22,12 @@ namespace Game.Content.Enemies
 
         public override void InstallBindings()
         {
+            //Main
             Container.BindInterfacesTo<Snake>()
                 .AsSingle()
                 .NonLazy();
 
+            //MonoBehaviors
             Container.Bind<Transform>()
                 .FromInstance(_transform)
                 .AsSingle();
@@ -33,7 +35,12 @@ namespace Game.Content.Enemies
             Container.Bind<GameObject>()
                 .FromInstance(_snake)
                 .AsSingle();
+            
+            Container.Bind<Rigidbody2D>()
+                .FromInstance(_rigidbody)
+                .AsSingle();
 
+            //Components
             Container.BindInterfacesAndSelfTo<TransformMoveComponent>()
                 .AsSingle()
                 .WithArguments(_speed);
@@ -51,10 +58,6 @@ namespace Game.Content.Enemies
 
             Container.Bind<UnityEventReceiver>()
                 .FromInstance(_unityEvents)
-                .AsSingle();
-
-            Container.Bind<Rigidbody2D>()
-                .FromInstance(_rigidbody)
                 .AsSingle();
 
             Container.Bind<AttackComponent>()

@@ -6,17 +6,14 @@ using Zenject;
 
 namespace Game.Content.Player
 {
-    public class Character : MonoBehaviour, IPlayerPusher, IMovable
+    public class Character : IInitializable, IDisposable, IPlayerPusher, IMovable
     {
-        private Transform _transform;
+        private readonly HealthComponent _health;
+        private readonly Transform _transform;
 
-        private ForceComponent _pushableComponent;
-        private GroundChecker _groundChecker;
-        private RotateComponent _rotater;
-        private RigidbodyMoveComponent _mover;
-        private JumpComponent _jumper;
-        private PlayerPushComponent _pusher;
-        private HealthComponent _health;
+        private readonly GroundChecker _groundChecker;
+        private readonly RigidbodyMoveComponent _mover;
+        private readonly PlayerPushComponent _pusher;
 
         private Transform _currentParent;
 
@@ -25,40 +22,33 @@ namespace Game.Content.Player
 
         public Vector2 Position => _transform.position;
 
-        [Inject]
-        public void Construct(GroundChecker groundChecker,
-            ForceComponent pushableComponent,
-            RotateComponent rotater,
+        public Character(HealthComponent health,
+            Transform transform,
+            GroundChecker groundChecker,
             RigidbodyMoveComponent mover,
-            JumpComponent jumper,
             PlayerPushComponent pusher,
-            HealthComponent health)
+            ForceComponent forcer,
+            JumpComponent jumper,
+            RotateComponent rotater)
         {
-            _pushableComponent = pushableComponent;
-            _groundChecker = groundChecker;
-            _rotater = rotater;
-            _mover = mover;
-            _jumper = jumper;
-            _pusher = pusher;
             _health = health;
-        }
-
-        private void Awake()
-        {
             _transform = transform;
 
-            _jumper.AddCondition(_groundChecker.IsGrounded);
-            _mover.AddCondition(() => !_pushableComponent.IsPushing);
-            _rotater.AddCondition(() => !_pushableComponent.IsPushing);
+            _groundChecker = groundChecker;
+            _mover = mover;
+
+            _pusher = pusher;
+
+            SetConditions(groundChecker, forcer, jumper, rotater, mover);
         }
 
-        private void OnEnable()
+        public void Initialize()
         {
             _health.Died += OnCharacterDied;
             _groundChecker.ParentChanged += SetParent;
         }
 
-        private void OnDisable()
+        public void Dispose()
         {
             _health.Died -= OnCharacterDied;
             _groundChecker.ParentChanged -= SetParent;
@@ -86,9 +76,20 @@ namespace Game.Content.Player
                 Tossed?.Invoke();
         }
 
+        private void SetConditions(GroundChecker groundChecker,
+            ForceComponent forcer,
+            JumpComponent jumper,
+            RotateComponent rotater,
+            RigidbodyMoveComponent mover)
+        {
+            jumper.AddCondition(groundChecker.IsGrounded);
+            mover.AddCondition(() => !forcer.IsPushing);
+            rotater.AddCondition(() => !forcer.IsPushing);
+        }
+
         private void OnCharacterDied()
         {
-            gameObject.SetActive(false);
+            _transform.gameObject.SetActive(false);
         }
 
         private void SetParent(Transform parent)

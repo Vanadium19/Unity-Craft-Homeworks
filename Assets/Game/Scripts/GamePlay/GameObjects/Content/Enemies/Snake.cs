@@ -18,13 +18,17 @@ namespace Game.Content.Enemies
             GameObject gameObject,
             TargetPushComponent pusher,
             AttackComponent attacker,
-            HealthComponent health)
+            HealthComponent health,
+            TransformMoveComponent mover,
+            ForceComponent force)
         {
             _unityEvents = unityEvents;
             _gameObject = gameObject;
             _attacker = attacker;
             _health = health;
             _pusher = pusher;
+
+            SetConditions(mover, force);
         }
 
         public void Initialize()
@@ -37,6 +41,11 @@ namespace Game.Content.Enemies
         {
             _unityEvents.OnTriggerEntered -= OnTriggerEntered;
             _health.Died -= OnDied;
+        }
+
+        private void SetConditions(TransformMoveComponent mover, ForceComponent force)
+        {
+            mover.AddCondition(() => !force.IsPushing);
         }
 
         private void OnTriggerEntered(Collider2D other)

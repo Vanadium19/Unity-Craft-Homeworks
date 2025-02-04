@@ -633,7 +633,7 @@ MonoBehaviour:
   _health: 10
   _speed: 3
   _pushForce: 15
-  _stunDelay: 0
+  _stunDelay: 2.5
   _damageView: {fileID: 3289107471756234965}
 --- !u!114 &5790741693685504968
 MonoBehaviour:

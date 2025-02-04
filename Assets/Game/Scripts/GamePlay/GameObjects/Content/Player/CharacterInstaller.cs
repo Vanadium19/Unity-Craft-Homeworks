@@ -7,26 +7,21 @@ namespace Game.Content.Player
 {
     public class CharacterInstaller : MonoInstaller
     {
-        [SerializeField] private Character _character;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Transform _transform;
         [SerializeField] private UnityEventReceiver _unityEvents;
 
-        [Header("Main Settings")]
-        [SerializeField] private int _health = 5;
+        [Header("Main Settings")] [SerializeField] private int _health = 5;
         [SerializeField] private float _speed = 5f;
 
-        [Header("Jump Settings")]
-        [SerializeField] private float _jumpForce = 12;
+        [Header("Jump Settings")] [SerializeField] private float _jumpForce = 12;
         [SerializeField] private float _jumpDelay = 0.5f;
 
-        [Header("Push Settings")]
-        [SerializeField] private PushParams _pushParams;
+        [Header("Push Settings")] [SerializeField] private PushParams _pushParams;
         [SerializeField] private float _stunDelay = 0.12f;
 
-        [Header("Ground Check Settings")]
-        [SerializeField] private GroundCheckParams _groundCheckParams;
-        
+        [Header("Ground Check Settings")] [SerializeField] private GroundCheckParams _groundCheckParams;
+
         //View
         [SerializeField] private PushView _pushView;
         [SerializeField] private JumpView _jumpView;
@@ -34,19 +29,25 @@ namespace Game.Content.Player
 
         public override void InstallBindings()
         {
+            //Main
             Container.BindInterfacesTo<Character>()
-                .FromInstance(_character)
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
 
-            //Components
+            //MonoBehaviors
             Container.Bind<Rigidbody2D>()
                 .FromInstance(_rigidbody)
                 .AsSingle();
-            
+
+            Container.Bind<Transform>()
+                .FromInstance(_transform)
+                .AsSingle();
+
             Container.Bind<UnityEventReceiver>()
                 .FromInstance(_unityEvents)
                 .AsSingle();
 
+            //Components
             Container.BindInterfacesAndSelfTo<HealthComponent>()
                 .AsSingle()
                 .WithArguments(_health);
@@ -58,23 +59,22 @@ namespace Game.Content.Player
             Container.BindInterfacesAndSelfTo<ForceComponent>()
                 .AsSingle()
                 .WithArguments(_stunDelay);
-            
-            Container.BindInterfacesAndSelfTo<RigidbodyMoveComponent>()
+
+            Container.Bind<RigidbodyMoveComponent>()
                 .AsSingle()
                 .WithArguments(_speed);
 
             Container.BindInterfacesAndSelfTo<JumpComponent>()
                 .AsSingle()
                 .WithArguments(_jumpForce, _jumpDelay);
-            
+
             Container.BindInterfacesAndSelfTo<RotateComponent>()
-                .AsSingle()
-                .WithArguments(_transform);
-            
+                .AsSingle();
+
             Container.BindInterfacesAndSelfTo<PlayerPushComponent>()
                 .AsSingle()
                 .WithArguments(_pushParams);
-            
+
             //Presenters
             Container.BindInterfacesTo<DamagePresenter>()
                 .AsSingle()
@@ -87,7 +87,7 @@ namespace Game.Content.Player
             Container.BindInterfacesTo<PushPresenter>()
                 .AsSingle()
                 .NonLazy();
-            
+
             //View
             Container.Bind<PushView>()
                 .FromInstance(_pushView)
