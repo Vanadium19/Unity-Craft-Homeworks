@@ -7,7 +7,7 @@ namespace Game.Content.Enemies
 {
     public class SnakeInstaller : MonoInstaller
     {
-        [SerializeField] private GameObject _snake;
+        [Header("Unity components")] [SerializeField] private GameObject _snake;
         [SerializeField] private Transform _transform;
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private UnityEventReceiver _unityEvents;
