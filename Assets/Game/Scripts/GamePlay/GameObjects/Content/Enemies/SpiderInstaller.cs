@@ -28,7 +28,7 @@ namespace Game.Content.Enemies
                 .FromInstance(_spider)
                 .AsSingle();
 
-            Container.Bind<TransformMoveComponent>()
+            Container.BindInterfacesAndSelfTo<TransformMoveComponent>()
                 .AsSingle()
                 .WithArguments(_transform, _speed);
 
@@ -52,7 +52,7 @@ namespace Game.Content.Enemies
                 .AsSingle()
                 .WithArguments(_damage);
 
-            Container.Bind<HealthComponent>()
+            Container.BindInterfacesAndSelfTo<HealthComponent>()
                 .AsSingle()
                 .WithArguments(_health);
             

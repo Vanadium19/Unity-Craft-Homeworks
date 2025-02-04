@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Core.Components
 {
-    public class TransformMoveComponent : EntityComponent
+    public class TransformMoveComponent : EntityComponent, IMovable
     {
         private readonly Transform _transform;
         private readonly float _speed;
@@ -12,6 +12,8 @@ namespace Game.Core.Components
             _transform = transform;
             _speed = speed;
         }
+
+        public Vector2 Position => _transform.position;
 
         public void Move(Vector2 direction)
         {

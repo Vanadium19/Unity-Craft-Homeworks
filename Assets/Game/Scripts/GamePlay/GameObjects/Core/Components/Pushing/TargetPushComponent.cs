@@ -13,10 +13,13 @@ namespace Game.Core.Components
 
         public bool Push(Collider2D collider, Vector2 direction)
         {
-            if (!collider.TryGetComponent(out IPushable pushable))
+            if (!collider.TryGetComponent(out IEntity entity))
                 return false;
 
-            pushable.AddForce(direction * _force);
+            if (!entity.TryGet(out IPushable target))
+                return false;
+
+            target.AddForce(direction * _force);
             return true;
         }
     }

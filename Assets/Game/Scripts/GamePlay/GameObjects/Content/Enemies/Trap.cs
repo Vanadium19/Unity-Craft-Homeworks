@@ -5,15 +5,13 @@ using Zenject;
 
 namespace Game.Content.Enemies
 {
-    public class Trap : MonoBehaviour, IDamagable, IPushable
+    public class Trap : MonoBehaviour
     {
         private UnityEventReceiver _unityEvents;
 
         private ForceComponent _pushableComponent;
         private AttackComponent _attacker;
         private HealthComponent _health;
-        
-        public event Action HealthChanged;
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents,
@@ -41,18 +39,6 @@ namespace Game.Content.Enemies
             _health.Died -= OnDied;
         }
 
-        public void TakeDamage(int damage)
-        {
-            HealthChanged?.Invoke();
-
-            _health.TakeDamage(damage);
-        }
-
-        public void AddForce(Vector2 force)
-        {
-            _pushableComponent.AddForce(force);
-        }
-
         private void OnCollisionEntered(Collision2D other)
         {
             _attacker.Attack(other.collider);
@@ -60,7 +46,7 @@ namespace Game.Content.Enemies
 
         private void Die()
         {
-            TakeDamage(int.MaxValue);
+            _health.TakeDamage(int.MaxValue);
         }
 
         private void OnDied()

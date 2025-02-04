@@ -36,7 +36,7 @@ namespace Game.Content.Enemies
                 .AsSingle()
                 .WithArguments(_damage);
 
-            Container.Bind<HealthComponent>()
+            Container.BindInterfacesAndSelfTo<HealthComponent>()
                 .AsSingle()
                 .WithArguments(_health);
         }

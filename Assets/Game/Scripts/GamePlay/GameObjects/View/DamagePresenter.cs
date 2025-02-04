@@ -25,7 +25,7 @@ namespace Game.View
             _target.HealthChanged -= OnHealthChanged;
         }
 
-        private void OnHealthChanged()
+        private void OnHealthChanged(int value)
         {
             _view.TakeDamage();
         }

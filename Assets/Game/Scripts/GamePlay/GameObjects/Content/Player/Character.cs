@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Game.Content.Player
 {
-    public class Character : MonoBehaviour, IDamagable, IPusher, IJumper, IMovable, IPushable
+    public class Character : MonoBehaviour, IPusher, IMovable
     {
         private Transform _transform;
 
@@ -20,10 +20,8 @@ namespace Game.Content.Player
 
         private Transform _currentParent;
 
-        public event Action Jumped;
         public event Action Pushed;
         public event Action Tossed;
-        public event Action HealthChanged;
 
         public Vector2 Position => _transform.position;
 
@@ -48,6 +46,10 @@ namespace Game.Content.Player
         private void Awake()
         {
             _transform = transform;
+
+            _jumper.AddCondition(_groundChecker.IsGrounded);
+            _mover.AddCondition(() => !_pushableComponent.IsPushing);
+            _rotater.AddCondition(() => !_pushableComponent.IsPushing);
         }
 
         private void OnEnable()
@@ -64,24 +66,9 @@ namespace Game.Content.Player
 
         public void Move(Vector2 direction)
         {
-            if (_pushableComponent.IsPushing)
-                return;
-
             _transform.SetParent(null);
-
             _mover.Move(direction);
-            _rotater.Rotate(direction);
-
             _transform.SetParent(_currentParent);
-        }
-
-        public void Jump()
-        {
-            if (!_groundChecker.IsGrounded())
-                return;
-
-            if (_jumper.Jump())
-                Jumped?.Invoke();
         }
 
         public void Push()
@@ -99,18 +86,6 @@ namespace Game.Content.Player
                 Tossed?.Invoke();
         }
 
-        public void AddForce(Vector2 force)
-        {
-            _pushableComponent.AddForce(force);
-        }
-
-        public void TakeDamage(int damage)
-        {
-            _health.TakeDamage(damage);
-
-            HealthChanged?.Invoke();
-        }
-
         private void OnCharacterDied()
         {
             gameObject.SetActive(false);
@@ -120,12 +95,6 @@ namespace Game.Content.Player
         {
             _transform.SetParent(parent);
             _currentParent = parent;
-        }
-
-        [Button]
-        public void TakeDamage()
-        {
-            TakeDamage(1);
         }
     }
 }

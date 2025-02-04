@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Game.Content.Enemies
 {
-    public class Spider : MonoBehaviour, IDamagable, IMovable, IPushable
+    public class Spider : MonoBehaviour
     {
         private UnityEventReceiver _unityEvents;
         private Transform _transform;
@@ -16,10 +16,6 @@ namespace Game.Content.Enemies
         private TargetPushComponent _pusher;
         private AttackComponent _attacker;
         private HealthComponent _health;
-
-        public event Action HealthChanged;
-
-        public Vector2 Position => _transform.position;
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents,
@@ -54,23 +50,6 @@ namespace Game.Content.Enemies
             _health.Died -= OnDied;
         }
 
-        public void TakeDamage(int damage)
-        {
-            HealthChanged?.Invoke();
-
-            _health.TakeDamage(damage);
-        }
-
-        public void Move(Vector2 direction)
-        {
-            _mover.Move(direction);
-        }
-
-        public void AddForce(Vector2 force)
-        {
-            _pushableComponent.AddForce(force);
-        }
-
         private void OnTriggerEntered(Collider2D other)
         {
             Vector2 direction = (other.transform.position - _transform.position).normalized;
@@ -82,12 +61,6 @@ namespace Game.Content.Enemies
         private void OnDied()
         {
             gameObject.SetActive(false);
-        }
-
-        [Button]
-        public void TakeDamage()
-        {
-            TakeDamage(1);
         }
     }
 }

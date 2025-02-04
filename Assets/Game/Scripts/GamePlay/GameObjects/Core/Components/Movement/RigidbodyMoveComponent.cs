@@ -15,6 +15,9 @@ namespace Game.Core.Components
 
         public void Move(Vector2 direction)
         {
+            if (!CheckConditions())
+                return;
+
             Vector2 velocity = direction * _speed + Vector2.up * _rigidbody.velocity.y;
 
             _rigidbody.velocity = velocity;

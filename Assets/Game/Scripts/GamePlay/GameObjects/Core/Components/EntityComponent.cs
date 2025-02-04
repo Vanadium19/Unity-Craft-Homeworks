@@ -5,7 +5,7 @@ namespace Game.Core.Components
 {
     public abstract class EntityComponent
     {
-        private List<Func<bool>> _conditions;
+        private readonly List<Func<bool>> _conditions = new();
 
         public void AddCondition(Func<bool> condition)
         {

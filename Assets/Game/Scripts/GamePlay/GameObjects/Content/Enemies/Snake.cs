@@ -1,11 +1,10 @@
-using System;
 using Game.Core.Components;
 using UnityEngine;
 using Zenject;
 
 namespace Game.Content.Enemies
 {
-    public class Snake : MonoBehaviour, IDamagable, IMovable, IPushable
+    public class Snake : MonoBehaviour
     {
         private UnityEventReceiver _unityEvents;
         private Transform _transform;
@@ -16,10 +15,6 @@ namespace Game.Content.Enemies
         private AttackComponent _attacker;
         private RotateComponent _rotater;
         private HealthComponent _health;
-
-        public event Action HealthChanged;
-
-        public Vector2 Position => _transform.position;
 
         [Inject]
         public void Construct(UnityEventReceiver unityEvents,
@@ -54,24 +49,6 @@ namespace Game.Content.Enemies
         {
             _unityEvents.OnTriggerEntered -= OnTriggerEntered;
             _health.Died -= OnDied;
-        }
-
-        public void TakeDamage(int damage)
-        {
-            HealthChanged?.Invoke();
-
-            _health.TakeDamage(damage);
-        }
-
-        public void Move(Vector2 direction)
-        {
-            _mover.Move(direction);
-            _rotater.Rotate(direction);
-        }
-
-        public void AddForce(Vector2 force)
-        {
-            _pushableComponent.AddForce(force);
         }
 
         private void OnTriggerEntered(Collider2D other)

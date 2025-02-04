@@ -16,10 +16,13 @@ namespace Game.Core.Components
 
         public void Attack(Collider2D collider)
         {
-            if (collider.TryGetComponent(out IDamagable target))
+            if (collider.TryGetComponent(out IEntity entity))
             {
-                target.TakeDamage(_damage);
-                GaveDamage?.Invoke();
+                if (entity.TryGet(out IDamagable target))
+                {
+                    target.TakeDamage(_damage);
+                    GaveDamage?.Invoke();
+                }
             }
         }
     }

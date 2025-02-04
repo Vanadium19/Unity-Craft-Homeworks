@@ -28,11 +28,11 @@ namespace Game.Content.Enemies
                 .FromInstance(_snake)
                 .AsSingle();
 
-            Container.Bind<TransformMoveComponent>()
+            Container.BindInterfacesAndSelfTo<TransformMoveComponent>()
                 .AsSingle()
                 .WithArguments(_transform, _speed);
             
-            Container.Bind<RotateComponent>()
+            Container.BindInterfacesAndSelfTo<RotateComponent>()
                 .AsSingle()
                 .WithArguments(_transform);
 
@@ -56,7 +56,7 @@ namespace Game.Content.Enemies
                 .AsSingle()
                 .WithArguments(_damage);
 
-            Container.Bind<HealthComponent>()
+            Container.BindInterfacesAndSelfTo<HealthComponent>()
                 .AsSingle()
                 .WithArguments(_health);
             

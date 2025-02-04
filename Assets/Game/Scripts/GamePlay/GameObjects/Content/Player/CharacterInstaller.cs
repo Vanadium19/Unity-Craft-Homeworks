@@ -47,7 +47,7 @@ namespace Game.Content.Player
                 .FromInstance(_unityEvents)
                 .AsSingle();
 
-            Container.Bind<HealthComponent>()
+            Container.BindInterfacesAndSelfTo<HealthComponent>()
                 .AsSingle()
                 .WithArguments(_health);
 
@@ -59,7 +59,7 @@ namespace Game.Content.Player
                 .AsSingle()
                 .WithArguments(_stunDelay);
             
-            Container.Bind<RigidbodyMoveComponent>()
+            Container.BindInterfacesAndSelfTo<RigidbodyMoveComponent>()
                 .AsSingle()
                 .WithArguments(_speed);
 
@@ -67,7 +67,7 @@ namespace Game.Content.Player
                 .AsSingle()
                 .WithArguments(_jumpForce, _jumpDelay);
             
-            Container.Bind<RotateComponent>()
+            Container.BindInterfacesAndSelfTo<RotateComponent>()
                 .AsSingle()
                 .WithArguments(_transform);
             

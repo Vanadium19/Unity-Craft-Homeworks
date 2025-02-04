@@ -46,9 +46,12 @@ namespace Game.Core.Components
 
             for (int i = 0; i < size; i++)
             {
-                if (colliders[i].TryGetComponent(out IPushable pushable))
+                if (colliders[i].TryGetComponent(out IEntity entity))
                 {
-                    pushable.AddForce(direction * _force);
+                    if (entity.TryGet(out IPushable target))
+                    {
+                        target.AddForce(direction * _force);
+                    }
                 }
             }
 

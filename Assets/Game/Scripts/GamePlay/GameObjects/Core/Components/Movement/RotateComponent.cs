@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Core.Components
 {
-    public class RotateComponent
+    public class RotateComponent : EntityComponent, IRotatable
     {
         private const float RightAngle = 0;
         private const float LeftAngle = 180;
@@ -16,6 +16,9 @@ namespace Game.Core.Components
 
         public void Rotate(Vector2 direction)
         {
+            if (!CheckConditions())
+                return;
+
             if (direction == Vector2.zero)
                 return;
 

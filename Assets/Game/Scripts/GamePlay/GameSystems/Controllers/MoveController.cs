@@ -8,18 +8,21 @@ namespace Game.GameSytems.Controllers
     {
         private const string HorizontalAxis = "Horizontal";
 
-        private readonly IMovable _character;
+        private readonly IMovable _movable;
+        private readonly IRotatable _rotatable;
 
-        public MoveController(IMovable character)
+        public MoveController(IMovable movable, [InjectOptional] IRotatable rotatable)
         {
-            _character = character;
+            _movable = movable;
+            _rotatable = rotatable;
         }
 
         public void FixedTick()
         {
             Vector2 direction = Input.GetAxis(HorizontalAxis) * Vector2.right;
 
-            _character.Move(direction);
+            _movable.Move(direction);
+            _rotatable?.Rotate(direction);
         }
     }
 }
