@@ -60,7 +60,7 @@ namespace Game.Content.Player
                 .AsSingle()
                 .WithArguments(_stunDelay);
 
-            Container.Bind<RigidbodyMoveComponent>()
+            Container.Bind<MoveComponent>()
                 .AsSingle()
                 .WithArguments(_speed);
 

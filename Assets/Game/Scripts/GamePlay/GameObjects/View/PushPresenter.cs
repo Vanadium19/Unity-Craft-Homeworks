@@ -1,15 +1,15 @@
 using System;
-using Game.Core.Components;
+using Game.Content.Player;
 using Zenject;
 
 namespace Game.View
 {
     public class PushPresenter : IInitializable, IDisposable
     {
-        private readonly IPlayerPusher _target;
+        private readonly ICharacter _target;
         private readonly PushView _view;
 
-        public PushPresenter(IPlayerPusher target, PushView view)
+        public PushPresenter(ICharacter target, PushView view)
         {
             _target = target;
             _view = view;

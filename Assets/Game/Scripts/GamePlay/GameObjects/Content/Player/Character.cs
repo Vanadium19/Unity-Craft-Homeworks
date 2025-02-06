@@ -6,13 +6,13 @@ using Zenject;
 
 namespace Game.Content.Player
 {
-    public class Character : IInitializable, IDisposable, IPlayerPusher, IMovable
+    public class Character : IInitializable, IDisposable, ICharacter
     {
         private readonly HealthComponent _health;
         private readonly Transform _transform;
 
         private readonly GroundChecker _groundChecker;
-        private readonly RigidbodyMoveComponent _mover;
+        private readonly MoveComponent _mover;
         private readonly PlayerPushComponent _pusher;
 
         private Transform _currentParent;
@@ -20,12 +20,10 @@ namespace Game.Content.Player
         public event Action Pushed;
         public event Action Tossed;
 
-        public Vector2 Position => _transform.position;
-
         public Character(HealthComponent health,
             Transform transform,
             GroundChecker groundChecker,
-            RigidbodyMoveComponent mover,
+            MoveComponent mover,
             PlayerPushComponent pusher,
             ForceComponent forcer,
             JumpComponent jumper,
@@ -80,7 +78,7 @@ namespace Game.Content.Player
             ForceComponent forcer,
             JumpComponent jumper,
             RotateComponent rotater,
-            RigidbodyMoveComponent mover)
+            MoveComponent mover)
         {
             jumper.AddCondition(groundChecker.IsGrounded);
             mover.AddCondition(() => !forcer.IsPushing);

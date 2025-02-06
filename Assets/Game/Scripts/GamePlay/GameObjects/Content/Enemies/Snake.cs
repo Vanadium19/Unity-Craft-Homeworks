@@ -5,26 +5,31 @@ using Zenject;
 
 namespace Game.Content.Enemies
 {
-    public class Snake : IInitializable, IDisposable
+    public class Snake : IInitializable, IFixedTickable, IDisposable
     {
         private readonly UnityEventReceiver _unityEvents;
         private readonly GameObject _gameObject;
 
         private readonly TargetPushComponent _pusher;
         private readonly AttackComponent _attacker;
+        private readonly RotateComponent _rotater;
         private readonly HealthComponent _health;
+        private readonly PatrolComponent _mover;
 
         public Snake(UnityEventReceiver unityEvents,
             GameObject gameObject,
             TargetPushComponent pusher,
             AttackComponent attacker,
+            RotateComponent rotater,
             HealthComponent health,
-            TransformMoveComponent mover,
+            PatrolComponent mover,
             ForceComponent force)
         {
             _unityEvents = unityEvents;
             _gameObject = gameObject;
             _attacker = attacker;
+            _rotater = rotater;
+            _mover = mover;
             _health = health;
             _pusher = pusher;
 
@@ -37,13 +42,18 @@ namespace Game.Content.Enemies
             _health.Died += OnDied;
         }
 
+        public void FixedTick()
+        {
+            _rotater.Rotate(_mover.Direction);
+        }
+
         public void Dispose()
         {
             _unityEvents.OnTriggerEntered -= OnTriggerEntered;
             _health.Died -= OnDied;
         }
 
-        private void SetConditions(TransformMoveComponent mover, ForceComponent force)
+        private void SetConditions(PatrolComponent mover, ForceComponent force)
         {
             mover.AddCondition(() => !force.IsPushing);
         }

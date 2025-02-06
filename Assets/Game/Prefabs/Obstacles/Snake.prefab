@@ -449,7 +449,6 @@ GameObject:
   - component: {fileID: 464711613102087323}
   - component: {fileID: 2762338412533226565}
   - component: {fileID: 2897245825107516042}
-  - component: {fileID: 5790741693685504968}
   - component: {fileID: 6871778313891900211}
   - component: {fileID: 3289107471756234965}
   - component: {fileID: 7709479104123595859}
@@ -609,7 +608,6 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 2897245825107516042}
-  - {fileID: 5790741693685504968}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
@@ -629,26 +627,14 @@ MonoBehaviour:
   _transform: {fileID: 1819249752555060710}
   _rigidbody: {fileID: 1745589832700849}
   _unityEvents: {fileID: 6871778313891900211}
+  _startPoint: {fileID: 7836685165928915669}
+  _endPoint: {fileID: 3188779134163127405}
+  _speed: 3
   _damage: 2
   _health: 10
-  _speed: 3
   _pushForce: 15
   _stunDelay: 2.5
   _damageView: {fileID: 3289107471756234965}
---- !u!114 &5790741693685504968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521204571576199944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621a42c7fbd141f39fc7367c480bf2db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startPoint: {fileID: 7836685165928915669}
-  _endPoint: {fileID: 3188779134163127405}
 --- !u!114 &6871778313891900211
 MonoBehaviour:
   m_ObjectHideFlags: 0

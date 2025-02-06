@@ -1,4 +1,4 @@
-using Game.Core.Components;
+using Game.Content.Player;
 using UnityEngine;
 using Zenject;
 
@@ -6,9 +6,9 @@ namespace Game.GameSytems.Controllers
 {
     public class PushController : ITickable
     {
-        private readonly IPlayerPusher _character;
+        private readonly ICharacter _character;
 
-        public PushController(IPlayerPusher character)
+        public PushController(ICharacter character)
         {
             _character = character;
         }

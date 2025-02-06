@@ -1,8 +1,9 @@
 using System;
+using Game.Core.Components;
 
-namespace Game.Core.Components
+namespace Game.Content.Player
 {
-    public interface IPlayerPusher
+    public interface ICharacter : IMovable
     {
         public event Action Pushed;
         public event Action Tossed;

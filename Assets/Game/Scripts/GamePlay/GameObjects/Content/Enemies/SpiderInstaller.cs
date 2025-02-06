@@ -12,9 +12,12 @@ namespace Game.Content.Enemies
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private UnityEventReceiver _unityEvents;
 
+        [Header("Move Settings")] [SerializeField] private Transform _startPoint;
+        [SerializeField] private Transform _endPoint;
+        [SerializeField] private float _speed = 5;
+
         [Header("Main Settings")] [SerializeField] private int _damage = 2;
         [SerializeField] private int _health = 3;
-        [SerializeField] private float _speed = 5;
         [SerializeField] private float _pushForce = 20;
         [SerializeField] private float _stunDelay = 0f;
 
@@ -45,9 +48,9 @@ namespace Game.Content.Enemies
                 .AsSingle();
 
             //Components
-            Container.BindInterfacesAndSelfTo<TransformMoveComponent>()
+            Container.BindInterfacesAndSelfTo<PatrolComponent>()
                 .AsSingle()
-                .WithArguments(_speed);
+                .WithArguments(_startPoint.position, _endPoint.position, _speed);
 
             Container.Bind<TargetPushComponent>()
                 .AsSingle()

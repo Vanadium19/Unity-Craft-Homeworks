@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Game.Core.Components
 {
-    public class RigidbodyMoveComponent : EntityComponent, IMovable
+    public class MoveComponent : EntityComponent, IMovable
     {
         private readonly Rigidbody2D _rigidbody;
         private readonly float _speed;
 
-        public RigidbodyMoveComponent(Rigidbody2D rigidbody, float speed)
+        public MoveComponent(Rigidbody2D rigidbody, float speed)
         {
             _rigidbody = rigidbody;
             _speed = speed;

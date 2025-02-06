@@ -4711,7 +4711,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8547868132614509888}
   - component: {fileID: 8547868132614509892}
-  - component: {fileID: 8547868132614509891}
   - component: {fileID: 8547868132614509890}
   m_Layer: 0
   m_Name: MovingLava
@@ -5298,21 +5297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 1856897318}
-  _speed: 2
---- !u!114 &8547868132614509891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1632417098175580217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621a42c7fbd141f39fc7367c480bf2db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   _startPoint: {fileID: 2725077071304007268}
   _endPoint: {fileID: 719510584883460979}
+  _speed: 2
 --- !u!114 &8547868132614509892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5327,7 +5314,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 8547868132614509891}
   - {fileID: 8547868132614509890}
   _installerPrefabs: []
   _autoRun: 1

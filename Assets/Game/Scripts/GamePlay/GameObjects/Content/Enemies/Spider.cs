@@ -9,23 +9,23 @@ namespace Game.Content.Enemies
     public class Spider : IInitializable, IDisposable
     {
         private readonly UnityEventReceiver _unityEvents;
-        private readonly GameObject _gameObject;
+        private readonly Transform _transform;
 
-        private readonly TransformMoveComponent _mover;
+        private readonly PatrolComponent _mover;
         private readonly TargetPushComponent _pusher;
         private readonly AttackComponent _attacker;
         private readonly HealthComponent _health;
 
         public Spider(UnityEventReceiver unityEvents,
-            GameObject gameObject,
-            TransformMoveComponent mover,
+            Transform transform,
+            PatrolComponent mover,
             TargetPushComponent pusher,
             AttackComponent attacker,
             HealthComponent health,
             ForceComponent force)
         {
             _unityEvents = unityEvents;
-            _gameObject = gameObject;
+            _transform = transform;
 
             _attacker = attacker;
             _health = health;
@@ -49,7 +49,7 @@ namespace Game.Content.Enemies
 
         private void OnTriggerEntered(Collider2D other)
         {
-            Vector2 direction = ((Vector2)other.transform.position - _mover.Position).normalized;
+            Vector2 direction = (other.transform.position - _transform.position).normalized;
 
             _pusher.Push(other, direction);
             _attacker.Attack(other);
@@ -57,7 +57,7 @@ namespace Game.Content.Enemies
 
         private void OnDied()
         {
-            _gameObject.SetActive(false);
+            _transform.gameObject.SetActive(false);
         }
     }
 }

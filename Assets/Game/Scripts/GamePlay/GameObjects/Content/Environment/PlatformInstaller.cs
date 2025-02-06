@@ -7,6 +7,8 @@ namespace Game.Content.Environment
     public class PlatformInstaller : MonoInstaller
     {
         [SerializeField] private Transform _transform;
+        [SerializeField] private Transform _startPoint;
+        [SerializeField] private Transform _endPoint;
         [SerializeField] private float _speed = 2;
 
         public override void InstallBindings()
@@ -22,9 +24,9 @@ namespace Game.Content.Environment
                 .AsSingle();
 
             //Components
-            Container.BindInterfacesAndSelfTo<TransformMoveComponent>()
+            Container.BindInterfacesAndSelfTo<PatrolComponent>()
                 .AsSingle()
-                .WithArguments(_speed);
+                .WithArguments(_startPoint.position, _endPoint.position, _speed);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Game.GameSytems.Controllers
         private readonly IMovable _movable;
         private readonly IRotatable _rotatable;
 
-        public MoveController(IMovable movable, [InjectOptional] IRotatable rotatable)
+        public MoveController(IMovable movable, IRotatable rotatable)
         {
             _movable = movable;
             _rotatable = rotatable;
@@ -22,7 +22,7 @@ namespace Game.GameSytems.Controllers
             Vector2 direction = Input.GetAxis(HorizontalAxis) * Vector2.right;
 
             _movable.Move(direction);
-            _rotatable?.Rotate(direction);
+            _rotatable.Rotate(direction);
         }
     }
 }
